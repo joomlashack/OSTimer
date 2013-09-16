@@ -30,7 +30,7 @@ defined('_JEXEC') or die('Restricted access'); ?>
 
 <?php
 if ($item->JS_enable == '1') {
-	echo countdounJS($item->JS_month, $item->JS_day, $item->JS_year, $item->JS_hour, $item->JS_min, $item->JS_endtime, $item->JS_offset, $item->JS_trans_hr, $item->JS_trans_min, $item->JS_trans_sec);
+	echo countdounJS($item->JS_month, $item->JS_day, $item->JS_year, $item->JS_hour, $item->JS_min, $item->JS_endtime, $item->JS_offset, $item->JS_trans_hr, $item->JS_trans_min, $item->JS_trans_sec, $item->timestamp);
 } else {}
 ?>
 <?php endforeach; ?>
