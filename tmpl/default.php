@@ -1,5 +1,13 @@
-<?php // no direct access
-defined('_JEXEC') or die('Restricted access'); ?>
+<?php
+/**
+ * @package   mod_ostimer
+ * @contact   www.ostraining.com, support@ostraining.com
+ * @copyright 2013 Open Source Training, LLC. All rights reserved
+ * @license   http://www.gnu.org/licenses/gpl.html GNU/GPL
+ */
+
+defined('_JEXEC') or die();
+?>
 <div class="countdown<?php echo $params->get('moduleclass_sfx'); ?>">
 
 <?php foreach ($list as $item) :?>
@@ -12,16 +20,16 @@ defined('_JEXEC') or die('Restricted access'); ?>
 <?php } else {} ?>
 <?php if (($params->get("show_zero_day") && $item->daycount ==0) || $item->daycount > 0):?>
     <span class="countdown_daycount" style="color:<?php echo $params->get('ev_color'); ?>;"><?php echo $item->daycount; ?></span>
-    
+
     <?php if ($item->dney) { ?>
         <span class="countdown_dney"><?php echo $item->dney; ?></span>
     <?php } else {} ?>
-    
+
     <?php echo $item->DetailCount; ?>
-    
+
 <?php else:?>
     <span class="countdown_hourcount" style="color:<?php echo $params->get('ev_color'); ?>;"><?php echo $item->DetailCount; ?></span>
-    
+
 <?php endif;?>
 
 <?php if ($item->DetailLink) { ?>

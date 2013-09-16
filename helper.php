@@ -1,10 +1,12 @@
 <?php
 /**
-* @author Beliyadm / OSTraining.com @license		GNU/GPL
-*/
+ * @package   mod_ostimer
+ * @contact   www.ostraining.com, support@ostraining.com
+ * @copyright 2013 Open Source Training, LLC. All rights reserved
+ * @license   http://www.gnu.org/licenses/gpl.html GNU/GPL
+ */
 
-// no direct access
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die();
 
 class modOSTimerHelper
 {
@@ -107,14 +109,14 @@ class modOSTimerHelper
 			}
 			// Need to set it to an open string in order to get rid of: Notice: Undefined property: stdClass::$DetailLink in modules\mod_ostimer\tmpl\default.php on line 27
 			$lists[$i]->DetailLink ="";
-			
+
 			 	if(($ev_displayURL == '1') && $ev_URL && $ev_URLtitle ) {
         	$lists[$i]->DetailLink = '<a href="'.$ev_URL.'" title="'.$ev_URLtitle.'">'.$ev_URLtitle.'</a>'; }
 
         if ($loadcss == '1') {
 			$header = '';
 			$header .= '<link rel="stylesheet" href="'.JURI::base().'modules/mod_ostimer/tmpl/style.css" type="text/css" />';
-			
+
 			$docContainer = JFactory::getDocument();
 			$docContainer->addCustomTag($header);
 			//$mainframe->addCustomTag($header);
@@ -134,7 +136,7 @@ function countdounJS($ev_month, $ev_day, $ev_year, $ev_hour, $ev_minutes, $ev_en
 		$curSet = 'AM';
 	}
 	//echo $curHour.'<br />';
-	
+
      ?>
 	<script language="JavaScript" type="text/javascript">
 	TargetDate<?php echo($id);?> = "<?php echo $ev_month; ?>/<?php echo $ev_day; ?>/<?php echo $ev_year; ?> <?php echo $curHour; ?>:<?php echo $ev_minutes; ?> <?php echo $curSet; ?>";
