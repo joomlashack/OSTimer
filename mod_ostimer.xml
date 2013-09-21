@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="module" version="3..0.0" client="site" method="upgrade">
+<extension type="module" version="3.0.0" client="site" method="upgrade">
 	<name>OSTimer Module</name>
 	<author>OSTraining.com</author>
 	<creationDate>3 March 2010</creationDate>
@@ -33,12 +33,12 @@
 					type="text"
 					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
 					description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
-				<field name="ev_dtitle" type="radio" default="1" label="DISPLAY_EVENT_TITLE_LABEL" description="YES_OR_NO">
+				<field name="ev_dtitle" type="radio" class="btn-group" default="1" label="DISPLAY_EVENT_TITLE_LABEL" description="YES_OR_NO">
 					<option value="1">J_YES</option>
 					<option value="0">J_NO</option>
 				</field>
 				<field name="ev_tit" type="text" default="Event Title..." label="EVENT_TITLE_LABEL" description="EVENT_TITLE_DESC" size="40"/>
-				<field name="ev_ddate" type="radio" default="1" label="DISPLAY_EVENT_DATE_LABEL" description="DISPLAY_EVENT_DATE_DESC">
+				<field name="ev_ddate" type="radio" class="btn-group" default="1" label="DISPLAY_EVENT_DATE_LABEL" description="DISPLAY_EVENT_DATE_DESC">
 					<option value="1">J_YES</option>
 					<option value="0">J_NO</option>
 				</field>
@@ -49,30 +49,30 @@
 				<field name="ev_d" type="text" default="01" label="DAY_LABEL" description="DAY_DESC"/>
 				<field name="ev_m" type="text" default="01" label="MONTH_LABEL" description="MONTH_DESC"/>
 				<field name="ev_y" type="text" default="2011" label="YEAR_LABEL" description="YEAR_DESC"/>
-				<field name="ev_ddleft" type="radio" default="1" label="TIME_TO_EVENT_LABEL" description="TIME_TO_EVENT_DESC">
+				<field name="ev_ddleft" type="radio" class="btn-group" default="1" label="TIME_TO_EVENT_LABEL" description="TIME_TO_EVENT_DESC">
 					<option value="1">J_YES</option>
 					<option value="0">J_NO</option>
 				</field>
-				<field name="ev_dhour" type="radio" default="1" label="HOURS_MINUTES_TO_EVENT_LABEL" description="Do you want to display the words (Hours and minutes to event)">
+				<field name="ev_dhour" type="radio" class="btn-group" default="1" label="HOURS_MINUTES_TO_EVENT_LABEL" description="Do you want to display the words (Hours and minutes to event)">
 					<option value="1">J_YES</option>
 					<option value="0">J_NO</option>
 				</field>
-				<field name="ev_js" type="radio" default="1" label="JAVASCRIPT_EFFECT_LABEL" description="JAVASCRIPT_EFFECT_DESC">
+				<field name="ev_js" type="radio" class="btn-group" default="1" label="JAVASCRIPT_EFFECT_LABEL" description="JAVASCRIPT_EFFECT_DESC">
 					<option value="1">J_YES</option>
 					<option value="0">J_NO</option>
 				</field>
 				<field name="ev_h" type="text" default="12" label="HOUR_LABEL" description="HOUR_DESC"/>
 				<field name="ev_min" type="text" default="00" label="MINUTE_LABEL" description="MINUTE_DESC"/>
-				<field name="@spacer" type="spacer" />
-				<field name="ev_dlink" type="radio" default="1" label="SHOW_LINK_LABEL" description="YES_OR_NO">
+				<field type="spacer" />
+				<field name="ev_dlink" type="radio" class="btn-group" default="1" label="SHOW_LINK_LABEL" description="YES_OR_NO">
 					<option value="1">J_YES</option>
 					<option value="0">J_NO</option>
 				</field>
 				<field name="ev_endtime" type="text" default="Time's Up" label="TIME_HAS_COME_LABEL" description="TIME_HAS_COME_DESC"/>
 				<field name="ev_ltitle" type="text" default="" label="TEXT_URL_LABEL" description="TEXT_URL_DESC"/>
 				<field name="ev_l" type="text" default="" label="URL_LABEL" description="URL_DESC"/>
-				<field name="@spacer" type="spacer" />
-				<field name="loadcss" type="radio" default="1" label="LOAD_MODULE_LABEL" description="LOAD_MODULE_DESC">
+				<field type="spacer" />
+				<field name="loadcss" type="radio" class="btn-group" default="1" label="LOAD_MODULE_LABEL" description="LOAD_MODULE_DESC">
 					<option value="1">J_YES</option>
 					<option value="0">J_NO</option>
 				</field>
@@ -83,7 +83,7 @@
 				<field name="ev_trans_min" type="text" default="Min." label="TRANSLATE_MINUTES_LABEL" description="TRANSLATE_MINUTES_DESC"/>
 				<field name="ev_trans_sec" type="text" default="Sec." label="TRANSLATE_SECONDS_LABEL" description="TRANSLATE_SECONDS_DESC"/>
 				<field name="ev_color" type="text" default="#2B7CBE" label="NUMBER_COLOR_LABEL" description="NUMBER_COLOR_DESC"/>
-				<field name="show_zero_day" type="radio" default="1" label="SHOW_ZERO_DAY" description="SHOW_ZERO_DAY_DESC">
+				<field name="show_zero_day" type="radio" class="btn-group" default="1" label="SHOW_ZERO_DAY" description="SHOW_ZERO_DAY_DESC">
 					<option value="1">J_YES</option>
 					<option value="0">J_NO</option>
 				</field>
