@@ -54,7 +54,7 @@
 					<option value="1">J_YES</option>
 					<option value="0">J_NO</option>
 				</field>
-				<field name="ev_dhour" type="radio" class="btn-group" default="1" label="HOURS_MINUTES_TO_EVENT_LABEL" description="Do you want to display the words (Hours and minutes to event)">
+				<field name="ev_dhour" type="radio" class="btn-group" default="1" label="HOURS_MINUTES_TO_EVENT_LABEL" description="HOURS_MINUTES_TO_EVENT_DESC">
 					<option value="1">J_YES</option>
 					<option value="0">J_NO</option>
 				</field>
