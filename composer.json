@@ -1,0 +1,20 @@
+{
+    "name"             : "OSTraining/OSTimer",
+    "description"      : "OSTimer",
+    "minimum-stability": "stable",
+    "license"          : "GPL-2+",
+    "type"             : "joomla.module",
+    "extra"            : {
+        "element": "mod_ostimer",
+        "name":    "OSTimer"
+    },
+    "authors"          : [
+        {
+            "name" : "Open Source Training",
+            "email": "info@ostraining.com"
+        }
+    ],
+    "require"          : {
+        "php"       : ">= 5.3"
+    }
+}
