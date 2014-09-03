@@ -9,13 +9,13 @@
 	<authorUrl>www.ostraining.com</authorUrl>
 	<version>2.5.6</version>
 	<description>OSTIMER_SUCCESSFULLY_INSTALLED</description>
-	
+
 	<languages>
     		<language tag="en-GB">language/en-GB/en-GB.mod_ostimer.ini</language>
     		<language tag="es-ES">language/es-ES/es-ES.mod_ostimer.ini</language>
 	</languages>
-	
-	
+
+
 	<files>
 		<filename module="mod_ostimer">mod_ostimer.php</filename>
 		<filename module="mod_ostimer">helper.php</filename>
@@ -24,9 +24,9 @@
 		<filename module="mod_ostimer">tmpl/style.css</filename>
 		<filename module="mod_ostimer">tmpl/index.html</filename>
 	</files>
-	
+
 	<config>
-	
+
 		<fields name="params">
 			<fieldset name="basic">
 				<field
@@ -77,7 +77,7 @@
 					<option value="1">J_YES</option>
 					<option value="0">J_NO</option>
 				</field>
-				
+
 				<field name="@spacer" type="spacer" />
 				<field name="ev_trans_days" type="text" default="Days" label="TRANSLATE_DAYS_LABEL" description="TRANSLATE_DAYS_DESC"/>
 				<field name="ev_trans_hr" type="text" default="Hr." label="TRANSLATE_HOURS_LABEL" description="TRANSLATE_HOURS_DESC"/>
@@ -93,7 +93,7 @@
 	</config>
 
 	<updateservers>
-		<server type="extension" priority="1" name="OSTimer Updates"><![CDATA[http://updates.ostraining.com/ostimer.xml]]></server>
-	</updateservers>
-	
+        <server type="extension" priority="1" name="OSTimer Module"><![CDATA[http://deploy.ostraining.com/updates/joomla/mod_ostimer.xml]]></server>
+    </updateservers>
+
 </extension>
