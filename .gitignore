@@ -101,3 +101,7 @@ desktop.ini
 *~
 *.bak
 
+packages/*
+!packages/.gitkeep
+
+build.properties

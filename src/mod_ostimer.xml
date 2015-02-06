@@ -1,99 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="module" version="3.0.0" client="site" method="upgrade">
-    <name>OSTimer Module</name>
-    <author>OSTraining.com</author>
-    <creationDate>3 March 2010</creationDate>
-    <copyright>Copyright Beliyadm and OSTraining</copyright>
+<extension type="module" version="2.5" client="site" method="upgrade">
+    <name>mod_ostimer</name>
+    <author>Alledia</author>
+    <creationDate>February 6th, 2015</creationDate>
+    <copyright>Copyright (C) 2015 Alledia.com</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-    <authorEmail>info@ostraining.com</authorEmail>
-    <authorUrl>www.ostraining.com</authorUrl>
-    <version>2.5.6</version>
+    <authorEmail>support@alledia.com</authorEmail>
+    <authorUrl>http://www.alledia.com</authorUrl>
+    <version>2.5.7a1</version>
     <description>OSTIMER_SUCCESSFULLY_INSTALLED</description>
 
-    <languages>
-            <language tag="en-GB">language/en-GB/en-GB.mod_ostimer.ini</language>
-            <language tag="es-ES">language/es-ES/es-ES.mod_ostimer.ini</language>
-    </languages>
+    <alledia>
+        <element publish="true">ostimer</element>
+        <namespace>OSTimer</namespace>
+        <license>free</license>
+        <relatedExtensions>
+            <extension
+                type="library"
+                element="allediaframework">AllediaFramework</extension>
 
+            <extension
+                type="plugin"
+                group="system"
+                element="ossystem"
+                publish="true"
+                ordering="first">OSSystem</extension>
+        </relatedExtensions>
+        <include>AllediaFreeDefaultFiles</include>
+    </alledia>
+
+    <scriptfile>script.installer.php</scriptfile>
+
+    <languages>
+        <language tag="en-GB">language/en-GB/en-GB.mod_ostimer.ini</language>
+        <language tag="en-GB">language/en-GB/en-GB.mod_ostimer.sys.ini</language>
+        <language tag="es-ES">language/es-ES/es-ES.mod_ostimer.ini</language>
+        <language tag="es-ES">language/es-ES/es-ES.mod_ostimer.sys.ini</language>
+    </languages>
 
     <files>
         <filename module="mod_ostimer">mod_ostimer.php</filename>
-        <filename module="mod_ostimer">helper.php</filename>
-        <filename module="mod_ostimer">index.html</filename>
-        <filename module="mod_ostimer">tmpl/default.php</filename>
-        <filename module="mod_ostimer">tmpl/style.css</filename>
-        <filename module="mod_ostimer">tmpl/index.html</filename>
+        <filename>include.php</filename>
+        <filename>index.html</filename>
+        <folder>tmpl</folder>
+        <folder>library</folder>
+        <folder>form</folder>
+        <folder>views</folder>
     </files>
 
-    <config>
+    <media destination="mod_ostimer" folder="media">
+        <folder>css</folder>
+        <folder>js</folder>
+        <folder>images</folder>
+        <folder>fonts</folder>
+    </media>
 
+    <config>
         <fields name="params">
-            <fieldset name="basic">
+            <fieldset name="basic" addfieldpath="/modules/mod_ostimer/form/fields">
                 <field
                     name="moduleclass_sfx"
                     type="text"
                     label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
                     description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+
                 <field name="ev_dtitle" type="radio" class="btn-group" default="1" label="DISPLAY_EVENT_TITLE_LABEL" description="YES_OR_NO">
                     <option value="1">J_YES</option>
                     <option value="0">J_NO</option>
                 </field>
+
                 <field name="ev_tit" type="text" default="Event Title..." label="EVENT_TITLE_LABEL" description="EVENT_TITLE_DESC" size="40"/>
+
                 <field name="ev_ddate" type="radio" class="btn-group" default="1" label="DISPLAY_EVENT_DATE_LABEL" description="DISPLAY_EVENT_DATE_DESC">
                     <option value="1">J_YES</option>
                     <option value="0">J_NO</option>
                 </field>
+
                 <field name="ev_ddate_format" type="list" default="1" label="DISPLAY_EVENT_DATE_FORMAT_LABEL" description="DISPLAY_EVENT_DATE_FORMAT_DESC">
                     <option value="1">US_FORMAT</option>
                     <option value="0">INT_FORMAT</option>
                 </field>
+
                 <field name="ev_d" type="text" default="01" label="DAY_LABEL" description="DAY_DESC"/>
+
                 <field name="ev_m" type="text" default="01" label="MONTH_LABEL" description="MONTH_DESC"/>
+
                 <field name="ev_y" type="text" default="2011" label="YEAR_LABEL" description="YEAR_DESC"/>
+
                 <field name="ev_ddleft" type="radio" class="btn-group" default="1" label="TIME_TO_EVENT_LABEL" description="TIME_TO_EVENT_DESC">
                     <option value="1">J_YES</option>
                     <option value="0">J_NO</option>
                 </field>
+
                 <field name="ev_dhour" type="radio" class="btn-group" default="1" label="HOURS_MINUTES_TO_EVENT_LABEL" description="HOURS_MINUTES_TO_EVENT_DESC">
                     <option value="1">J_YES</option>
                     <option value="0">J_NO</option>
                 </field>
+
                 <field name="ev_js" type="radio" class="btn-group" default="1" label="JAVASCRIPT_EFFECT_LABEL" description="JAVASCRIPT_EFFECT_DESC">
                     <option value="1">J_YES</option>
                     <option value="0">J_NO</option>
                 </field>
+
                 <field name="ev_h" type="text" default="12" label="HOUR_LABEL" description="HOUR_DESC"/>
+
                 <field name="ev_min" type="text" default="00" label="MINUTE_LABEL" description="MINUTE_DESC"/>
+
                 <field type="spacer" />
+
                 <field name="ev_dlink" type="radio" class="btn-group" default="1" label="SHOW_LINK_LABEL" description="YES_OR_NO">
                     <option value="1">J_YES</option>
                     <option value="0">J_NO</option>
                 </field>
+
                 <field name="ev_endtime" type="text" default="Time's Up" label="TIME_HAS_COME_LABEL" description="TIME_HAS_COME_DESC"/>
+
                 <field name="ev_ltitle" type="text" default="" label="TEXT_URL_LABEL" description="TEXT_URL_DESC"/>
+
                 <field name="ev_l" type="text" default="" label="URL_LABEL" description="URL_DESC"/>
+
                 <field type="spacer" />
+
                 <field name="loadcss" type="radio" class="btn-group" default="1" label="LOAD_MODULE_LABEL" description="LOAD_MODULE_DESC">
                     <option value="1">J_YES</option>
                     <option value="0">J_NO</option>
                 </field>
 
                 <field name="@spacer" type="spacer" />
+
                 <field name="ev_trans_days" type="text" default="Days" label="TRANSLATE_DAYS_LABEL" description="TRANSLATE_DAYS_DESC"/>
+
                 <field name="ev_trans_hr" type="text" default="Hr." label="TRANSLATE_HOURS_LABEL" description="TRANSLATE_HOURS_DESC"/>
+
                 <field name="ev_trans_min" type="text" default="Min." label="TRANSLATE_MINUTES_LABEL" description="TRANSLATE_MINUTES_DESC"/>
+
                 <field name="ev_trans_sec" type="text" default="Sec." label="TRANSLATE_SECONDS_LABEL" description="TRANSLATE_SECONDS_DESC"/>
+
                 <field name="ev_color" type="text" default="#2B7CBE" label="NUMBER_COLOR_LABEL" description="NUMBER_COLOR_DESC"/>
+
                 <field name="show_zero_day" type="radio" class="btn-group" default="1" label="SHOW_ZERO_DAY" description="SHOW_ZERO_DAY_DESC">
                     <option value="1">J_YES</option>
                     <option value="0">J_NO</option>
                 </field>
+
+                <field
+                    type="customfooter"
+                    name="customfooter"
+                    media="mod_ostimer"
+                    jedurl="http://extensions.joomla.org/extension/ostimer" />
             </fieldset>
         </fields>
     </config>
 
     <updateservers>
-        <server type="extension" priority="1" name="OSTimer Module"><![CDATA[http://deploy.ostraining.com/updates/joomla/mod_ostimer.xml]]></server>
+        <server type="extension" priority="1" name="OSTimer Module"><![CDATA[https://deploy.ostraining.com/client/update/free/stable/mod_ostimer]]></server>
     </updateservers>
 
 </extension>

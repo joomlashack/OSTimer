@@ -1,17 +1,20 @@
 {
-    "name"             : "OSTraining/OSTimer",
+    "name"             : "alledia/ostimer",
     "description"      : "OSTimer",
     "minimum-stability": "stable",
     "license"          : "GPL-2+",
     "type"             : "joomla.module",
     "extra"            : {
         "element": "mod_ostimer",
-        "name":    "OSTimer"
+        "element-short"  : "ostimer",
+        "name"           : "OSTimer",
+        "client"         : "site",
+        "package-license": "free"
     },
     "authors"          : [
         {
-            "name" : "Open Source Training",
-            "email": "info@ostraining.com"
+            "name" : "Alledia",
+            "email": "support@alledia.com"
         }
     ],
     "require"          : {

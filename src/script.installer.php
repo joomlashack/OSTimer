@@ -8,9 +8,13 @@
 
 defined('_JEXEC') or die();
 
-use Alledia\OSTimer\Free\Joomla\Module;
+require_once 'library/Installer/include.php';
 
-require_once 'include.php';
+use Alledia\Installer\AbstractScript;
 
-$modOSTimer = Module::getInstance(null, $module);
-$modOSTimer->init();
+/**
+ * Custom installer script
+ */
+class Mod_OSTimerInstallerScript extends AbstractScript
+{
+}
