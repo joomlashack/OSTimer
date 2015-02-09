@@ -64,49 +64,49 @@
                     label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
                     description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
 
-                <field name="ev_dtitle" type="radio" class="btn-group" default="1" label="DISPLAY_EVENT_TITLE_LABEL" description="YES_OR_NO">
+                <field name="ev_dtitle" type="radio" class="btn-group" default="1" label="MOD_OSTIMER_DISPLAY_MOD_OSTIMER_EVENT_TITLE_LABEL" description="MOD_OSTIMER_YES_OR_NO">
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
                 </field>
 
-                <field name="ev_tit" type="text" default="Event Title..." label="EVENT_TITLE_LABEL" description="EVENT_TITLE_DESC" size="40"/>
+                <field name="ev_tit" type="text" default="Event Title..." label="MOD_OSTIMER_EVENT_TITLE_LABEL" description="MOD_OSTIMER_EVENT_TITLE_DESC" size="40"/>
 
-                <field name="ev_ddate" type="radio" class="btn-group" default="1" label="DISPLAY_EVENT_DATE_LABEL" description="DISPLAY_EVENT_DATE_DESC">
+                <field name="ev_ddate" type="radio" class="btn-group" default="1" label="MOD_OSTIMER_DISPLAY_EVENT_DATE_LABEL" description="MOD_OSTIMER_DISPLAY_EVENT_DATE_DESC">
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
                 </field>
 
-                <field name="ev_ddate_format" type="list" default="1" label="DISPLAY_EVENT_DATE_FORMAT_LABEL" description="DISPLAY_EVENT_DATE_FORMAT_DESC">
-                    <option value="1">US_FORMAT</option>
-                    <option value="0">INT_FORMAT</option>
+                <field name="ev_ddate_format" type="list" default="1" label="MOD_OSTIMER_DISPLAY_EVENT_DATE_FORMAT_LABEL" description="MOD_OSTIMER_DISPLAY_EVENT_DATE_FORMAT_DESC">
+                    <option value="1">MOD_OSTIMER_US_FORMAT</option>
+                    <option value="0">MOD_OSTIMER_INT_FORMAT</option>
                 </field>
 
-                <field name="ev_d" type="text" default="01" label="DAY_LABEL" description="DAY_DESC"/>
+                <field name="ev_d" type="text" default="01" label="MOD_OSTIMER_DAY_LABEL" description="MOD_OSTIMER_DAY_DESC"/>
 
-                <field name="ev_m" type="text" default="01" label="MONTH_LABEL" description="MONTH_DESC"/>
+                <field name="ev_m" type="text" default="01" label="MOD_OSTIMER_MONTH_LABEL" description="MOD_OSTIMER_MONTH_DESC"/>
 
-                <field name="ev_y" type="text" default="2015" label="YEAR_LABEL" description="YEAR_DESC"/>
+                <field name="ev_y" type="text" default="2015" label="MOD_OSTIMER_YEAR_LABEL" description="MOD_OSTIMER_YEAR_DESC"/>
 
-                <field name="ev_ddleft" type="radio" class="btn-group" default="1" label="TIME_TO_EVENT_LABEL" description="TIME_TO_EVENT_DESC">
+                <field name="ev_ddleft" type="radio" class="btn-group" default="1" label="MOD_OSTIMER_TIME_TO_EVENT_LABEL" description="MOD_OSTIMER_TIME_TO_EVENT_DESC">
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
                 </field>
 
-                <field name="ev_dhour" type="radio" class="btn-group" default="1" label="HOURS_MINUTES_TO_EVENT_LABEL" description="HOURS_MINUTES_TO_EVENT_DESC">
+                <field name="ev_dhour" type="radio" class="btn-group" default="1" label="MOD_OSTIMER_HOURS_MINUTES_TO_EVENT_LABEL" description="MOD_OSTIMER_HOURS_MINUTES_TO_EVENT_DESC">
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
                 </field>
 
-                <field name="ev_js" type="radio" class="btn-group" default="1" label="JAVASCRIPT_EFFECT_LABEL" description="JAVASCRIPT_EFFECT_DESC">
+                <field name="ev_js" type="radio" class="btn-group" default="1" label="MOD_OSTIMER_JAVASCRIPT_EFFECT_LABEL" description="MOD_OSTIMER_JAVASCRIPT_EFFECT_DESC">
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
                 </field>
 
-                <field name="ev_h" type="text" default="12" label="HOUR_LABEL" description="HOUR_DESC"/>
+                <field name="ev_h" type="text" default="12" label="MOD_OSTIMER_HOUR_LABEL" description="MOD_OSTIMER_HOUR_DESC"/>
 
-                <field name="ev_min" type="text" default="00" label="MINUTE_LABEL" description="MINUTE_DESC"/>
+                <field name="ev_min" type="text" default="00" label="MOD_OSTIMER_MINUTE_LABEL" description="MOD_OSTIMER_MINUTE_DESC"/>
 
-                <field name="timezone" type="list" default="UTC" label="TIMEZONE" description="TIMEZONE_DESC">
+                <field name="timezone" type="list" default="UTC" label="MOD_OSTIMER_TIMEZONE_LABEL" description="MOD_OSTIMER_TIMEZONE_DESC">
                     <option value="Africa/Abidjan">Africa/Abidjan</option>
                     <option value="Africa/Accra">Africa/Accra</option>
                     <option value="Africa/Addis_Ababa">Africa/Addis_Ababa</option>
@@ -694,37 +694,37 @@
 
                 <field type="spacer" />
 
-                <field name="ev_dlink" type="radio" class="btn-group" default="1" label="SHOW_LINK_LABEL" description="YES_OR_NO">
+                <field name="ev_dlink" type="radio" class="btn-group" default="1" label="MOD_OSTIMER_SHOW_LINK_LABEL" description="MOD_OSTIMER_YES_OR_NO">
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
                 </field>
 
-                <field name="ev_endtime" type="text" default="Time's Up" label="TIME_HAS_COME_LABEL" description="TIME_HAS_COME_DESC"/>
+                <field name="ev_endtime" type="text" default="Time's Up" label="MOD_OSTIMER_TIME_HAS_COME_LABEL" description="MOD_OSTIMER_TIME_HAS_COME_DESC"/>
 
-                <field name="ev_ltitle" type="text" default="" label="TEXT_URL_LABEL" description="TEXT_URL_DESC"/>
+                <field name="ev_ltitle" type="text" default="" label="MOD_OSTIMER_TEXT_URL_LABEL" description="MOD_OSTIMER_TEXT_URL_DESC"/>
 
-                <field name="ev_l" type="text" default="" label="URL_LABEL" description="URL_DESC"/>
+                <field name="ev_l" type="text" default="" label="MOD_OSTIMER_URL_LABEL" description="MOD_OSTIMER_URL_DESC"/>
 
                 <field type="spacer" />
 
-                <field name="loadcss" type="radio" class="btn-group" default="1" label="LOAD_MODULE_LABEL" description="LOAD_MODULE_DESC">
+                <field name="loadcss" type="radio" class="btn-group" default="1" label="MOD_OSTIMER_LOAD_MODULE_LABEL" description="MOD_OSTIMER_LOAD_MODULE_DESC">
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
                 </field>
 
                 <field name="@spacer" type="spacer" />
 
-                <field name="ev_trans_days" type="text" default="Days" label="TRANSLATE_DAYS_LABEL" description="TRANSLATE_DAYS_DESC"/>
+                <field name="ev_trans_days" type="text" default="Days" label="MOD_OSTIMER_TRANSLATE_DAYS_LABEL" description="MOD_OSTIMER_TRANSLATE_DAYS_DESC"/>
 
-                <field name="ev_trans_hr" type="text" default="Hr." label="TRANSLATE_HOURS_LABEL" description="TRANSLATE_HOURS_DESC"/>
+                <field name="ev_trans_hr" type="text" default="Hr." label="MOD_OSTIMER_TRANSLATE_HOURS_LABEL" description="MOD_OSTIMER_TRANSLATE_HOURS_DESC"/>
 
-                <field name="ev_trans_min" type="text" default="Min." label="TRANSLATE_MINUTES_LABEL" description="TRANSLATE_MINUTES_DESC"/>
+                <field name="ev_trans_min" type="text" default="Min." label="MOD_OSTIMER_TRANSLATE_MINUTES_LABEL" description="MOD_OSTIMER_TRANSLATE_MINUTES_DESC"/>
 
-                <field name="ev_trans_sec" type="text" default="Sec." label="TRANSLATE_SECONDS_LABEL" description="TRANSLATE_SECONDS_DESC"/>
+                <field name="ev_trans_sec" type="text" default="Sec." label="MOD_OSTIMER_TRANSLATE_SECONDS_LABEL" description="MOD_OSTIMER_TRANSLATE_SECONDS_DESC"/>
 
-                <field name="ev_color" type="text" default="#2B7CBE" label="NUMBER_COLOR_LABEL" description="NUMBER_COLOR_DESC"/>
+                <field name="ev_color" type="text" default="#2B7CBE" label="MOD_OSTIMER_NUMBER_COLOR_LABEL" description="MOD_OSTIMER_NUMBER_COLOR_DESC"/>
 
-                <field name="show_zero_day" type="radio" class="btn-group" default="1" label="SHOW_ZERO_DAY" description="SHOW_ZERO_DAY_DESC">
+                <field name="show_zero_day" type="radio" class="btn-group" default="1" label="MOD_OSTIMER_SHOW_ZERO_DAY_LABEL" description="MOD_OSTIMER_SHOW_ZERO_DAY_DESC">
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
                 </field>
