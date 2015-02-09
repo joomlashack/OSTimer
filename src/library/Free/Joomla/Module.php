@@ -1,8 +1,8 @@
 <?php
 /**
- * @package   com_osdownloads
- * @contact   www.alledia.com, hello@alledia.com
- * @copyright 2014 Alledia.com, All rights reserved
+ * @package   OSTimer
+ * @contact   www.alledia.com, support@alledia.com
+ * @copyright 2015 Alledia.com, All rights reserved
  * @license   http://www.gnu.org/licenses/gpl.html GNU/GPL
  */
 
@@ -12,11 +12,15 @@ defined('_JEXEC') or die();
 
 use Alledia\Framework\Joomla\Extension\AbstractModule;
 use Alledia\Framework\Factory;
+use Alledia\OSTimer\Free\Countdown;
 use JUri;
+use stdClass;
 
 class Module extends AbstractModule
 {
     protected static $instance;
+
+    protected static $timeStamp;
 
     public static function getInstance($namespace = null, $module = null)
     {
@@ -25,97 +29,72 @@ class Module extends AbstractModule
 
     public function init()
     {
-        $this->list   = $this->getList();
+        $params = $this->params;
 
-        parent::init();
-    }
+        $eventDisplayTitle = @$params->get('ev_dtitle', 1);
+        $eventTitle        = @$params->get('ev_tit');
+        $eventDisplayDate  = @$params->get('ev_ddate', 1);
+        $eventDateFormat   = @$params->get('ev_ddate_format', 1);
+        $eventDay          = @$params->get('ev_d', 1);
+        $eventMonth        = @$params->get('ev_m', 1);
+        $eventYear         = @$params->get('ev_y', 2015);
+        $eventDDaysLeft    = @$params->get('ev_ddleft', 1);
+        $eventDisplayHour  = @$params->get('ev_dhour', 1);
+        $eventHour         = @$params->get('ev_h', 0);
+        $eventMinutes      = @$params->get('ev_min', 0);
+        $eventColor        = @$params->get('ev_color', '#2B7CBE');
+        $eventDisplayURL   = @$params->get('ev_dlink', 1);
+        $eventURLTitle     = @$params->get('ev_ltitle', '');
+        $eventURL          = @$params->get('ev_l', '');
+        $eventJs           = @$params->get('ev_js', 1);
+        $eventEndTime      = @$params->get('ev_endtime', 'Time\'s Up');
+        $loadCSS           = @$params->get('loadcss', 1);
+        $transDays         = @$params->get('ev_trans_days', 'Days');
+        $transHour         = @$params->get('ev_trans_hr', 'Hr.');
+        $transMin          = @$params->get('ev_trans_min', 'Min.');
+        $transSec          = @$params->get('ev_trans_sec', 'Sec.');
+        $timezone          = @$params->get('timezone', 'UTC');
 
-    protected function getList()
-    {
-        $app = Factory::getApplication();
+        $this->moduleClassSfx = @$params->get('moduleclass_sfx', '');
+        $this->showZeroDay    = @$params->get('show_zero_day', 1);
 
-        $eventDisplayTitle = @$this->params->get('ev_dtitle');
-        $eventTitle        = @$this->params->get('ev_tit');
-        $eventDisplayDate  = @$this->params->get('ev_ddate');
-        $eventDateFormat   = @$this->params->get('ev_ddate_format');
-        $eventDay          = @$this->params->get('ev_d');
-        $eventMonth        = @$this->params->get('ev_m');
-        $eventYear         = @$this->params->get('ev_y');
-        $eventDDaysLeft    = @$this->params->get('ev_ddleft');
-        $eventDisplayHour  = @$this->params->get('ev_dhour');
-        $eventHour         = @$this->params->get('ev_h');
-        $eventMinutes      = @$this->params->get('ev_min');
-        $eventColor        = @$this->params->get('ev_color');
-        $eventDisplayURL   = @$this->params->get('ev_dlink');
-        $eventURLTitle     = @$this->params->get('ev_ltitle');
-        $eventURL          = @$this->params->get('ev_l');
-        $eventJs           = @$this->params->get('ev_js');
-        $eventEndTime      = @$this->params->get('ev_endtime');
-        $eventOffset       = @$this->params->get('ev_offset');
-        $loadCSS           = @$this->params->get('loadcss');
-        $transDays         = @$this->params->get('ev_trans_days');
-        $transHour         = @$this->params->get('ev_trans_hr');
-        $transMin          = @$this->params->get('ev_trans_min');
-        $transSec          = @$this->params->get('ev_trans_sec');
-        // $eventHour         = $eventHour+$eventOffset;
+        $this->event = new stdClass;
 
-        $eventTime = mktime($eventHour, $eventMinutes, 0, $eventMonth, $eventDay, $eventYear);
-        $now       = time();
-
-        $diff = $eventTime - $now;
-        $days = floor($diff / 86400);
-
-        if ($days * 86400 + $now > $eventTime) {
-            $days--;
-        }
-
-        $h1   = floor($diff / 3600);
-        $m1   = floor($diff / 60);
-        $hour = floor($diff / 3600 - $days * 24);
-        $min  = floor($diff / 60 - $hour * 60);
-
-        //collect data in an array
-        $i         = 0;
-        $lists     = array();
-        $lists[0]  = 0;
-        $lists[$i] = (object) $lists[$i];
+        $timeLeft = Countdown::calculate($eventHour, $eventMinutes, 0, $eventMonth, $eventDay, $eventYear, $timezone);
 
         if ($eventDisplayTitle) {
-            $lists[$i]->title = $eventTitle;
+            $this->event->title = $eventTitle;
         }
-
 
         if ($eventDisplayDate) {
             if ($eventDateFormat == 1){
-                $lists[$i]->displaydate = $eventMonth.'.'.$eventDay.'.'.$eventYear.' '.$eventHour.':'.$eventMinutes;
+                $this->event->date = $eventMonth.'.'.$eventDay.'.'.$eventYear.' '.$eventHour.':'.$eventMinutes;
             } else {
-                $lists[$i]->displaydate = $eventDay.'.'.$eventMonth.'.'.$eventYear.' '.$eventHour.':'.$eventMinutes;
+                $this->event->date = $eventDay.'.'.$eventMonth.'.'.$eventYear.' '.$eventHour.':'.$eventMinutes;
             }
         }
 
         if ($eventDDaysLeft == '1') {
-            $lists[$i]->dney = $transDays;
+            $this->event->textDays = $transDays;
         }
 
-        $lists[$i]->daycount = $days;
-        static $timeStamp;
+        $this->event->days = $timeLeft['days'];
 
-        //$timeStamp = microtime(true);
-        $timeStamp++;
-        $lists[$i]->timestamp = $timeStamp;
+        static::$timeStamp++;
+        $this->event->timestamp = static::$timeStamp;
         if (($eventDisplayHour == '1') && ($eventJs == '1')) {
-            $lists[$i]->DetailCount  = '<span id="clockJS'.$timeStamp.'"></span>';
-            $lists[$i]->JS_enable    = $eventJs;
-            $lists[$i]->JS_month     = $eventMonth;
-            $lists[$i]->JS_day       = $eventDay;
-            $lists[$i]->JS_year      = $eventYear;
-            $lists[$i]->JS_hour      = $eventHour;
-            $lists[$i]->JS_min       = $eventMinutes;
-            $lists[$i]->JS_endtime   = $eventEndTime;
-            $lists[$i]->JS_offset    = $eventOffset;
-            $lists[$i]->JS_trans_hr  = $transHour;
-            $lists[$i]->JS_trans_min = $transMin;
-            $lists[$i]->JS_trans_sec = $transSec;
+            $this->event->DetailCount  = '<span id="clockJS'.static::$timeStamp.'"></span>';
+            $this->event->JS_enable    = $eventJs;
+            $this->event->JS_month     = $eventMonth;
+            $this->event->JS_day       = $eventDay;
+            $this->event->JS_year      = $eventYear;
+            $this->event->JS_hour      = $eventHour;
+            $this->event->JS_min       = $eventMinutes;
+            $this->event->JS_endtime   = $eventEndTime;
+            $this->event->JS_offset    = '';
+            $this->event->JS_trans_hr  = $transHour;
+            $this->event->JS_trans_min = $transMin;
+            $this->event->JS_trans_sec = $transSec;
         } else if (($eventDisplayHour == '1') && ($eventJs == '0')) {
             $curmin = date('i');
 
@@ -125,31 +104,23 @@ class Module extends AbstractModule
                 $min = $eventMinutes - $curmin;
             }
 
-            $lists[$i]->DetailCount = $hour.' Hrs. '.$min.' Min.';
+            $this->event->DetailCount = $hour.' ' . $transHour . ' '.$min.' ' . $transMin;
         } else {
             if ($days <= 0) {
-                $lists[$i]->DetailCount = $eventEndTime;
+                $this->event->DetailCount = $eventEndTime;
             }
         }
 
-        // Need to set it to an open string in order to get rid of: Notice: Undefined property: stdClass::$DetailLink in modules\mod_ostimer\tmpl\default.php on line 27
-        $lists[$i]->DetailLink ="";
-
         if (($eventDisplayURL == '1') && $eventURL && $eventURLTitle ) {
-            $lists[$i]->DetailLink = '<a href="'.$eventURL.'" title="'.$eventURLTitle.'">'.$eventURLTitle.'</a>';
+            $this->event->detailLink = '<a href="'.$eventURL.'" title="'.$eventURLTitle.'">'.$eventURLTitle.'</a>';
         }
 
-        if ($loadCSS == '1') {
-            $header = '';
-            $header .= '<link rel="stylesheet" href="'.JUri::base().'modules/mod_ostimer/tmpl/style.css" type="text/css" />';
-
-            $docContainer = Factory::getDocument();
-            $docContainer->addCustomTag($header);
-            //$app->addCustomTag($header);
-            //$app->addCustomHeadTag($header);
+        if ((bool) $loadCSS) {
+            $doc = Factory::getDocument();
+            $doc->addStylesheet(JUri::base() . 'modules/mod_ostimer/tmpl/style.css');
         }
 
-        return $lists;
+        parent::init();
     }
 
     public function printCountDounJS(

@@ -8,40 +8,34 @@
 
 defined('_JEXEC') or die();
 
+$event = $this->event;
 ?>
-<div class="countdown<?php echo $this->params->get('moduleclass_sfx'); ?>">
+<div class="countdown<?php echo $this->moduleClassSfx; ?>">
+    <?php if (isset($event->title)) : ?>
+        <span class="countdown_title"><?php echo $event->title; ?></span>
+    <?php endif; ?>
 
-<?php foreach ($this->list as $item) :?>
-<?php if ($item->title) { ?>
-	<span class="countdown_title"><?php echo $item->title; ?></span>
-<?php } else {} ?>
+    <?php if (isset($event->date)) : ?>
+        <span class="countdown_displaydate"><?php echo $event->date; ?></span>
+    <?php endif; ?>
 
-<?php if ($item->displaydate) { ?>
-	<span class="countdown_displaydate"><?php echo $item->displaydate; ?></span>
-<?php } else {} ?>
-<?php if (($this->params->get("show_zero_day") && $item->daycount ==0) || $item->daycount > 0):?>
-    <span class="countdown_daycount" style="color:<?php echo $this->params->get('ev_color'); ?>;"><?php echo $item->daycount; ?></span>
+    <?php if (($this->showZeroDay && $event->days == 0) || $event->days > 0) : ?>
+        <span class="countdown_daycount" style="color:<?php echo $this->params->get('ev_color'); ?>;"><?php echo $event->days; ?></span>
 
-    <?php if ($item->dney) { ?>
-        <span class="countdown_dney"><?php echo $item->dney; ?></span>
-    <?php } else {} ?>
+        <?php if (isset($event->textDays)) : ?>
+            <span class="countdown_dney"><?php echo $event->textDays; ?></span>
+        <?php endif; ?>
 
-    <?php echo $item->DetailCount; ?>
+        <?php echo $event->DetailCount; ?>
+    <?php else: ?>
+        <span class="countdown_hourcount" style="color:<?php echo $this->params->get('ev_color'); ?>;"><?php echo $event->DetailCount; ?></span>
+    <?php endif; ?>
 
-<?php else:?>
-    <span class="countdown_hourcount" style="color:<?php echo $this->params->get('ev_color'); ?>;"><?php echo $item->DetailCount; ?></span>
+    <?php if (isset($event->detailLink)) : ?>
+        <span class="countdown_link"><?php echo $event->detailLink; ?></span>
+    <?php endif; ?>
 
-<?php endif;?>
-
-<?php if ($item->DetailLink) { ?>
-	<span class="countdown_link"><?php echo $item->DetailLink; ?></span>
-<?php } else {} ?>
-
-<?php
-if ($item->JS_enable == '1') {
-    // echo $this->countdounJS($item->JS_month, $item->JS_day, $item->JS_year, $item->JS_hour, $item->JS_min, $item->JS_endtime, $item->JS_offset, $item->JS_trans_hr, $item->JS_trans_min, $item->JS_trans_sec, $item->timestamp);
-	echo $this->printCountDounJS($item->JS_month, $item->JS_day, $item->JS_year, $item->JS_hour, $item->JS_min, $item->JS_endtime, $item->JS_offset, $item->JS_trans_hr, $item->JS_trans_min, $item->JS_trans_sec, $item->timestamp);
-} else {}
-?>
-<?php endforeach; ?>
+    <?php if ((bool) $event->JS_enable) : ?>
+        <?php echo $this->printCountDounJS($event->JS_month, $event->JS_day, $event->JS_year, $event->JS_hour, $event->JS_min, $event->JS_endtime, $event->JS_offset, $event->JS_trans_hr, $event->JS_trans_min, $event->JS_trans_sec, $event->timestamp); ?>
+    <?php endif; ?>
 </div>
