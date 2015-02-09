@@ -14,6 +14,7 @@ use Alledia\Framework\Joomla\Extension\AbstractModule;
 use Alledia\Framework\Factory;
 use Alledia\OSTimer\Free\Countdown;
 use JUri;
+use JText;
 use stdClass;
 
 class Module extends AbstractModule
