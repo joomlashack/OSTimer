@@ -34,23 +34,23 @@ class Module extends AbstractModule
     {
         $app = Factory::getApplication();
 
-        $eventDisplaytitle = @$this->params->get('ev_dtitle');
+        $eventDisplayTitle = @$this->params->get('ev_dtitle');
         $eventTitle        = @$this->params->get('ev_tit');
-        $eventDisplaydate  = @$this->params->get('ev_ddate');
-        $eventDateformat   = @$this->params->get('ev_ddate_format');
+        $eventDisplayDate  = @$this->params->get('ev_ddate');
+        $eventDateFormat   = @$this->params->get('ev_ddate_format');
         $eventDay          = @$this->params->get('ev_d');
         $eventMonth        = @$this->params->get('ev_m');
         $eventYear         = @$this->params->get('ev_y');
-        $eventDdaysleft    = @$this->params->get('ev_ddleft');
-        $eventDisplayhour  = @$this->params->get('ev_dhour');
+        $eventDDaysLeft    = @$this->params->get('ev_ddleft');
+        $eventDisplayHour  = @$this->params->get('ev_dhour');
         $eventHour         = @$this->params->get('ev_h');
         $eventMinutes      = @$this->params->get('ev_min');
         $eventColor        = @$this->params->get('ev_color');
         $eventDisplayURL   = @$this->params->get('ev_dlink');
-        $eventURLtitle     = @$this->params->get('ev_ltitle');
+        $eventURLTitle     = @$this->params->get('ev_ltitle');
         $eventURL          = @$this->params->get('ev_l');
         $eventJs           = @$this->params->get('ev_js');
-        $eventEndtime      = @$this->params->get('ev_endtime');
+        $eventEndTime      = @$this->params->get('ev_endtime');
         $eventOffset       = @$this->params->get('ev_offset');
         $loadCSS           = @$this->params->get('loadcss');
         $transDays         = @$this->params->get('ev_trans_days');
@@ -62,17 +62,17 @@ class Module extends AbstractModule
         $eventTime = mktime($eventHour, $eventMinutes, 0, $eventMonth, $eventDay, $eventYear);
         $now       = time();
 
-        $sec  = $eventTime - $now;
-        $days = floor(($eventTime - $now) /86400);
+        $diff = $eventTime - $now;
+        $days = floor($diff / 86400);
 
         if ($days * 86400 + $now > $eventTime) {
             $days--;
         }
 
-        $h1   = floor(($eventTime - $now) /3600);
-        $m1   = floor(($eventTime - $now) /60);
-        $hour = floor($sec/60/60 - $days*24);
-        $min  = floor($sec/60 - $hour*60);
+        $h1   = floor($diff / 3600);
+        $m1   = floor($diff / 60);
+        $hour = floor($diff / 3600 - $days * 24);
+        $min  = floor($diff / 60 - $hour * 60);
 
         //collect data in an array
         $i         = 0;
@@ -80,20 +80,20 @@ class Module extends AbstractModule
         $lists[0]  = 0;
         $lists[$i] = (object) $lists[$i];
 
-        if ($eventDisplaytitle) {
+        if ($eventDisplayTitle) {
             $lists[$i]->title = $eventTitle;
         }
 
 
-        if ($eventDisplaydate) {
-            if ($eventDateformat == 1){
+        if ($eventDisplayDate) {
+            if ($eventDateFormat == 1){
                 $lists[$i]->displaydate = $eventMonth.'.'.$eventDay.'.'.$eventYear.' '.$eventHour.':'.$eventMinutes;
             } else {
                 $lists[$i]->displaydate = $eventDay.'.'.$eventMonth.'.'.$eventYear.' '.$eventHour.':'.$eventMinutes;
             }
         }
 
-        if ($eventDdaysleft == '1') {
+        if ($eventDDaysLeft == '1') {
             $lists[$i]->dney = $transDays;
         }
 
@@ -103,7 +103,7 @@ class Module extends AbstractModule
         //$timeStamp = microtime(true);
         $timeStamp++;
         $lists[$i]->timestamp = $timeStamp;
-        if (($eventDisplayhour == '1') && ($eventJs == '1')) {
+        if (($eventDisplayHour == '1') && ($eventJs == '1')) {
             $lists[$i]->DetailCount  = '<span id="clockJS'.$timeStamp.'"></span>';
             $lists[$i]->JS_enable    = $eventJs;
             $lists[$i]->JS_month     = $eventMonth;
@@ -111,12 +111,12 @@ class Module extends AbstractModule
             $lists[$i]->JS_year      = $eventYear;
             $lists[$i]->JS_hour      = $eventHour;
             $lists[$i]->JS_min       = $eventMinutes;
-            $lists[$i]->JS_endtime   = $eventEndtime;
+            $lists[$i]->JS_endtime   = $eventEndTime;
             $lists[$i]->JS_offset    = $eventOffset;
             $lists[$i]->JS_trans_hr  = $transHour;
             $lists[$i]->JS_trans_min = $transMin;
             $lists[$i]->JS_trans_sec = $transSec;
-        } else if (($eventDisplayhour == '1') && ($eventJs == '0')) {
+        } else if (($eventDisplayHour == '1') && ($eventJs == '0')) {
             $curmin = date('i');
 
             if ($curmin >= $eventMinutes) {
@@ -128,15 +128,15 @@ class Module extends AbstractModule
             $lists[$i]->DetailCount = $hour.' Hrs. '.$min.' Min.';
         } else {
             if ($days <= 0) {
-                $lists[$i]->DetailCount = $eventEndtime;
+                $lists[$i]->DetailCount = $eventEndTime;
             }
         }
 
         // Need to set it to an open string in order to get rid of: Notice: Undefined property: stdClass::$DetailLink in modules\mod_ostimer\tmpl\default.php on line 27
         $lists[$i]->DetailLink ="";
 
-        if (($eventDisplayURL == '1') && $eventURL && $eventURLtitle ) {
-            $lists[$i]->DetailLink = '<a href="'.$eventURL.'" title="'.$eventURLtitle.'">'.$eventURLtitle.'</a>';
+        if (($eventDisplayURL == '1') && $eventURL && $eventURLTitle ) {
+            $lists[$i]->DetailLink = '<a href="'.$eventURL.'" title="'.$eventURLTitle.'">'.$eventURLTitle.'</a>';
         }
 
         if ($loadCSS == '1') {
@@ -158,7 +158,7 @@ class Module extends AbstractModule
         $eventYear,
         $eventHour,
         $eventMinutes,
-        $eventEndtime,
+        $eventEndTime,
         $eventOffset,
         $transHour,
         $transMin,
@@ -183,7 +183,7 @@ class Module extends AbstractModule
             LeadingZero<?php echo($id);?>  = true;
 
             DisplayFormat<?php echo($id);?> = "%%H%% <?php echo $transHour; ?> %%M%% <?php echo $transMin; ?> %%S%% <?php echo $transSec; ?>";
-            FinishMessage<?php echo($id);?> = "<?php echo $eventEndtime; ?>";
+            FinishMessage<?php echo($id);?> = "<?php echo $eventEndTime; ?>";
 
             function calcage<?php echo($id);?>(secs, num1, num2) {
                 s = ((Math.floor(secs/num1))%num2).toString();
