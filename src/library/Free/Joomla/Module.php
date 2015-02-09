@@ -49,10 +49,10 @@ class Module extends AbstractModule
         $eventJs           = @$params->get('ev_js', 1);
         $eventEndTime      = @$params->get('ev_endtime', 'Time\'s Up');
         $loadCSS           = @$params->get('loadcss', 1);
-        $transDays         = @$params->get('ev_trans_days', 'Days');
-        $transHour         = @$params->get('ev_trans_hr', 'Hr.');
-        $transMin          = @$params->get('ev_trans_min', 'Min.');
-        $transSec          = @$params->get('ev_trans_sec', 'Sec.');
+        $transDays         = JText::_(@$params->get('ev_trans_days', 'Days'));
+        $transHour         = JText::_(@$params->get('ev_trans_hr', 'Hr.'));
+        $transMin          = JText::_(@$params->get('ev_trans_min', 'Min.'));
+        $transSec          = JText::_(@$params->get('ev_trans_sec', 'Sec.'));
         $timezone          = @$params->get('timezone', 'UTC');
 
         $this->moduleClassSfx = @$params->get('moduleclass_sfx', '');
