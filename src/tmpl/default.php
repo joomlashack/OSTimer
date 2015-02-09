@@ -12,7 +12,7 @@ $event = $this->event;
 ?>
 <div class="countdown<?php echo $this->moduleClassSfx; ?>">
     <?php if (isset($event->title)) : ?>
-        <span class="countdown_title"><?php echo $event->title; ?></span>
+        <span class="countdown_title"><?php echo JText::_($event->title); ?></span>
     <?php endif; ?>
 
     <?php if (isset($event->date)) : ?>
@@ -23,7 +23,7 @@ $event = $this->event;
         <span class="countdown_daycount" style="color:<?php echo $this->params->get('ev_color'); ?>;"><?php echo $event->days; ?></span>
 
         <?php if (isset($event->textDays)) : ?>
-            <span class="countdown_dney"><?php echo $event->textDays; ?></span>
+            <span class="countdown_dney"><?php echo JText::_($event->textDays); ?></span>
         <?php endif; ?>
 
         <?php echo $event->DetailCount; ?>
