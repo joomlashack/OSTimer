@@ -43,7 +43,6 @@ class Module extends AbstractModule
         $eventDisplayHour  = @$params->get('ev_dhour', 1);
         $eventHour         = @$params->get('ev_h', 0);
         $eventMinutes      = @$params->get('ev_min', 0);
-        $eventColor        = @$params->get('ev_color', '#2B7CBE');
         $eventDisplayURL   = @$params->get('ev_dlink', 1);
         $eventURLTitle     = @$params->get('ev_ltitle', '');
         $eventURL          = @$params->get('ev_l', '');
@@ -58,6 +57,7 @@ class Module extends AbstractModule
 
         $this->moduleClassSfx = @$params->get('moduleclass_sfx', '');
         $this->showZeroDay    = @$params->get('show_zero_day', 1);
+        $this->eventColor     = @$params->get('ev_color', '#2B7CBE');
 
         $this->event = new stdClass;
 

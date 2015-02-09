@@ -20,7 +20,7 @@ $event = $this->event;
     <?php endif; ?>
 
     <?php if (($this->showZeroDay && $event->days == 0) || $event->days > 0) : ?>
-        <span class="countdown_daycount" style="color:<?php echo $this->params->get('ev_color'); ?>;"><?php echo $event->days; ?></span>
+        <span class="countdown_daycount" style="color:<?php echo $this->eventColor; ?>;"><?php echo $event->days; ?></span>
 
         <?php if (isset($event->textDays)) : ?>
             <span class="countdown_dney"><?php echo $event->textDays; ?></span>
@@ -28,7 +28,7 @@ $event = $this->event;
 
         <?php echo $event->DetailCount; ?>
     <?php else: ?>
-        <span class="countdown_hourcount" style="color:<?php echo $this->params->get('ev_color'); ?>;"><?php echo $event->DetailCount; ?></span>
+        <span class="countdown_hourcount" style="color:<?php echo $this->eventColor; ?>;"><?php echo $event->DetailCount; ?></span>
     <?php endif; ?>
 
     <?php if (isset($event->detailLink)) : ?>
