@@ -60,9 +60,10 @@ class Module extends AbstractModule
         // $eventHour         = $eventHour+$eventOffset;
 
         $eventTime = mktime($eventHour, $eventMinutes, 0, $eventMonth, $eventDay, $eventYear);
-        $now = time();
-        $sec   = $eventTime - $now;
-        $days  = floor(($eventTime - $now) /86400);
+        $now       = time();
+
+        $sec  = $eventTime - $now;
+        $days = floor(($eventTime - $now) /86400);
 
         if ($days * 86400 + $now > $eventTime) {
             $days--;
@@ -151,7 +152,19 @@ class Module extends AbstractModule
         return $lists;
     }
 
-    public function printCountDounJS($eventMonth, $eventDay, $eventYear, $eventHour, $eventMinutes, $eventEndtime, $eventOffset, $transHour, $transMin, $transSec, $id)
+    public function printCountDounJS(
+        $eventMonth,
+        $eventDay,
+        $eventYear,
+        $eventHour,
+        $eventMinutes,
+        $eventEndtime,
+        $eventOffset,
+        $transHour,
+        $transMin,
+        $transSec,
+        $id
+    )
     {
         if ($eventHour >= '12') {
             $curHour = $eventHour - '12';
