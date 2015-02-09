@@ -5,7 +5,7 @@ OSTimer
 
 ## About
 
-The module displays a countdown to an event of your choice. Now developed (and improved) by http://www.OSTraining.com, it was originally developed by Beliyadm from http://blog.pbelkov.com
+The module displays a countdown to an event of your choice. Now developed (and improved) by http://www.alledia.com, it was originally developed by Beliyadm from http://blog.pbelkov.com
 
 ## Requirements
 
