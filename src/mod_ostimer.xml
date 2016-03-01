@@ -77,8 +77,12 @@
                 </field>
 
                 <field name="ev_ddate_format" type="list" default="1" label="MOD_OSTIMER_DISPLAY_EVENT_DATE_FORMAT_LABEL" description="MOD_OSTIMER_DISPLAY_EVENT_DATE_FORMAT_DESC">
-                    <option value="1">MOD_OSTIMER_US_FORMAT</option>
-                    <option value="0">MOD_OSTIMER_INT_FORMAT</option>
+                    <option value="1">MOD_OSTIMER_US_FORMAT_LABEL</option>
+                    <option value="0">MOD_OSTIMER_INT_FORMAT_LABEL</option>
+                    <option value="MOD_OSTIMER_DATE_FORMAT_LC1">MOD_OSTIMER_DATE_FORMAT_LC1_LABEL</option>
+                    <option value="MOD_OSTIMER_DATE_FORMAT_LC2">MOD_OSTIMER_DATE_FORMAT_LC2_LABEL</option>
+                    <option value="MOD_OSTIMER_DATE_FORMAT_LC3">MOD_OSTIMER_DATE_FORMAT_LC3_LABEL</option>
+                    <option value="MOD_OSTIMER_DATE_FORMAT_LC4">MOD_OSTIMER_DATE_FORMAT_LC4_LABEL</option>
                 </field>
 
                 <field name="ev_d" type="text" default="01" label="MOD_OSTIMER_DAY_LABEL" description="MOD_OSTIMER_DAY_DESC"/>
@@ -690,6 +694,12 @@
                     <option value="W-SU">W-SU</option>
                     <option value="WET">WET</option>
                     <option value="Zulu">Zulu</option>
+                </field>
+
+                <field name="ev_dtime_format" type="list" default="MOD_OSTIMER_TIME_FORMAT_12H_UPPER" label="MOD_OSTIMER_DISPLAY_EVENT_TIME_FORMAT_LABEL" description="MOD_OSTIMER_DISPLAY_EVENT_TIME_FORMAT_DESC">
+                    <option value="MOD_OSTIMER_TIME_FORMAT_12H_UPPER">MOD_OSTIMER_TIME_FORMAT_12H_UPPER_LABEL</option>
+                    <option value="MOD_OSTIMER_TIME_FORMAT_12H_LOWER">MOD_OSTIMER_TIME_FORMAT_12H_LOWER_LABEL</option>
+                    <option value="MOD_OSTIMER_TIME_FORMAT_24H">MOD_OSTIMER_TIME_FORMAT_24H_LABEL</option>
                 </field>
 
                 <field type="spacer" />

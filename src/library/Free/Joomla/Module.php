@@ -36,6 +36,7 @@ class Module extends AbstractModule
         $eventTitle        = @$params->get('ev_tit');
         $eventDisplayDate  = @$params->get('ev_ddate', 1);
         $eventDateFormat   = @$params->get('ev_ddate_format', 1);
+        $eventTimeFormat   = @$params->get('ev_dtime_format', 'MOD_OSTIMER_TIME_FORMAT_12H_UPPER');
         $eventDay          = @$params->get('ev_d', 1);
         $eventMonth        = @$params->get('ev_m', 1);
         $eventYear         = @$params->get('ev_y', 2015);
@@ -68,10 +69,19 @@ class Module extends AbstractModule
         }
 
         if ($eventDisplayDate) {
-            if ($eventDateFormat == 1){
+
+            if ($eventDateFormat === '1') {
+                // Backward compatibility for legacy configuration
                 $this->event->date = $eventMonth.'.'.$eventDay.'.'.$eventYear.' '.$eventHour.':'.$eventMinutes;
-            } else {
+            } elseif ($eventDateFormat === '0') {
+                // Backward compatibility for legacy configuration
                 $this->event->date = $eventDay.'.'.$eventMonth.'.'.$eventYear.' '.$eventHour.':'.$eventMinutes;
+            } else {
+                // New formats
+                $this->event->date = date(
+                    JText::_($eventDateFormat) .  ' ' . JText::_($eventTimeFormat),
+                    mktime($eventHour, $eventMinutes, 0, $eventMonth, $eventDay, $eventYear)
+                );
             }
         }
 
