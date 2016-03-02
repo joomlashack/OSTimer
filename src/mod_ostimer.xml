@@ -2,12 +2,12 @@
 <extension type="module" version="2.5" client="site" method="upgrade">
     <name>mod_ostimer</name>
     <author>Alledia</author>
-    <creationDate>May 01, 2015</creationDate>
+    <creationDate>March 03 2016</creationDate>
     <copyright>Copyright (C) 2015 Open Source Training, LLC</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
     <authorEmail>support@alledia.com</authorEmail>
     <authorUrl>http://www.alledia.com</authorUrl>
-    <version>2.6.1</version>
+    <version>2.6.2</version>
     <description>OSTIMER_SUCCESSFULLY_INSTALLED</description>
 
     <alledia>
