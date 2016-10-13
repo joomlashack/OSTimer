@@ -1,5 +1,5 @@
 {
-    "name"             : "alledia/ostimer",
+    "name"             : "joomlashack/ostimer",
     "description"      : "OSTimer",
     "minimum-stability": "stable",
     "license"          : "GPL-2+",
@@ -13,8 +13,8 @@
     },
     "authors"          : [
         {
-            "name" : "Alledia",
-            "email": "support@alledia.com"
+            "name" : "Joomlashack",
+            "email": "help@joomlashack.com"
         }
     ],
     "require"          : {
