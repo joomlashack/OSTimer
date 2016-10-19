@@ -86,11 +86,7 @@
                     <option value="MOD_OSTIMER_DATE_FORMAT_LC4">MOD_OSTIMER_DATE_FORMAT_LC4_LABEL</option>
                 </field>
 
-                <field name="ev_d" type="text" default="01" label="MOD_OSTIMER_DAY_LABEL" description="MOD_OSTIMER_DAY_DESC"/>
-
-                <field name="ev_m" type="text" default="01" label="MOD_OSTIMER_MONTH_LABEL" description="MOD_OSTIMER_MONTH_DESC"/>
-
-                <field name="ev_y" type="text" default="2015" label="MOD_OSTIMER_YEAR_LABEL" description="MOD_OSTIMER_YEAR_DESC"/>
+                <field name="ev_date" type="calendar" default="10-10-2017" label="MOD_OSTIMER_DATE_LABEL" description="MOD_OSTIMER_DATE_DESC" format="%d-%m-%Y" />
 
                 <field name="ev_ddleft" type="radio" class="btn-group" default="1" label="MOD_OSTIMER_TIME_TO_EVENT_LABEL" description="MOD_OSTIMER_TIME_TO_EVENT_DESC">
                     <option value="1">JYES</option>
@@ -106,6 +102,8 @@
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
                 </field>
+
+                <field type="spacer" />
 
                 <field name="ev_h" type="text" default="12" label="MOD_OSTIMER_HOUR_LABEL" description="MOD_OSTIMER_HOUR_DESC"/>
 
@@ -714,7 +712,7 @@
 
                 <field name="ev_ltitle" type="text" default="" label="MOD_OSTIMER_TEXT_URL_LABEL" description="MOD_OSTIMER_TEXT_URL_DESC"/>
 
-                <field name="ev_l" type="text" default="" label="MOD_OSTIMER_URL_LABEL" description="MOD_OSTIMER_URL_DESC"/>
+                <field name="ev_l" type="url" default="" label="MOD_OSTIMER_URL_LABEL" description="MOD_OSTIMER_URL_DESC"/>
 
                 <field type="spacer" />
 
@@ -722,8 +720,6 @@
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
                 </field>
-
-                <field name="@spacer" type="spacer" />
 
                 <field name="ev_trans_days" type="text" default="Days" label="MOD_OSTIMER_TRANSLATE_DAYS_LABEL" description="MOD_OSTIMER_TRANSLATE_DAYS_DESC"/>
 
@@ -733,7 +729,7 @@
 
                 <field name="ev_trans_sec" type="text" default="Sec." label="MOD_OSTIMER_TRANSLATE_SECONDS_LABEL" description="MOD_OSTIMER_TRANSLATE_SECONDS_DESC"/>
 
-                <field name="ev_color" type="text" default="#2B7CBE" label="MOD_OSTIMER_NUMBER_COLOR_LABEL" description="MOD_OSTIMER_NUMBER_COLOR_DESC"/>
+                <field name="ev_color" type="color" default="#2B7CBE" label="MOD_OSTIMER_NUMBER_COLOR_LABEL" description="MOD_OSTIMER_NUMBER_COLOR_DESC"/>
 
                 <field name="show_zero_day" type="radio" class="btn-group" default="1" label="MOD_OSTIMER_SHOW_ZERO_DAY_LABEL" description="MOD_OSTIMER_SHOW_ZERO_DAY_DESC">
                     <option value="1">JYES</option>
