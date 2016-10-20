@@ -10,7 +10,7 @@ defined('_JEXEC') or die();
 
 $event = $this->event;
 ?>
-<div class="countdown<?php echo $this->moduleClassSfx; ?>">
+<div class="countdown<?php echo $this->moduleClassSfx; ?>" id="ostimer-wrapper">
     <?php if (isset($event->title)) : ?>
         <span class="countdown_title"><?php echo $event->title; ?></span>
     <?php endif; ?>
