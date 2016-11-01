@@ -86,7 +86,7 @@
                     <option value="MOD_OSTIMER_DATE_FORMAT_LC4">MOD_OSTIMER_DATE_FORMAT_LC4_LABEL</option>
                 </field>
 
-                <field name="ev_date" type="calendar" default="10-10-2017" label="MOD_OSTIMER_DATE_LABEL" description="MOD_OSTIMER_DATE_DESC" format="%d-%m-%Y" />
+                <field name="ev_date" type="calendar" default="01-11-2017" label="MOD_OSTIMER_DATE_LABEL" description="MOD_OSTIMER_DATE_DESC" format="%d-%m-%Y" />
 
                 <field name="ev_ddleft" type="radio" class="btn-group" default="1" label="MOD_OSTIMER_TIME_TO_EVENT_LABEL" description="MOD_OSTIMER_TIME_TO_EVENT_DESC">
                     <option value="1">JYES</option>
@@ -740,6 +740,7 @@
                     type="customfooter"
                     name="customfooter"
                     media="mod_ostimer"
+                    showgoproad="1"
                     jedurl="http://extensions.joomla.org/extension/ostimer" />
             </fieldset>
             <fieldset name="advanced">

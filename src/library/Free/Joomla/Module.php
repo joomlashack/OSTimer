@@ -31,16 +31,16 @@ class Module extends AbstractModule
     public function init()
     {
         $params = $this->params;
-        $eventDate = explode('-', @$params->get('ev_date', '10-10-2017'));
 
         $eventDisplayTitle = @$params->get('ev_dtitle', 1);
         $eventTitle        = @$params->get('ev_tit');
         $eventDisplayDate  = @$params->get('ev_ddate', 1);
         $eventDateFormat   = @$params->get('ev_ddate_format', 1);
         $eventTimeFormat   = @$params->get('ev_dtime_format', 'MOD_OSTIMER_TIME_FORMAT_12H_UPPER');
-        $eventDay          = $eventDate[0];
-        $eventMonth        = $eventDate[1];
-        $eventYear         = $eventDate[2];
+        $eventDate         = strtotime(@$params->get('ev_date', '01-11-2017'));
+        $eventDay          = date('d', $eventDate);
+        $eventMonth        = date('m', $eventDate);
+        $eventYear         = date('Y', $eventDate);
         $eventDDaysLeft    = @$params->get('ev_ddleft', 1);
         $eventDisplayHour  = @$params->get('ev_dhour', 1);
         $eventHour         = @$params->get('ev_h', 0);
