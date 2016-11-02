@@ -15,6 +15,7 @@
         <element publish="true">ostimer</element>
         <namespace>OSTimer</namespace>
         <license>free</license>
+        <targetplatform>3.*</targetplatform>
         <relatedExtensions>
             <extension
                 type="library"
