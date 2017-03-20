@@ -19,14 +19,16 @@
         <relatedExtensions>
             <extension
                 type="library"
-                element="allediaframework">AllediaFramework</extension>
+                element="allediaframework">AllediaFramework
+            </extension>
 
             <extension
                 type="plugin"
                 group="system"
                 element="ossystem"
                 publish="true"
-                ordering="first">OSSystem</extension>
+                ordering="first">OSSystem
+            </extension>
         </relatedExtensions>
         <include>AllediaFreeDefaultFiles</include>
     </alledia>
@@ -43,7 +45,6 @@
     <files>
         <filename module="mod_ostimer">mod_ostimer.php</filename>
         <filename>include.php</filename>
-        <filename>index.html</filename>
         <folder>tmpl</folder>
         <folder>library</folder>
         <folder>form</folder>
@@ -60,7 +61,7 @@
     <config>
         <fields name="params">
             <fieldset name="basic" addfieldpath="/modules/mod_ostimer/form/fields">
-                <field type="subtitle" label="MOD_OSTIMER_EVENT" />
+                <field type="subtitle" label="MOD_OSTIMER_EVENT"/>
 
                 <field
                     name="ev_dtitle"
@@ -77,11 +78,8 @@
                 <field
                     name="ev_tit"
                     type="text"
-                    default="Event
-                    Title..."
                     label="MOD_OSTIMER_EVENT_TITLE_LABEL"
-                    description="MOD_OSTIMER_EVENT_TITLE_DESC"
-                    size="40"/>
+                    description="MOD_OSTIMER_EVENT_TITLE_DESC"/>
 
                 <field
                     name="ev_ddate"
@@ -116,28 +114,28 @@
                     default="01-11-2017"
                     label="MOD_OSTIMER_DATE_LABEL"
                     description="MOD_OSTIMER_DATE_DESC"
-                    format="%d-%m-%Y" />
+                    format="%d-%m-%Y"/>
 
                 <field
                     name="ev_h"
                     type="text"
                     default="12"
                     label="MOD_OSTIMER_HOUR_LABEL"
-                    description="MOD_OSTIMER_HOUR_DESC" />
+                    description="MOD_OSTIMER_HOUR_DESC"/>
 
                 <field
                     name="ev_min"
                     type="text"
                     default="00"
                     label="MOD_OSTIMER_MINUTE_LABEL"
-                    description="MOD_OSTIMER_MINUTE_DESC" />
+                    description="MOD_OSTIMER_MINUTE_DESC"/>
 
                 <field
                     name="timezone"
                     type="timezones"
                     default="UTC"
                     label="MOD_OSTIMER_TIMEZONE_LABEL"
-                    description="MOD_OSTIMER_TIMEZONE_DESC" />
+                    description="MOD_OSTIMER_TIMEZONE_DESC"/>
 
                 <field
                     name="ev_dtime_format"
@@ -151,14 +149,14 @@
                     <option value="MOD_OSTIMER_TIME_FORMAT_24H">MOD_OSTIMER_TIME_FORMAT_24H_LABEL</option>
                 </field>
 
-                <field type="subtitle" label="MOD_OSTIMER_LAYOUT" />
+                <field type="subtitle" label="MOD_OSTIMER_LAYOUT"/>
 
                 <field
                     name="layout"
                     type="modulelayout"
                     default="default"
                     label="MOD_OSTIMER_THEME_STYLE_LABEL"
-                    description="MOD_OSTIMER_THEME_STYLE_DESC" />
+                    description="MOD_OSTIMER_THEME_STYLE_DESC"/>
 
                 <field
                     name="ev_ddleft"
@@ -225,7 +223,7 @@
                     type="color"
                     default="#2B7CBE"
                     label="MOD_OSTIMER_NUMBER_COLOR_LABEL"
-                    description="MOD_OSTIMER_NUMBER_COLOR_DESC" />
+                    description="MOD_OSTIMER_NUMBER_COLOR_DESC"/>
 
                 <field
                     name="ev_dlink"
@@ -244,9 +242,9 @@
                     type="url"
                     default=""
                     label="MOD_OSTIMER_URL_LABEL"
-                    description="MOD_OSTIMER_URL_DESC" />
+                    description="MOD_OSTIMER_URL_DESC"/>
 
-                <field type="subtitle" label="MOD_OSTIMER_CUSTOM_TEXT" />
+                <field type="subtitle" label="MOD_OSTIMER_CUSTOM_TEXT"/>
 
                 <field
                     name="ev_endtime"
@@ -254,7 +252,7 @@
                     default="Time's
                     Up"
                     label="MOD_OSTIMER_TIME_HAS_COME_LABEL"
-                    description="MOD_OSTIMER_TIME_HAS_COME_DESC" />
+                    description="MOD_OSTIMER_TIME_HAS_COME_DESC"/>
 
                 <field
                     name="ev_ltitle"
@@ -262,42 +260,42 @@
                     default=""
                     label="MOD_OSTIMER_TEXT_URL_LABEL"
                     description="MOD_OSTIMER_TEXT_URL_DESC"
-                    />
+                />
 
                 <field
                     name="ev_trans_days"
                     type="text"
                     default="Days"
                     label="MOD_OSTIMER_TRANSLATE_DAYS_LABEL"
-                    description="MOD_OSTIMER_TRANSLATE_DAYS_DESC" />
+                    description="MOD_OSTIMER_TRANSLATE_DAYS_DESC"/>
 
                 <field
                     name="ev_trans_hr"
                     type="text"
                     default="Hr."
                     label="MOD_OSTIMER_TRANSLATE_HOURS_LABEL"
-                    description="MOD_OSTIMER_TRANSLATE_HOURS_DESC" />
+                    description="MOD_OSTIMER_TRANSLATE_HOURS_DESC"/>
 
                 <field
                     name="ev_trans_min"
                     type="text"
                     default="Min."
                     label="MOD_OSTIMER_TRANSLATE_MINUTES_LABEL"
-                    description="MOD_OSTIMER_TRANSLATE_MINUTES_DESC" />
+                    description="MOD_OSTIMER_TRANSLATE_MINUTES_DESC"/>
 
                 <field
                     name="ev_trans_sec"
                     type="text"
                     default="Sec."
                     label="MOD_OSTIMER_TRANSLATE_SECONDS_LABEL"
-                    description="MOD_OSTIMER_TRANSLATE_SECONDS_DESC" />
+                    description="MOD_OSTIMER_TRANSLATE_SECONDS_DESC"/>
 
                 <field
                     type="customfooter"
                     name="customfooter"
                     media="mod_ostimer"
                     showgoproad="1"
-                    jedurl="http://extensions.joomla.org/extension/ostimer" />
+                    jedurl="http://extensions.joomla.org/extension/ostimer"/>
             </fieldset>
 
             <fieldset name="advanced">
@@ -306,7 +304,7 @@
                     type="textarea"
                     label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
                     description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC"
-                    rows="3" />
+                    rows="3"/>
 
                 <field
                     name="cache"
@@ -323,7 +321,8 @@
     </config>
 
     <updateservers>
-        <server type="extension" priority="1" name="OSTimer Module"><![CDATA[https://deploy.ostraining.com/client/update/free/stable/mod_ostimer]]></server>
+        <server type="extension" priority="1" name="OSTimer Module">
+            <![CDATA[https://deploy.ostraining.com/client/update/free/stable/mod_ostimer]]></server>
     </updateservers>
 
 </extension>

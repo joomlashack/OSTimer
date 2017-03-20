@@ -20,7 +20,9 @@ $event = $this->event;
     <?php endif; ?>
 
     <?php if (($this->showZeroDay && $event->days == 0) || $event->days > 0) : ?>
-        <span class="countdown_daycount" style="color:<?php echo $this->eventColor; ?>;"><?php echo $event->days; ?></span>
+        <span class="countdown_daycount" style="<?php echo 'color: ' . $this->eventColor . ';'; ?>">
+            <?php echo $event->days; ?>
+        </span>
 
         <?php if (isset($event->textDays)) : ?>
             <span class="countdown_dney"><?php echo $event->textDays; ?></span>
@@ -28,14 +30,30 @@ $event = $this->event;
 
         <?php echo $event->DetailCount; ?>
     <?php else: ?>
-        <span class="countdown_hourcount" style="color:<?php echo $this->eventColor; ?>;"><?php echo $event->DetailCount; ?></span>
+        <span class="countdown_hourcount" style="<?php echo 'color: ' . $this->eventColor . ';'; ?>">
+            <?php echo $event->DetailCount; ?>
+        </span>
     <?php endif; ?>
 
     <?php if (isset($event->detailLink)) : ?>
         <span class="countdown_link"><?php echo $event->detailLink; ?></span>
     <?php endif; ?>
 
-    <?php if ((bool) $event->JS_enable) : ?>
-        <?php echo $this->printCountDounJS($event->JS_month, $event->JS_day, $event->JS_year, $event->JS_hour, $event->JS_min, $event->JS_endtime, $event->JS_offset, $event->JS_trans_hr, $event->JS_trans_min, $event->JS_trans_sec, $event->timestamp); ?>
+    <?php if ((bool)$event->JS_enable) : ?>
+        <?php
+        echo $this->printCountDounJS(
+            $event->JS_month,
+            $event->JS_day,
+            $event->JS_year,
+            $event->JS_hour,
+            $event->JS_min,
+            $event->JS_endtime,
+            $event->JS_offset,
+            $event->JS_trans_hr,
+            $event->JS_trans_min,
+            $event->JS_trans_sec,
+            $event->timestamp
+        );
+        ?>
     <?php endif; ?>
 </div>
