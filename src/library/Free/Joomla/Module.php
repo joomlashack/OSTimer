@@ -65,12 +65,12 @@ class Module extends AbstractFlexibleModule
         $eventURLTitle     = $params->get('ev_ltitle', '');
         $eventURL          = $params->get('ev_l', '');
         $eventJs           = $params->get('ev_js', 1);
-        $eventEndTime      = $params->get('ev_endtime', 'Time\'s Up');
+        $eventEndTime      = $params->get('ev_endtime', JText::_('MOD_OSTIMER_TIME_HAS_COME_DEFAULT'));
         $loadCSS           = $params->get('loadcss', 1);
-        $transDays         = JText::_($params->get('ev_trans_days', 'Days'));
-        $transHour         = JText::_($params->get('ev_trans_hr', 'Hr.'));
-        $transMin          = JText::_($params->get('ev_trans_min', 'Min.'));
-        $transSec          = JText::_($params->get('ev_trans_sec', 'Sec.'));
+        $transDays         = JText::_($params->get('ev_trans_days', JText::_('MOD_OSTIMER_TRANSLATE_DAYS_DEFAULT')));
+        $transHour         = JText::_($params->get('ev_trans_hr', JText::_('MOD_OSTIMER_TRANSLATE_HOURS_DEFAULT'));
+        $transMin          = JText::_($params->get('ev_trans_min', JText::_('MOD_OSTIMER_TRANSLATE_MINUTES_DEFAULT')));
+        $transSec          = JText::_($params->get('ev_trans_sec', JText::_('MOD_OSTIMER_TRANSLATE_SECONDS_DEFAULT')));
         $timezone          = $params->get('timezone', 'UTC');
 
         $eventTimezone = new DateTimeZone($timezone);

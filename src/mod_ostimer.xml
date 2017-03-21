@@ -237,27 +237,25 @@
                 <field
                     name="ev_l"
                     type="url"
-                    default=""
                     label="MOD_OSTIMER_URL_LABEL"
                     description="MOD_OSTIMER_URL_DESC"/>
 
-                <field type="subtitle" label="MOD_OSTIMER_CUSTOM_TEXT"/>
+                <field
+                    type="subtitle"
+                    label="MOD_OSTIMER_CUSTOM_TEXT"/>
 
                 <field
                     name="ev_endtime"
                     type="text"
-                    default="Time's
-                    Up"
+                    default="Time's Up"
                     label="MOD_OSTIMER_TIME_HAS_COME_LABEL"
                     description="MOD_OSTIMER_TIME_HAS_COME_DESC"/>
 
                 <field
                     name="ev_ltitle"
                     type="text"
-                    default=""
                     label="MOD_OSTIMER_TEXT_URL_LABEL"
-                    description="MOD_OSTIMER_TEXT_URL_DESC"
-                />
+                    description="MOD_OSTIMER_TEXT_URL_DESC"/>
 
                 <field
                     name="ev_trans_days"
