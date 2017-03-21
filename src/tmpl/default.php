@@ -11,11 +11,11 @@ defined('_JEXEC') or die();
 $event = $this->event;
 ?>
 <div class="countdown<?php echo $this->moduleClassSfx; ?> ostimer-wrapper">
-    <?php if (isset($event->title)) : ?>
+    <?php if (!empty($event->title)) : ?>
         <span class="countdown_title"><?php echo $event->title; ?></span>
     <?php endif; ?>
 
-    <?php if (isset($event->date)) : ?>
+    <?php if (!empty($event->date)) : ?>
         <span class="countdown_displaydate"><?php echo $event->date; ?></span>
     <?php endif; ?>
 
@@ -24,7 +24,7 @@ $event = $this->event;
             <?php echo $event->days; ?>
         </span>
 
-        <?php if (isset($event->textDays)) : ?>
+        <?php if (!empty($event->textDays)) : ?>
             <span class="countdown_dney"><?php echo $event->textDays; ?></span>
         <?php endif; ?>
 
@@ -35,7 +35,7 @@ $event = $this->event;
         </span>
     <?php endif; ?>
 
-    <?php if (isset($event->detailLink)) : ?>
+    <?php if (!empty($event->detailLink)) : ?>
         <span class="countdown_link"><?php echo $event->detailLink; ?></span>
     <?php endif; ?>
 
