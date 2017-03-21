@@ -114,13 +114,14 @@ class Module extends AbstractFlexibleModule
             $this->event->textDays = $transDays;
         }
 
-        $this->event->days = $timeLeft->format('%a');
+        $this->event->days      = $timeLeft->format('%a');
+        $this->event->JS_enable = false;
 
         static::$timeStamp++;
         $this->event->timestamp = static::$timeStamp;
         if (($eventDisplayHour == '1') && ($eventJs == '1')) {
             $this->event->DetailCount  = '<span id="clockJS' . static::$timeStamp . '"></span>';
-            $this->event->JS_enable    = $eventJs;
+            $this->event->JS_enable    = true;
             $this->event->JS_month     = $eventTime->format('m');
             $this->event->JS_day       = $eventTime->format('d');
             $this->event->JS_year      = $eventTime->format('Y');
@@ -134,18 +135,18 @@ class Module extends AbstractFlexibleModule
 
         } else {
             if (($eventDisplayHour == '1') && ($eventJs == '0')) {
-                $curmin = date('i');
-
-                if ($curmin >= $eventMinutes) {
-                    $min = $curmin - $eventMinutes;
-                } else {
-                    $min = $eventMinutes - $curmin;
-                }
-
-                $this->event->DetailCount = $hour . ' ' . $transHour . ' ' . $min . ' ' . $transMin;
+                $this->event->DetailCount = join(
+                    ' ',
+                    array(
+                        $timeLeft->format('%h'),
+                        $transHour,
+                        $timeLeft->format('%i'),
+                        $transMin
+                    )
+                );
 
             } else {
-                if ($days <= 0) {
+                if ($timeLeft->format('%d') <= 0) {
                     $this->event->DetailCount = $eventEndTime;
                 }
             }
@@ -170,7 +171,6 @@ class Module extends AbstractFlexibleModule
         $eventHour,
         $eventMinutes,
         $eventEndTime,
-        $eventOffset,
         $transHour,
         $transMin,
         $transSec,

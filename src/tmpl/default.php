@@ -39,7 +39,7 @@ $event = $this->event;
         <span class="countdown_link"><?php echo $event->detailLink; ?></span>
     <?php endif; ?>
 
-    <?php if ((bool)$event->JS_enable) : ?>
+    <?php if ($event->JS_enable) : ?>
         <?php
         echo $this->printCountDounJS(
             $event->JS_month,
@@ -48,7 +48,6 @@ $event = $this->event;
             $event->JS_hour,
             $event->JS_min,
             $event->JS_endtime,
-            $event->JS_offset,
             $event->JS_trans_hr,
             $event->JS_trans_min,
             $event->JS_trans_sec,
