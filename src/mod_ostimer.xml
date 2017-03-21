@@ -28,6 +28,10 @@
                 ordering="first">OSSystem</extension>
         </relatedExtensions>
         <include>AllediaFreeDefaultFiles</include>
+
+        <obsolete>
+            <file>/modules/mod_ostimer/library/Free/Countdown.php</file>
+        </obsolete>
     </alledia>
 
     <scriptfile>script.installer.php</scriptfile>
