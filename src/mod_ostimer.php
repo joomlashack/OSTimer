@@ -9,8 +9,25 @@
 defined('_JEXEC') or die();
 
 use Alledia\OSTimer\Free\Joomla\Module;
+use Joomla\Registry\Registry;
 
 require_once 'include.php';
 
-$modOSTimer = Module::getInstance(null, $module);
+/**
+ * @var object           $module
+ * @var string[]         $attribs
+ * @var string           $chrome
+ * @var JApplicationSite $app
+ * @var string           $scope
+ * @var Registry         $params
+ * @var string           $template
+ * @var string           $path
+ * @var JLanguage        $lang
+ * @var string           $coreLanguageDirectory
+ * @var string           $extensionLanguageDirectory
+ * @var string[]         $langPaths
+ * @var string           $content
+ */
+
+$modOSTimer = new Module('OSTimer', $module);
 $modOSTimer->init();
