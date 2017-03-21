@@ -114,7 +114,7 @@ class Module extends AbstractFlexibleModule
             $this->event->textDays = $transDays;
         }
 
-        $this->event->days = $timeLeft->format('%d');
+        $this->event->days = $timeLeft->format('%a');
 
         static::$timeStamp++;
         $this->event->timestamp = static::$timeStamp;
@@ -195,7 +195,7 @@ class Module extends AbstractFlexibleModule
             DisplayFormat<?php echo($id);?> = "%%H%% <?php echo $transHour; ?> %%M%% <?php echo $transMin; ?> %%S%% <?php echo $transSec; ?>";
             FinishMessage<?php echo($id);?> = "<?php echo $eventEndTime; ?>";
 
-            function calcage <?php echo($id);?>(secs, num1, num2) {
+            function calcage<?php echo($id);?>(secs, num1, num2) {
                 s = ((Math.floor(secs / num1)) % num2).toString();
                 if (LeadingZero<?php echo($id);?> && s.length < 2) {
                     s = "0" + s;
@@ -204,7 +204,7 @@ class Module extends AbstractFlexibleModule
                 return s;
             }
 
-            function CountBack <?php echo($id);?>(secs) {
+            function CountBack<?php echo($id);?>(secs) {
                 if (secs < 0) {
                     document.getElementById("clockJS<?php echo($id);?>").innerHTML = FinishMessage<?php echo($id);?>;
 
