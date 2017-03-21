@@ -111,9 +111,9 @@
                 <field
                     name="ev_date"
                     type="calendar"
-                    default="01-11-2017"
                     label="MOD_OSTIMER_DATE_LABEL"
                     description="MOD_OSTIMER_DATE_DESC"
+                    filter="server_utc"
                     format="%d-%m-%Y"/>
 
                 <field
