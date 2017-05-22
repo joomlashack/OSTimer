@@ -21,7 +21,9 @@ $event = $this->event;
 
     <?php if (($this->showZeroDay && $event->days == 0) || $event->days > 0) : ?>
         <span class="countdown_daycount" style="<?php echo 'color: ' . $this->eventColor . ';'; ?>">
-            <?php echo $event->days; ?>
+            <span id="clockJSDay<?php echo static::$timeStamp ?>">
+                <?php echo $event->days; ?>
+            </span>
         </span>
 
         <?php if (!empty($event->textDays)) : ?>

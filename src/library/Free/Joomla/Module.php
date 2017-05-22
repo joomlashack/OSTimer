@@ -195,9 +195,9 @@ class Module extends AbstractFlexibleModule
             DisplayFormat<?php echo($id);?> = "%%H%% <?php echo $transHour; ?> %%M%% <?php echo $transMin; ?> %%S%% <?php echo $transSec; ?>";
             FinishMessage<?php echo($id);?> = "<?php echo $eventEndTime; ?>";
 
-            function calcage<?php echo($id);?>(secs, num1, num2) {
+            function calcage<?php echo($id);?>(secs, num1, num2, doublezero = true) {
                 s = ((Math.floor(secs / num1)) % num2).toString();
-                if (LeadingZero<?php echo($id);?> && s.length < 2) {
+                if (LeadingZero<?php echo($id);?> && s.length < 2 && doublezero) {
                     s = "0" + s;
                 }
 
@@ -218,6 +218,9 @@ class Module extends AbstractFlexibleModule
                 if (calcage<?php echo($id);?>(secs, 86400, 100000) == 0 && calcage<?php echo($id);?>(secs, 3600, 24) == 0 && calcage<?php echo($id);?>(secs, 60, 60) == 0) {
                     DisplayFormat<?php echo($id);?> = "%%S%% <?php echo $transSec; ?>";
                 }
+
+                WaitingDays = calcage<?php echo($id);?>(secs, 86400, secs, false);
+                document.getElementById("clockJSDay<?php echo($id);?>").innerHTML = WaitingDays;
 
                 DisplayStr = DisplayFormat<?php echo($id);?>.replace(/%%D%%/g, calcage<?php echo($id);?>(secs, 86400, 100000));
                 DisplayStr = DisplayStr.replace(/%%H%%/g, calcage<?php echo($id);?>(secs, 3600, 24));
