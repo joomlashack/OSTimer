@@ -219,8 +219,9 @@ class Module extends AbstractFlexibleModule
                     DisplayFormat<?php echo($id);?> = "%%S%% <?php echo $transSec; ?>";
                 }
 
-                WaitingDays = calcage<?php echo($id);?>(secs, 86400, secs, false);
-                document.getElementById("clockDayJS<?php echo($id);?>").innerHTML = WaitingDays;
+                if(document.getElementById("clockDayJS<?php echo($id);?>")) {
+                    CountBackDays<?php echo($id);?>(secs);
+                }
 
                 DisplayStr = DisplayFormat<?php echo($id);?>.replace(/%%D%%/g, calcage<?php echo($id);?>(secs, 86400, 100000));
                 DisplayStr = DisplayStr.replace(/%%H%%/g, calcage<?php echo($id);?>(secs, 3600, 24));
@@ -232,6 +233,13 @@ class Module extends AbstractFlexibleModule
                 if (CountActive<?php echo($id);?>) {
                     setTimeout("CountBack<?php echo($id);?>(" + (secs + CountStepper<?php echo($id);?>) + ")", SetTimeOutPeriod<?php echo($id);?>);
                 }
+            }
+
+            function CountBackDays<?php echo($id);?>(secs) {
+                WaitingDays = calcage<?php echo($id);?>(secs, 86400, secs, false);
+                document.getElementById("clockDayJS<?php echo($id);?>").innerHTML = WaitingDays;
+
+                return;
             }
 
             CountStepper<?php echo($id);?> = Math.ceil(CountStepper<?php echo($id);?>);
