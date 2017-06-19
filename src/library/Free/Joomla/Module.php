@@ -68,6 +68,7 @@ class Module extends AbstractFlexibleModule
         $eventEndTime      = $params->get('ev_endtime', JText::_('MOD_OSTIMER_TIME_HAS_COME_DEFAULT'));
         $loadCSS           = $params->get('loadcss', 1);
         $transDays         = JText::_($params->get('ev_trans_days', JText::_('MOD_OSTIMER_TRANSLATE_DAYS_DEFAULT')));
+        $transDay          = JText::_($params->get('ev_trans_day', JText::_('MOD_OSTIMER_TRANSLATE_DAY_DEFAULT')));
         $transHour         = JText::_($params->get('ev_trans_hr', JText::_('MOD_OSTIMER_TRANSLATE_HOURS_DEFAULT')));
         $transMin          = JText::_($params->get('ev_trans_min', JText::_('MOD_OSTIMER_TRANSLATE_MINUTES_DEFAULT')));
         $transSec          = JText::_($params->get('ev_trans_sec', JText::_('MOD_OSTIMER_TRANSLATE_SECONDS_DEFAULT')));
@@ -115,12 +116,12 @@ class Module extends AbstractFlexibleModule
             if($timeLeft->format('%a') == 1)
             {
                 // Print "Day" (singular)
-                $this->event->textDays = JText::_('MOD_OSTIMER_TRANSLATE_DAY_DEFAULT');
+                $this->event->textDays = $transDay;
             }
             else
             {
                 // Print "Days" (plural)
-                $this->event->textDays = JText::_('MOD_OSTIMER_TRANSLATE_DAYS_DEFAULT');
+                $this->event->textDays = $transDays;
             }
         }
 
