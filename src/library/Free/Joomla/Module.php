@@ -111,7 +111,17 @@ class Module extends AbstractFlexibleModule
 
 
         if ($eventDDaysLeft == '1') {
-            $this->event->textDays = $transDays;
+
+            if($timeLeft->format('%a') == 1)
+            {
+                // Print "Day" (singular)
+                $this->event->textDays = JText::_('MOD_OSTIMER_TRANSLATE_DAY_DEFAULT');
+            }
+            else
+            {
+                // Print "Days" (plural)
+                $this->event->textDays = JText::_('MOD_OSTIMER_TRANSLATE_DAYS_DEFAULT');
+            }
         }
 
         $this->event->days      = $timeLeft->format('%a');
