@@ -221,7 +221,6 @@ class Module extends AbstractFlexibleModule
 
                 if(document.getElementById("clockDayJS<?php echo($id);?>") && secs > 0) {
                     CountBackDays<?php echo($id);?>(secs);
-                    console.log(secs);
                 }
 
                 DisplayStr = DisplayFormat<?php echo($id);?>.replace(/%%D%%/g, calcage<?php echo($id);?>(secs, 86400, 100000));
