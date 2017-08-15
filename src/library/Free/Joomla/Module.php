@@ -206,7 +206,13 @@ class Module extends AbstractFlexibleModule
             DisplayFormat<?php echo($id);?> = "%%H%% <?php echo $transHour; ?> %%M%% <?php echo $transMin; ?> %%S%% <?php echo $transSec; ?>";
             FinishMessage<?php echo($id);?> = "<?php echo $eventEndTime; ?>";
 
-            function calcage<?php echo($id);?>(secs, num1, num2, doublezero = true) {
+            function calcage<?php echo($id);?>(secs, num1, num2, doublezero) {
+                // The default value for doublezero was removed from the method
+                // signature to avoid issues with IE
+                if ( doublezero !== false ) {
+                    doublezero = true;
+                }
+
                 s = ((Math.floor(secs / num1)) % num2).toString();
                 if (LeadingZero<?php echo($id);?> && s.length < 2 && doublezero) {
                     s = "0" + s;
