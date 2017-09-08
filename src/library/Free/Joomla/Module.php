@@ -194,8 +194,6 @@ class Module extends AbstractFlexibleModule
             $curHour = $eventHour;
             $curSet  = 'AM';
         }
-        //echo $curHour.'<br />';
-
         ?>
         <script language="JavaScript" type="text/javascript">
             TargetDate<?php echo($id);?>   = "<?php echo $eventMonth; ?>/<?php echo $eventDay; ?>/<?php echo $eventYear; ?> <?php echo $curHour; ?>:<?php echo $eventMinutes; ?> <?php echo $curSet; ?>";

@@ -43,7 +43,7 @@ $event = $this->event;
 
     <?php if ($event->JS_enable) : ?>
         <?php
-        echo $this->printCountDounJS(
+        $this->printCountDounJS(
             $event->JS_month,
             $event->JS_day,
             $event->JS_year,
