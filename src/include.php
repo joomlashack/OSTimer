@@ -18,10 +18,13 @@ if (!defined('ALLEDIA_FRAMEWORK_LOADED')) {
 
     if (file_exists($allediaFrameworkPath)) {
         require_once $allediaFrameworkPath;
-    } else {
-        JFactory::getApplication()
-            ->enqueueMessage('[OSTimer] Alledia framework not found', 'error');
     }
 }
 
-AutoLoader::register('Alledia\OSTimer', JPATH_SITE . '/modules/mod_ostimer/library');
+if (defined('ALLEDIA_FRAMEWORK_LOADED')) {
+    AutoLoader::register('Alledia\OSTimer', JPATH_SITE . '/modules/mod_ostimer/library');
+
+} else {
+    JFactory::getApplication()
+        ->enqueueMessage('[OSTimer] Alledia framework not found', 'error');
+}
