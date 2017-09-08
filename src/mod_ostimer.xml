@@ -30,6 +30,7 @@
         <include>AllediaFreeDefaultFiles</include>
 
         <obsolete>
+            <file>/modules/mod_ostimer/form/fields/timezones.php</file>
             <file>/modules/mod_ostimer/library/Free/Countdown.php</file>
         </obsolete>
     </alledia>
@@ -133,7 +134,7 @@
 
                 <field
                     name="timezone"
-                    type="timezones"
+                    type="timezone"
                     default="UTC"
                     label="MOD_OSTIMER_TIMEZONE_LABEL"
                     description="MOD_OSTIMER_TIMEZONE_DESC"/>
