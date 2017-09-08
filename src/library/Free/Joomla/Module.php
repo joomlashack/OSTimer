@@ -113,13 +113,10 @@ class Module extends AbstractFlexibleModule
 
         if ($eventDDaysLeft == '1') {
 
-            if($timeLeft->format('%a') == 1)
-            {
+            if ($timeLeft->format('%a') == 1) {
                 // Print "Day" (singular)
                 $this->event->textDays = $transDay;
-            }
-            else
-            {
+            } else {
                 // Print "Days" (plural)
                 $this->event->textDays = $transDays;
             }
@@ -194,88 +191,115 @@ class Module extends AbstractFlexibleModule
             $curHour = $eventHour;
             $curSet  = 'AM';
         }
+
+        $targetDate = sprintf(
+            '%s/%s/%s %s:%s %s',
+            $eventMonth,
+            $eventDay,
+            $eventYear,
+            $curHour,
+            $eventMinutes,
+            $curSet
+        );
+
+        $displayFormat = '%%H%% ' . $transHour . ' %%M%% ' . $transMin . ' %%S%% ' . $transSec;
         ?>
         <script language="JavaScript" type="text/javascript">
-            TargetDate<?php echo($id);?>   = "<?php echo $eventMonth; ?>/<?php echo $eventDay; ?>/<?php echo $eventYear; ?> <?php echo $curHour; ?>:<?php echo $eventMinutes; ?> <?php echo $curSet; ?>";
-            CountActive<?php echo($id);?>  = true;
-            CountStepper<?php echo($id);?> = -1;
-            LeadingZero<?php echo($id);?>  = true;
-
-            DisplayFormat<?php echo($id);?> = "%%H%% <?php echo $transHour; ?> %%M%% <?php echo $transMin; ?> %%S%% <?php echo $transSec; ?>";
-            FinishMessage<?php echo($id);?> = "<?php echo $eventEndTime; ?>";
-
-            function calcage<?php echo($id);?>(secs, num1, num2, doublezero) {
-                // The default value for doublezero was removed from the method
-                // signature to avoid issues with IE
-                if ( doublezero !== false ) {
-                    doublezero = true;
-                }
-
-                s = ((Math.floor(secs / num1)) % num2).toString();
-                if (LeadingZero<?php echo($id);?> && s.length < 2 && doublezero) {
-                    s = "0" + s;
-                }
-
-                return s;
-            }
-
-            function CountBack<?php echo($id);?>(secs) {
-                if (secs < 0) {
-                    document.getElementById("clockJS<?php echo($id);?>").innerHTML = FinishMessage<?php echo($id);?>;
-
+            (function(timerId) {
+                var clockJS = document.getElementById('clockJS' + timerId);
+                if (!clockJS) {
+                    console.log(timerId + ' Not found');
                     return;
                 }
 
-                if (calcage<?php echo($id);?>(secs, 86400, 100000) == 0 && calcage<?php echo($id);?>(secs, 3600, 24) == 0) {
-                    DisplayFormat<?php echo($id);?> = "%%M%% <?php echo $transMin; ?> %%S%% <?php echo $transSec; ?>";
+                var TargetDate    = '<?php echo $targetDate; ?>',
+                    CountActive   = true,
+                    CountStepper  = -1,
+                    LeadingZero   = true,
+                    DisplayFormat = '<?php echo addslashes($displayFormat); ?>',
+                    FinishMessage = '<?php echo addslashes($eventEndTime); ?>',
+                    clockDayJS    = document.getElementById('clockDayJS' + timerId);
+
+                var calcage = function(secs, num1, num2, doublezero) {
+                    // The default value for doublezero was removed from the method
+                    // signature to avoid issues with IE
+                    if (doublezero !== false) {
+                        doublezero = true;
+                    }
+
+                    s = ((Math.floor(secs / num1)) % num2).toString();
+                    if (LeadingZero && s.length < 2 && doublezero) {
+                        s = "0" + s;
+                    }
+
+                    return s;
+                };
+
+                var CountBack = function(secs) {
+                    if (secs < 0) {
+                        clockJS.innerHTML = FinishMessage;
+
+                        return;
+                    }
+
+                    if (calcage(secs, 86400, 100000) === 0 && calcage(secs, 3600, 24) === 0) {
+                        DisplayFormat = "%%M%% <?php echo $transMin; ?> %%S%% <?php echo $transSec; ?>";
+                    }
+
+                    if (calcage(secs, 86400, 100000) === 0
+                        && calcage(secs, 3600, 24) === 0
+                        && calcage(secs, 60, 60) === 0
+                    ) {
+                        DisplayFormat = "%%S%% <?php echo $transSec; ?>";
+                    }
+
+                    if (clockDayJS && secs > 0) {
+                        CountBackDays(secs);
+                    }
+
+                    var DisplayStr = DisplayFormat.replace(/%%D%%/g, calcage(secs, 86400, 100000));
+                    DisplayStr = DisplayStr.replace(/%%H%%/g, calcage(secs, 3600, 24));
+                    DisplayStr = DisplayStr.replace(/%%M%%/g, calcage(secs, 60, 60));
+                    DisplayStr = DisplayStr.replace(/%%S%%/g, calcage(secs, 1, 60));
+
+                    clockJS.innerHTML = DisplayStr;
+                };
+
+                var CountBackDays = function(secs) {
+                    WaitingDays = calcage(secs, 86400, secs, false);
+                    clockDayJS.innerHTML = WaitingDays;
+                };
+
+                CountStepper = Math.ceil(CountStepper);
+
+                if (CountStepper === 0) {
+                    CountActive = false;
                 }
 
-                if (calcage<?php echo($id);?>(secs, 86400, 100000) == 0 && calcage<?php echo($id);?>(secs, 3600, 24) == 0 && calcage<?php echo($id);?>(secs, 60, 60) == 0) {
-                    DisplayFormat<?php echo($id);?> = "%%S%% <?php echo $transSec; ?>";
+                var SetTimeOutPeriod = (Math.abs(CountStepper) - 1) * 1000 + 990,
+                    dthen            = new Date(TargetDate),
+                    dnow             = new Date();
+
+                var ddiff = null;
+                if (CountStepper > 0) {
+                    ddiff = new Date(dnow - dthen);
+                } else {
+                    ddiff = new Date(dthen - dnow);
                 }
 
-                if(document.getElementById("clockDayJS<?php echo($id);?>") && secs > 0) {
-                    CountBackDays<?php echo($id);?>(secs);
+                var secs = Math.floor(ddiff.valueOf() / 1000);
+                if (CountActive) {
+                    var repeatFunc = function()
+                    {
+                        secs += CountStepper;
+                        CountBack(secs);
+                        setTimeout(repeatFunc, SetTimeOutPeriod);
+                    };
+                    repeatFunc();
+                } else {
+                    CountBack(secs);
                 }
-
-                DisplayStr = DisplayFormat<?php echo($id);?>.replace(/%%D%%/g, calcage<?php echo($id);?>(secs, 86400, 100000));
-                DisplayStr = DisplayStr.replace(/%%H%%/g, calcage<?php echo($id);?>(secs, 3600, 24));
-                DisplayStr = DisplayStr.replace(/%%M%%/g, calcage<?php echo($id);?>(secs, 60, 60));
-                DisplayStr = DisplayStr.replace(/%%S%%/g, calcage<?php echo($id);?>(secs, 1, 60));
-
-                document.getElementById("clockJS<?php echo($id);?>").innerHTML = DisplayStr;
-
-                if (CountActive<?php echo($id);?>) {
-                    setTimeout("CountBack<?php echo($id);?>(" + (secs + CountStepper<?php echo($id);?>) + ")", SetTimeOutPeriod<?php echo($id);?>);
-                }
-            }
-
-            function CountBackDays<?php echo($id);?>(secs) {
-                WaitingDays = calcage<?php echo($id);?>(secs, 86400, secs, false);
-                document.getElementById("clockDayJS<?php echo($id);?>").innerHTML = WaitingDays;
-
-                return;
-            }
-
-            CountStepper<?php echo($id);?> = Math.ceil(CountStepper<?php echo($id);?>);
-
-            if (CountStepper<?php echo($id);?> == 0) {
-                CountActive<?php echo($id);?> = false;
-            }
-
-            var SetTimeOutPeriod<?php echo($id);?> = (Math.abs(CountStepper<?php echo($id);?>) - 1) * 1000 + 990;
-            var dthen<?php echo($id);?>            = new Date(TargetDate<?php echo($id);?>);
-            var dnow<?php echo($id);?>             = new Date();
-
-            if (CountStepper<?php echo($id);?>> 0) {
-                ddiff<?php echo($id);?> = new Date(dnow<?php echo($id);?>- dthen<?php echo($id);?>);
-            } else {
-                ddiff<?php echo($id);?> = new Date(dthen<?php echo($id);?>- dnow<?php echo($id);?>);
-            }
-
-            gsecs<?php echo($id);?> = Math.floor(ddiff<?php echo($id);?>.valueOf() / 1000);
-
-            CountBack<?php echo($id);?>(gsecs<?php echo($id);?>);
+            })(<?php echo (int)$id; ?>);
         </script>
         <?php
     }
