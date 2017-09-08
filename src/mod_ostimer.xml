@@ -60,9 +60,9 @@
         <folder>fonts</folder>
     </media>
 
-    <config>
+    <config addfieldpath="/modules/mod_ostimer/form/fields">
         <fields name="params">
-            <fieldset name="basic" addfieldpath="/modules/mod_ostimer/form/fields">
+            <fieldset name="basic">
                 <field type="subtitle" label="MOD_OSTIMER_EVENT"/>
 
                 <field
