@@ -168,6 +168,10 @@ abstract class ModuleAbstract extends AbstractFlexibleModule
                 $dateFormat = JText::_($dateFormat);
             }
             $this->event->date = $eventTime->format($dateFormat . ' ' . $timeFormat);
+            if ($timezoneFormat = $params->get('show_timezone', '')) {
+                $this->event->date .= ' ' . str_replace('_', ' ', $eventTime->format($timezoneFormat));
+            }
+
         }
 
         if ($this->event->JS_enable) {

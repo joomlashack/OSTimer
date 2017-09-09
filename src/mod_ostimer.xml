@@ -211,6 +211,16 @@
                 </field>
 
                 <field
+                    name="show_timezone"
+                    type="list"
+                    label="MOD_OSTIMER_SHOW_TIMEZONE_LABEL"
+                    description="MOD_OSTIMER_SHOW_TIMEZONE_DESC">
+                    <option value="">MOD_OSTIMER_OPTION_TIMEZONE_NONE</option>
+                    <option value="e">MOD_OSTIMER_OPTION_TIMEZONE_IDENTIFIER</option>
+                    <option value="P">MOD_OSTIMER_OPTION_TIMEZONE_GMT</option>
+                    <option value="T">MOD_OSTIMER_OPTION_TIMEZONE_ABBREVIATION</option>
+                </field>
+                <field
                     name="show_after_expired"
                     type="radio"
                     class="btn-group"
