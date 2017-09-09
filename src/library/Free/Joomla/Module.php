@@ -68,11 +68,11 @@ class Module extends AbstractFlexibleModule
         $eventJs           = $params->get('ev_js', 1);
         $eventEndTime      = $params->get('ev_endtime', JText::_('MOD_OSTIMER_TIME_HAS_COME_DEFAULT'));
         $restart           = (array)$params->get('ev_restart', array());
-        $transDays         = JText::_($params->get('ev_trans_days', JText::_('MOD_OSTIMER_TRANSLATE_DAYS_DEFAULT')));
-        $transDay          = JText::_($params->get('ev_trans_day', JText::_('MOD_OSTIMER_TRANSLATE_DAY_DEFAULT')));
-        $transHour         = JText::_($params->get('ev_trans_hr', JText::_('MOD_OSTIMER_TRANSLATE_HOURS_DEFAULT')));
-        $transMin          = JText::_($params->get('ev_trans_min', JText::_('MOD_OSTIMER_TRANSLATE_MINUTES_DEFAULT')));
-        $transSec          = JText::_($params->get('ev_trans_sec', JText::_('MOD_OSTIMER_TRANSLATE_SECONDS_DEFAULT')));
+        $transDays         = JText::_($params->get('ev_trans_days', JText::_('MOD_OSTIMER_TRANSLATE_DAYS')));
+        $transDay          = JText::_($params->get('ev_trans_day', JText::_('MOD_OSTIMER_TRANSLATE_DAY_1')));
+        $transHour         = JText::_($params->get('ev_trans_hr', JText::_('MOD_OSTIMER_TRANSLATE_HOUR')));
+        $transMin          = JText::_($params->get('ev_trans_min', JText::_('MOD_OSTIMER_TRANSLATE_MINUTE')));
+        $transSec          = JText::_($params->get('ev_trans_sec', JText::_('MOD_OSTIMER_TRANSLATE_SECOND')));
 
         $loadCSS  = $params->get('loadcss', 1);
         $timezone = $params->get('timezone', 'UTC');
