@@ -335,6 +335,12 @@ class Module extends AbstractFlexibleModule
                     $moduleParams->set('ev_date', $newDatetime->format('Y-m-d H:i:s'));
 
                     $table->params = $moduleParams->toString();
+                    try {
+                        $table->store();
+
+                    } catch (\Exception $e) {
+                        // @TODO: What should we do here?
+                    }
 
                     return true;
                 }
