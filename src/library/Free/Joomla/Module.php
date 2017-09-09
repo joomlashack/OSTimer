@@ -212,58 +212,59 @@ class Module extends AbstractFlexibleModule
                 var TargetDate    = '<?php echo $targetDate; ?>',
                     CountActive   = true,
                     CountStepper  = -1,
-                    LeadingZero   = true,
                     DisplayFormat = '<?php echo addslashes($displayFull); ?>',
                     FinishMessage = '<?php echo addslashes($this->event->textEnd); ?>',
                     clockDayJS    = document.getElementById('clockDayJS' + timerId);
 
-                var calcage = function(secs, num1, num2, doublezero) {
+                var calcage = function(timeLeft, num1, num2, doublezero) {
                     // The default value for doublezero was removed from the method
                     // signature to avoid issues with IE
                     if (doublezero !== false) {
                         doublezero = true;
                     }
 
-                    s = ((Math.floor(secs / num1)) % num2).toString();
-                    if (LeadingZero && s.length < 2 && doublezero) {
+                    s = ((Math.floor(timeLeft / num1)) % num2).toString();
+                    if (s.length < 2 && doublezero) {
                         s = "0" + s;
                     }
 
                     return s;
                 };
 
-                var CountBack = function(secs) {
-                    if (secs < 0) {
+                var CountBack = function(timeLeft) {
+                    if (timeLeft < 0) {
                         clockJS.innerHTML = FinishMessage;
 
                         return;
                     }
 
-                    if (calcage(secs, 86400, 100000) === 0 && calcage(secs, 3600, 24) === 0) {
+                    var days    = calcage(timeLeft, 86400, 100000),
+                        hours   = calcage(timeLeft, 3600, 24),
+                        minutes = calcage(timeLeft, 60, 60),
+                        seconds = calcage(timeLeft, 1, 60);
+
+                    if (+days === 0 && +hours === 0) {
                         DisplayFormat = "<?php echo $displayMinutes; ?>";
                     }
 
-                    if (calcage(secs, 86400, 100000) === 0
-                        && calcage(secs, 3600, 24) === 0
-                        && calcage(secs, 60, 60) === 0
-                    ) {
+                    if (+days === 0 && +hours === 0 && +minutes === 0) {
                         DisplayFormat = "<?php echo $displaySeconds; ?>";
                     }
 
-                    if (clockDayJS && secs > 0) {
-                        CountBackDays(secs);
+                    if (clockDayJS && timeLeft > 0) {
+                        CountBackDays(timeLeft);
                     }
 
-                    var DisplayStr = DisplayFormat.replace(/%%D%%/g, calcage(secs, 86400, 100000));
-                    DisplayStr = DisplayStr.replace(/%%H%%/g, calcage(secs, 3600, 24));
-                    DisplayStr = DisplayStr.replace(/%%M%%/g, calcage(secs, 60, 60));
-                    DisplayStr = DisplayStr.replace(/%%S%%/g, calcage(secs, 1, 60));
+                    var DisplayStr = DisplayFormat.replace(/%%D%%/g, days);
+                    DisplayStr = DisplayStr.replace(/%%H%%/g, hours);
+                    DisplayStr = DisplayStr.replace(/%%M%%/g, minutes);
+                    DisplayStr = DisplayStr.replace(/%%S%%/g, seconds);
 
                     clockJS.innerHTML = DisplayStr;
                 };
 
-                var CountBackDays = function(secs) {
-                    WaitingDays = calcage(secs, 86400, secs, false);
+                var CountBackDays = function(timeLeft) {
+                    WaitingDays = calcage(timeLeft, 86400, timeLeft, false);
                     clockDayJS.innerHTML = WaitingDays;
                 };
 
@@ -284,16 +285,16 @@ class Module extends AbstractFlexibleModule
                     ddiff = new Date(dthen - dnow);
                 }
 
-                var secs = Math.floor(ddiff.valueOf() / 1000);
+                var timeLeft = Math.floor(ddiff.valueOf() / 1000);
                 if (CountActive) {
                     var repeatFunc = function() {
-                        secs += CountStepper;
-                        CountBack(secs);
+                        timeLeft += CountStepper;
+                        CountBack(timeLeft);
                         setTimeout(repeatFunc, SetTimeOutPeriod);
                     };
                     repeatFunc();
                 } else {
-                    CountBack(secs);
+                    CountBack(timeLeft);
                 }
             })(<?php echo $this->event->instanceId; ?>);
         </script>
