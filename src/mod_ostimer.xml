@@ -209,6 +209,17 @@
                 </field>
 
                 <field
+                    name="show_after_expired"
+                    type="radio"
+                    class="btn-group"
+                    default="1"
+                    label="MOD_OSTIMER_SHOW_AFTER_EXPIRED_LABEL"
+                    description="MOD_OSTIMER_SHOW_AFTER_EXPIRED_DESC">
+                    <option value="1">JSHOW</option>
+                    <option value="0">JHIDE</option>
+                </field>
+
+                <field
                     name="ev_color"
                     type="color"
                     default="#2B7CBE"

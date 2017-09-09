@@ -329,6 +329,10 @@ abstract class ModuleAbstract extends AbstractFlexibleModule
      */
     protected function checkEventDisplay(DateTime $eventTime, DateTime $now)
     {
-        return ($now < $eventTime);
+        if ($now < $eventTime) {
+            return true;
+        }
+
+        return (bool)$this->params->get('show_after_expired', 1);
     }
 }
