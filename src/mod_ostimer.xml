@@ -325,6 +325,6 @@
     </config>
 
     <updateservers>
-        <server type="extension" priority="1" name="OSTimer Module"><![CDATA[https://deploy.ostraining.com/client/update/pro/stable/mod_ostimer]]></server>
+        <server type="extension" priority="1" name="OSTimer Module"><![CDATA[https://deploy.ostraining.com/client/update/free/stable/mod_ostimer]]></server>
     </updateservers>
 </extension>
