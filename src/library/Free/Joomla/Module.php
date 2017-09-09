@@ -301,6 +301,16 @@ class Module extends AbstractFlexibleModule
         <?php
     }
 
+    /**
+     * Checks for restarts and updates module parameters if so.
+     * Returns true/false the target date is in the future
+     * 
+     * @param DateTime $eventTime
+     * @param DateTime $now
+     * @param array    $restart
+     *
+     * @return bool
+     */
     protected function updateEventDate(DateTime $eventTime, DateTime $now, array $restart)
     {
         if ($now > $eventTime) {
