@@ -86,7 +86,7 @@ class Module extends AbstractFlexibleModule
         $eventTimezone = new DateTimeZone($timezone);
         $userTimezone  = new DateTimeZone($user->getParam('timezone', $app->get('offset')));
 
-        $fullDate  = sprintf('%s %s:%s', $eventDate, $eventHour, $eventMinutes);
+        $fullDate  = sprintf('%s %02d:%02d:00', $eventDate, $eventHour, $eventMinutes);
         $eventTime = new DateTime($fullDate, $eventTimezone);
         $eventTime->setTimezone($userTimezone);
 
