@@ -12,10 +12,10 @@ defined('_JEXEC') or die();
 
 use Alledia\Framework\Joomla\Extension\AbstractFlexibleModule;
 use Alledia\Framework\Factory;
-use Alledia\OSTimer\Free\Countdown;
 use DateTime;
 use DateTimeZone;
 use JFactory;
+use JHtml;
 use Joomla\Registry\Registry;
 use JUri;
 use JText;
@@ -46,7 +46,13 @@ class Module extends AbstractFlexibleModule
     /**
      * @var int
      */
-    protected static $timeStamp = 0;
+    protected static $instance = 0;
+
+    /**
+     * @var int
+     * @deprecated v2.8.1
+     */
+    protected static $timestamp = 0;
 
     public function init()
     {
@@ -84,8 +90,7 @@ class Module extends AbstractFlexibleModule
         $eventTime = new DateTime($fullDate, $eventTimezone);
         $eventTime->setTimezone($userTimezone);
 
-        $now = new DateTime();
-        $now->setTimezone($userTimezone);
+        $now = new DateTime('now', $userTimezone);
 
         if (!$this->updateEventDate($eventTime, $now, $restart)) {
             return;
@@ -95,7 +100,26 @@ class Module extends AbstractFlexibleModule
         $this->showZeroDay    = $params->get('show_zero_day', 1);
         $this->eventColor     = $params->get('ev_color', '#2B7CBE');
 
-        $this->event = new stdClass;
+        static::$instance++;
+        static::$timestamp = static::$instance; // Provided for b/c
+
+        $timeLeft = $now->diff($eventTime);
+
+        $this->event = (object)array(
+            'instanceId'  => static::$instance,
+            'datetime'    => $eventTime,
+            'date'        => null,
+            'title'       => $eventDisplayTitle ? $eventTitle : null,
+            'textDays'    => $timeLeft == 1 ? $transDay : $transDays,
+            'textEnd'     => $eventEndTime,
+            'transHour'   => $transHour,
+            'transMin'    => $transMin,
+            'transSec'    => $transSec,
+            'days'        => $timeLeft->format('%a'),
+            'JS_enable'   => ($eventDisplayHour && $eventJs),
+            'detailCount' => null,
+            'detailLink'  => null
+        );
 
         if ($eventDisplayDate) {
             $dateFormat = $params->get('ev_ddate_format', 1);
@@ -112,106 +136,73 @@ class Module extends AbstractFlexibleModule
             $this->event->date = $eventTime->format($dateFormat . ' ' . $timeFormat);
         }
 
-        $timeLeft = $now->diff($eventTime);
+        if ($this->event->JS_enable) {
+            $this->event->DetailCount = '<span id="clockJS' . static::$instance . '"></span>';
 
-        if ($eventDisplayTitle) {
-            $this->event->title = $eventTitle;
-        }
-
-        if ($eventDDaysLeft == '1') {
-            if ($timeLeft->format('%a') == 1) {
-                // Print "Day" (singular)
-                $this->event->textDays = $transDay;
-            } else {
-                // Print "Days" (plural)
-                $this->event->textDays = $transDays;
-            }
-        }
-
-        $this->event->days      = $timeLeft->format('%a');
-        $this->event->JS_enable = false;
-
-        static::$timeStamp++;
-        $this->event->timestamp = static::$timeStamp;
-        if (($eventDisplayHour == '1') && ($eventJs == '1')) {
-            $this->event->DetailCount  = '<span id="clockJS' . static::$timeStamp . '"></span>';
-            $this->event->JS_enable    = true;
-            $this->event->JS_month     = $eventTime->format('m');
-            $this->event->JS_day       = $eventTime->format('d');
-            $this->event->JS_year      = $eventTime->format('Y');
-            $this->event->JS_hour      = $eventTime->format('H');
-            $this->event->JS_min       = $eventTime->format('i');
-            $this->event->JS_endtime   = $eventEndTime;
-            $this->event->JS_offset    = '';
-            $this->event->JS_trans_hr  = $transHour;
-            $this->event->JS_trans_min = $transMin;
-            $this->event->JS_trans_sec = $transSec;
+        } elseif (($eventDisplayHour == '1') && ($eventJs == '0')) {
+            $this->event->DetailCount = join(
+                ' ',
+                array(
+                    $timeLeft->format('%h'),
+                    $transHour,
+                    $timeLeft->format('%i'),
+                    $transMin
+                )
+            );
 
         } else {
-            if (($eventDisplayHour == '1') && ($eventJs == '0')) {
-                $this->event->DetailCount = join(
-                    ' ',
-                    array(
-                        $timeLeft->format('%h'),
-                        $transHour,
-                        $timeLeft->format('%i'),
-                        $transMin
-                    )
-                );
-
-            } else {
-                if ($timeLeft->format('%d') <= 0) {
-                    $this->event->DetailCount = $eventEndTime;
-                }
+            if ($timeLeft->format('%d') <= 0) {
+                $this->event->DetailCount = $eventEndTime;
             }
         }
 
         if (($eventDisplayURL == '1') && $eventURL && $eventURLTitle) {
-            $this->event->detailLink = \JHtml::_('link', $eventURL, $eventTitle, ' title="' . $eventURLTitle . '"');
+            $this->event->detailLink = JHtml::_('link', $eventURL, $eventTitle, ' title="' . $eventURLTitle . '"');
         }
 
         if ((bool)$loadCSS) {
-            $doc = Factory::getDocument();
-            $doc->addStylesheet(JUri::base() . 'modules/mod_ostimer/tmpl/style.css');
+            JHtml::_('stylesheet', 'modules/mod_ostimer/tmpl/style.css');
         }
 
         parent::init();
     }
 
-    public function printCountDounJS(
-        $eventMonth,
-        $eventDay,
-        $eventYear,
-        $eventHour,
-        $eventMinutes,
-        $eventEndTime,
-        $transHour,
-        $transMin,
-        $transSec,
-        $id
-    ) {
-        if ($eventHour >= '12') {
-            $curHour = $eventHour - '12';
-            $curSet  = 'PM';
+    public function printCountDounJS()
+    {
+        if (!$this->event->JS_enable) {
+            return;
+        }
+
+        $month   = $this->event->datetime->format('m');
+        $day     = $this->event->datetime->format('d');
+        $year    = $this->event->datetime->format('Y');
+        $hour    = $this->event->datetime->format('H');
+        $minutes = $this->event->datetime->format('i');
+
+        if ($hour >= '12') {
+            $curHour = $hour - '12';
+            $period  = 'PM';
         } else {
-            $curHour = $eventHour;
-            $curSet  = 'AM';
+            $curHour = $hour;
+            $period  = 'AM';
         }
 
         $targetDate = sprintf(
             '%s/%s/%s %s:%s %s',
-            $eventMonth,
-            $eventDay,
-            $eventYear,
+            $month,
+            $day,
+            $year,
             $curHour,
-            $eventMinutes,
-            $curSet
+            $minutes,
+            $period
         );
 
-        $displayFormat = '%%H%% ' . $transHour . ' %%M%% ' . $transMin . ' %%S%% ' . $transSec;
+        $displaySeconds = '%%S%% ' . $this->event->transSec;
+        $displayMinutes = '%%M%% ' . $this->event->transMin . ' '  . $displaySeconds;
+        $displayFull = '%%H%% ' . $this->event->transHour . ' ' . $displayMinutes;
         ?>
         <script language="JavaScript" type="text/javascript">
-            (function(timerId) {
+            ;(function(timerId) {
                 var clockJS = document.getElementById('clockJS' + timerId);
                 if (!clockJS) {
                     console.log(timerId + ' Not found');
@@ -222,8 +213,8 @@ class Module extends AbstractFlexibleModule
                     CountActive   = true,
                     CountStepper  = -1,
                     LeadingZero   = true,
-                    DisplayFormat = '<?php echo addslashes($displayFormat); ?>',
-                    FinishMessage = '<?php echo addslashes($eventEndTime); ?>',
+                    DisplayFormat = '<?php echo addslashes($displayFull); ?>',
+                    FinishMessage = '<?php echo addslashes($this->event->textEnd); ?>',
                     clockDayJS    = document.getElementById('clockDayJS' + timerId);
 
                 var calcage = function(secs, num1, num2, doublezero) {
@@ -249,14 +240,14 @@ class Module extends AbstractFlexibleModule
                     }
 
                     if (calcage(secs, 86400, 100000) === 0 && calcage(secs, 3600, 24) === 0) {
-                        DisplayFormat = "%%M%% <?php echo $transMin; ?> %%S%% <?php echo $transSec; ?>";
+                        DisplayFormat = "<?php echo $displayMinutes; ?>";
                     }
 
                     if (calcage(secs, 86400, 100000) === 0
                         && calcage(secs, 3600, 24) === 0
                         && calcage(secs, 60, 60) === 0
                     ) {
-                        DisplayFormat = "%%S%% <?php echo $transSec; ?>";
+                        DisplayFormat = "<?php echo $displaySeconds; ?>";
                     }
 
                     if (clockDayJS && secs > 0) {
@@ -304,7 +295,7 @@ class Module extends AbstractFlexibleModule
                 } else {
                     CountBack(secs);
                 }
-            })(<?php echo (int)$id; ?>);
+            })(<?php echo $this->event->instanceId; ?>);
         </script>
         <?php
     }
@@ -326,7 +317,7 @@ class Module extends AbstractFlexibleModule
                         . (empty($restart['minutes']) ? '' : $restart['minutes'] . 'M');
 
                     $interval = new \DateInterval($intervalSpec);
-                    $limit = 100;
+                    $limit    = 100;
                     while ($now > $eventTime) {
                         $eventTime->add($interval);
                         if (!$limit--) {
