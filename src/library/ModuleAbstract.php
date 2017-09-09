@@ -66,6 +66,28 @@ abstract class ModuleAbstract extends AbstractFlexibleModule
     protected static $timestamp = 0;
 
     /**
+     * @param object $module
+     *
+     * @return ModuleAbstract
+     */
+    public static function getInstance($module)
+    {
+        $nameSpace = '\\Alledia\\OSTimer\\%s\\Joomla\\Module';
+
+        $proClass = sprintf($nameSpace, 'Pro');
+        if (class_exists($proClass)) {
+            return new $proClass('OSTimer', $module);
+        }
+
+        $freeClass = sprintf($nameSpace, 'Free');
+        if (class_exists($freeClass)) {
+            return new $freeClass('OSTimer', $module);
+        }
+
+        return null;
+    }
+
+    /**
      * @return void
      */
     public function init()

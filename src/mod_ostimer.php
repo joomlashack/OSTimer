@@ -8,7 +8,7 @@
 
 defined('_JEXEC') or die();
 
-use Alledia\OSTimer\Free\Joomla\Module;
+use Alledia\OSTimer\ModuleAbstract;
 use Joomla\Registry\Registry;
 
 require_once 'include.php';
@@ -29,5 +29,8 @@ require_once 'include.php';
  * @var string           $content
  */
 
-$modOSTimer = new Module('OSTimer', $module);
-$modOSTimer->init();
+if ($modOSTimer = ModuleAbstract::getInstance($module)) {
+    $modOSTimer->init();
+} else {
+    JFactory::getApplication()->enqueueMessage('MOD_OSTIMER_ERROR_INSTANTIATION', 'error');
+}
