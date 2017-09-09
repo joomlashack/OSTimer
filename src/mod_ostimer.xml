@@ -161,18 +161,6 @@
                     description="MOD_OSTIMER_THEME_STYLE_DESC"/>
 
                 <field
-                    name="ev_ddleft"
-                    type="radio"
-                    class="btn-group"
-                    default="1"
-                    label="MOD_OSTIMER_TIME_TO_EVENT_LABEL"
-                    description="MOD_OSTIMER_TIME_TO_EVENT_DESC">
-
-                    <option value="1">JYES</option>
-                    <option value="0">JNO</option>
-                </field>
-
-                <field
                     name="ev_dhour"
                     type="radio"
                     class="btn-group"
