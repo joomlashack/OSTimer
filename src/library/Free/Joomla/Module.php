@@ -16,6 +16,7 @@ use Alledia\OSTimer\Free\Countdown;
 use DateTime;
 use DateTimeZone;
 use JFactory;
+use Joomla\Registry\Registry;
 use JUri;
 use JText;
 use stdClass;
@@ -66,13 +67,15 @@ class Module extends AbstractFlexibleModule
         $eventURL          = $params->get('ev_l', '');
         $eventJs           = $params->get('ev_js', 1);
         $eventEndTime      = $params->get('ev_endtime', JText::_('MOD_OSTIMER_TIME_HAS_COME_DEFAULT'));
-        $loadCSS           = $params->get('loadcss', 1);
+        $restart           = (array)$params->get('ev_restart', array());
         $transDays         = JText::_($params->get('ev_trans_days', JText::_('MOD_OSTIMER_TRANSLATE_DAYS_DEFAULT')));
         $transDay          = JText::_($params->get('ev_trans_day', JText::_('MOD_OSTIMER_TRANSLATE_DAY_DEFAULT')));
         $transHour         = JText::_($params->get('ev_trans_hr', JText::_('MOD_OSTIMER_TRANSLATE_HOURS_DEFAULT')));
         $transMin          = JText::_($params->get('ev_trans_min', JText::_('MOD_OSTIMER_TRANSLATE_MINUTES_DEFAULT')));
         $transSec          = JText::_($params->get('ev_trans_sec', JText::_('MOD_OSTIMER_TRANSLATE_SECONDS_DEFAULT')));
-        $timezone          = $params->get('timezone', 'UTC');
+
+        $loadCSS  = $params->get('loadcss', 1);
+        $timezone = $params->get('timezone', 'UTC');
 
         $eventTimezone = new DateTimeZone($timezone);
         $userTimezone  = new DateTimeZone($user->getParam('timezone', $app->get('offset')));
@@ -80,6 +83,13 @@ class Module extends AbstractFlexibleModule
         $fullDate  = sprintf('%s %s:%s', $eventDate, $eventHour, $eventMinutes);
         $eventTime = new DateTime($fullDate, $eventTimezone);
         $eventTime->setTimezone($userTimezone);
+
+        $now = new DateTime();
+        $now->setTimezone($userTimezone);
+
+        if (!$this->updateEventDate($eventTime, $now, $restart)) {
+            return;
+        }
 
         $this->moduleClassSfx = $params->get('moduleclass_sfx', '');
         $this->showZeroDay    = $params->get('show_zero_day', 1);
@@ -102,17 +112,13 @@ class Module extends AbstractFlexibleModule
             $this->event->date = $eventTime->format($dateFormat . ' ' . $timeFormat);
         }
 
-        $now = new DateTime();
-        $now->setTimezone($userTimezone);
         $timeLeft = $now->diff($eventTime);
 
         if ($eventDisplayTitle) {
             $this->event->title = $eventTitle;
         }
 
-
         if ($eventDDaysLeft == '1') {
-
             if ($timeLeft->format('%a') == 1) {
                 // Print "Day" (singular)
                 $this->event->textDays = $transDay;
@@ -289,8 +295,7 @@ class Module extends AbstractFlexibleModule
 
                 var secs = Math.floor(ddiff.valueOf() / 1000);
                 if (CountActive) {
-                    var repeatFunc = function()
-                    {
+                    var repeatFunc = function() {
                         secs += CountStepper;
                         CountBack(secs);
                         setTimeout(repeatFunc, SetTimeOutPeriod);
@@ -302,5 +307,51 @@ class Module extends AbstractFlexibleModule
             })(<?php echo (int)$id; ?>);
         </script>
         <?php
+    }
+
+    protected function updateEventDate(DateTime $eventTime, DateTime $now, array $restart)
+    {
+        if ($now > $eventTime) {
+            if (array_sum($restart)) {
+                if ($table = \JTable::getInstance('Module')) {
+                    $table->load($this->id);
+                }
+                if (!empty($table->id)) {
+                    $moduleParams = new Registry($table->params);
+
+                    $intervalSpec = 'P'
+                        . (empty($restart['days']) ? '' : $restart['days'] . 'D')
+                        . (empty($restart['hours']) && empty($restart['minutes']) ? '' : 'T')
+                        . (empty($restart['hours']) ? '' : $restart['hours'] . 'H')
+                        . (empty($restart['minutes']) ? '' : $restart['minutes'] . 'M');
+
+                    $interval = new \DateInterval($intervalSpec);
+                    $limit = 100;
+                    while ($now > $eventTime) {
+                        $eventTime->add($interval);
+                        if (!$limit--) {
+                            // Too far in the past, bail before we semi-infinite loop
+                            return false;
+                        }
+                    }
+
+                    $newDatetime = clone $eventTime;
+
+                    $moduleParams->set('ev_h', $newDatetime->format('H'));
+                    $moduleParams->set('ev_min', $newDatetime->format('i'));
+                    $newDatetime->setTime(0, 0);
+                    $newDatetime->setTimezone(new DateTimeZone('UTC'));
+                    $moduleParams->set('ev_date', $newDatetime->format('Y-m-d H:i:s'));
+
+                    $table->params = $moduleParams->toString();
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        return true;
     }
 }
