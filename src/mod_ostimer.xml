@@ -137,7 +137,9 @@
                     type="timezone"
                     default="UTC"
                     label="MOD_OSTIMER_TIMEZONE_LABEL"
-                    description="MOD_OSTIMER_TIMEZONE_DESC"/>
+                    description="MOD_OSTIMER_TIMEZONE_DESC">
+                    <option value="UTC">JLIB_FORM_VALUE_TIMEZONE_UTC</option>
+                </field>
 
                 <field
                     name="ev_dtime_format"
