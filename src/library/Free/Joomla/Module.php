@@ -198,8 +198,8 @@ class Module extends AbstractFlexibleModule
         );
 
         $displaySeconds = '%%S%% ' . $this->event->transSec;
-        $displayMinutes = '%%M%% ' . $this->event->transMin . ' '  . $displaySeconds;
-        $displayFull = '%%H%% ' . $this->event->transHour . ' ' . $displayMinutes;
+        $displayMinutes = '%%M%% ' . $this->event->transMin . ' ' . $displaySeconds;
+        $displayFull    = '%%H%% ' . $this->event->transHour . ' ' . $displayMinutes;
         ?>
         <script language="JavaScript" type="text/javascript">
             ;(function(timerId) {
