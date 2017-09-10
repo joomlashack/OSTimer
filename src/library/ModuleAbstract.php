@@ -216,29 +216,7 @@ abstract class ModuleAbstract extends AbstractFlexibleModule
             return;
         }
 
-        $month   = $this->event->datetime->format('m');
-        $day     = $this->event->datetime->format('d');
-        $year    = $this->event->datetime->format('Y');
-        $hour    = $this->event->datetime->format('H');
-        $minutes = $this->event->datetime->format('i');
-
-        if ($hour >= '12') {
-            $curHour = $hour - '12';
-            $period  = 'PM';
-        } else {
-            $curHour = $hour;
-            $period  = 'AM';
-        }
-
-        $targetDate = sprintf(
-            '%s/%s/%s %s:%s %s',
-            $month,
-            $day,
-            $year,
-            $curHour,
-            $minutes,
-            $period
-        );
+        $targetDate = $this->event->datetime->format('m/d/Y h:i:s A T');
 
         $displaySeconds = '%%S%% ' . $this->event->transSec;
         $displayMinutes = '%%M%% ' . $this->event->transMin . ' ' . $displaySeconds;
