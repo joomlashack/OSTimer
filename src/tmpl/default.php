@@ -21,7 +21,7 @@ $event = $this->event;
 
     <?php if (($this->showZeroDay && $event->days == 0) || $event->days > 0) : ?>
         <span class="countdown_daycount" style="<?php echo 'color: ' . $this->eventColor . ';'; ?>">
-            <span id="clockDayJS<?php echo static::$timeStamp ?>">
+            <span id="<?php echo 'clockDayJS' . static::$instance ?>">
                 <?php echo $event->days; ?>
             </span>
         </span>
@@ -42,19 +42,6 @@ $event = $this->event;
     <?php endif; ?>
 
     <?php if ($event->JS_enable) : ?>
-        <?php
-        $this->printCountDounJS(
-            $event->JS_month,
-            $event->JS_day,
-            $event->JS_year,
-            $event->JS_hour,
-            $event->JS_min,
-            $event->JS_endtime,
-            $event->JS_trans_hr,
-            $event->JS_trans_min,
-            $event->JS_trans_sec,
-            $event->timestamp
-        );
-        ?>
+        <?php $this->printCountDounJS(); ?>
     <?php endif; ?>
 </div>
