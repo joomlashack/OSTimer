@@ -144,7 +144,7 @@ abstract class ModuleAbstract extends AbstractFlexibleModule
             'datetime'    => $eventTime,
             'date'        => null,
             'title'       => $eventDisplayTitle ? $eventTitle : null,
-            'textDays'    => $timeLeft == 1 ? $transDay : $transDays,
+            'textDays'    => $timeLeft->days == 1 ? $transDay : $transDays,
             'textEnd'     => $eventEndTime,
             'transHour'   => $transHour,
             'transMin'    => $transMin,
