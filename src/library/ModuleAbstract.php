@@ -117,14 +117,28 @@ abstract class ModuleAbstract extends AbstractFlexibleModule
         $loadCSS  = $params->get('loadcss', 1);
         $timezone = $params->get('timezone', 'UTC');
 
+        $fullDate      = sprintf('%s %02d:%02d:00', $eventDate, $eventHour, $eventMinutes);
         $eventTimezone = new DateTimeZone($timezone);
-        $userTimezone  = new DateTimeZone($user->getParam('timezone', $app->get('offset')));
+        $eventTime     = new DateTime($fullDate, $eventTimezone);
 
-        $fullDate  = sprintf('%s %02d:%02d:00', $eventDate, $eventHour, $eventMinutes);
-        $eventTime = new DateTime($fullDate, $eventTimezone);
-        $eventTime->setTimezone($userTimezone);
+        switch ($params->get('use_timezone')) {
+            case 'event':
+                $displayTimezone = $eventTimezone;
+                break;
 
-        $now = new DateTime('now', $userTimezone);
+            case 'joomla':
+                $displayTimezone = new DateTimeZone($app->get('offset'));
+                break;
+
+            case 'user':
+            default:
+                $displayTimezone = new DateTimeZone($user->getParam('timezone', $app->get('offset')));
+                break;
+        }
+
+        $eventTime->setTimezone($displayTimezone);
+
+        $now = new DateTime('now', $displayTimezone);
 
         if (!$this->checkEventDisplay($eventTime, $now)) {
             return;
@@ -171,7 +185,6 @@ abstract class ModuleAbstract extends AbstractFlexibleModule
             if ($timezoneFormat = $params->get('show_timezone', '')) {
                 $this->event->date .= ' ' . str_replace('_', ' ', $eventTime->format($timezoneFormat));
             }
-
         }
 
         if ($this->event->JS_enable) {
