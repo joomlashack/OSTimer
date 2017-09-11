@@ -120,25 +120,9 @@ abstract class AbstractModule extends AbstractFlexibleModule
         $fullDate      = sprintf('%s %02d:%02d:00', $eventDate, $eventHour, $eventMinutes);
         $eventTimezone = new DateTimeZone($timezone);
         $eventTime     = new DateTime($fullDate, $eventTimezone);
+        $eventTime->setTimezone($eventTimezone);
 
-        switch ($params->get('use_timezone', 'event')) {
-            case 'event':
-                $displayTimezone = $eventTimezone;
-                break;
-
-            case 'joomla':
-                $displayTimezone = new DateTimeZone($app->get('offset'));
-                break;
-
-            case 'user':
-            default:
-                $displayTimezone = new DateTimeZone($user->getParam('timezone', $app->get('offset')));
-                break;
-        }
-
-        $eventTime->setTimezone($displayTimezone);
-
-        $now = new DateTime('now', $displayTimezone);
+        $now = new DateTime('now', $eventTimezone);
 
         if (!$this->checkEventDisplay($eventTime, $now)) {
             return;
