@@ -215,7 +215,7 @@
                     type="list"
                     label="MOD_OSTIMER_USE_TIMEZONE_LABEL"
                     description="MOD_OSTIMER_USE_TIMEZONE_DESC"
-                    default="user">
+                    default="event">
                     <option value="user">MOD_OSTIMER_OPTION_TIMEZONE_USER</option>
                     <option value="event">MOD_OSTIMER_OPTION_TIMEZONE_EVENT</option>
                     <option value="joomla">MOD_OSTIMER_OPTION_TIMEZONE_JOOMLA</option>

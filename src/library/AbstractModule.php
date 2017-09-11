@@ -121,7 +121,7 @@ abstract class AbstractModule extends AbstractFlexibleModule
         $eventTimezone = new DateTimeZone($timezone);
         $eventTime     = new DateTime($fullDate, $eventTimezone);
 
-        switch ($params->get('use_timezone')) {
+        switch ($params->get('use_timezone', 'event')) {
             case 'event':
                 $displayTimezone = $eventTimezone;
                 break;
