@@ -220,6 +220,7 @@
                     <option value="P">MOD_OSTIMER_OPTION_TIMEZONE_GMT</option>
                     <option value="T">MOD_OSTIMER_OPTION_TIMEZONE_ABBREVIATION</option>
                 </field>
+                
                 <field
                     name="show_after_expired"
                     type="radio"
