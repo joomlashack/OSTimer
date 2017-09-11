@@ -10,8 +10,8 @@ namespace Alledia\OSTimer\Free\Joomla;
 
 defined('_JEXEC') or die();
 
-use Alledia\OSTimer\ModuleAbstract;
+use Alledia\OSTimer\AbstractModule;
 
-class Module extends ModuleAbstract
+class Module extends AbstractModule
 {
 }

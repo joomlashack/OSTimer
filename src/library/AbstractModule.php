@@ -32,7 +32,7 @@ use JText;
 
 defined('_JEXEC') or die();
 
-abstract class ModuleAbstract extends AbstractFlexibleModule
+abstract class AbstractModule extends AbstractFlexibleModule
 {
     /**
      * @var string
@@ -68,7 +68,7 @@ abstract class ModuleAbstract extends AbstractFlexibleModule
     /**
      * @param object $module
      *
-     * @return ModuleAbstract
+     * @return AbstractModule
      */
     public static function getInstance($module)
     {
