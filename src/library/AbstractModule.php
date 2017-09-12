@@ -63,7 +63,7 @@ abstract class AbstractModule extends AbstractFlexibleModule
      * @var int
      * @deprecated v2.8.1
      */
-    protected static $timestamp = 0;
+    protected static $timeStamp = 0;
 
     /**
      * @param object $module
@@ -133,7 +133,7 @@ abstract class AbstractModule extends AbstractFlexibleModule
         $this->eventColor     = $params->get('ev_color', '#2B7CBE');
 
         static::$instance++;
-        static::$timestamp = static::$instance; // Provided for b/c
+        static::$timeStamp = static::$instance; // Provided for b/c
 
         $timeLeft = $now->diff($eventTime);
 
