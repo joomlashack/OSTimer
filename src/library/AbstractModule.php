@@ -158,11 +158,11 @@ abstract class AbstractModule extends AbstractFlexibleModule
             $dateFormat = $params->get('ev_ddate_format', 1);
             $timeFormat = JText::_($params->get('ev_dtime_format', 'MOD_OSTIMER_TIME_FORMAT_12H_UPPER'));
             if ($dateFormat == '1') {
-                // U.S. format
-                $dateFormat = 'm.d.Y';
+                $dateFormat = 'm.d.Y'; // U.S. format
+
             } elseif ($dateFormat == '0') {
-                // International format
-                $dateFormat = 'd.m.Y';
+                $dateFormat = 'd.m.Y'; // International format
+
             } else {
                 $dateFormat = JText::_($dateFormat);
             }
