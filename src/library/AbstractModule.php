@@ -196,8 +196,8 @@ abstract class AbstractModule extends AbstractFlexibleModule
             $this->event->detailLink = JHtml::_('link', $eventURL, $eventTitle, ' title="' . $eventURLTitle . '"');
         }
 
-        if ((bool)$loadCSS) {
-            JHtml::_('stylesheet', 'modules/mod_ostimer/tmpl/style.css');
+        if ($loadCSS) {
+            JHtml::_('stylesheet', 'mod_ostimer/style.css', null, true);
         }
 
         parent::init();

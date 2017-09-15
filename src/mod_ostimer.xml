@@ -34,6 +34,7 @@
         <obsolete>
             <file>/modules/mod_ostimer/form/fields/timezones.php</file>
             <file>/modules/mod_ostimer/library/Free/Countdown.php</file>
+            <file>/modules/mod_ostimer/tmpl/style.css</file>
         </obsolete>
     </alledia>
 
