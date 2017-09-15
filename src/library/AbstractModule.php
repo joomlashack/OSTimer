@@ -195,7 +195,7 @@ abstract class AbstractModule extends AbstractFlexibleModule
         }
 
         if ($loadCSS) {
-            JHtml::_('stylesheet', 'mod_ostimer/style.css', null, true);
+            JHtml::_('stylesheet', 'mod_ostimer/style.min.css', null, true);
         }
 
         parent::init();
