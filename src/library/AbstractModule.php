@@ -92,8 +92,6 @@ abstract class AbstractModule extends AbstractFlexibleModule
      */
     public function init()
     {
-        $app    = JFactory::getApplication();
-        $user   = JFactory::getUser();
         $params = $this->params;
 
         $eventDisplayTitle = $params->get('ev_dtitle', 1);
