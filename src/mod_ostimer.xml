@@ -9,7 +9,7 @@
     <authorUrl>http://www.joomlashack.com</authorUrl>
     <version>2.8.11b1</version>
     <variant>FREE</variant>
-    <description>OSTIMER_SUCCESSFULLY_INSTALLED</description>
+    <description>MOD_OSTIMER_DESCRIPTION</description>
 
     <alledia>
         <element publish="true">ostimer</element>
