@@ -141,6 +141,7 @@ abstract class AbstractModule extends AbstractFlexibleModule
             'instanceId'  => static::$instance,
             'datetime'    => $eventTime,
             'date'        => null,
+            'seconds'     => $eventTime->getTimestamp() - $now->getTimestamp(),
             'title'       => $eventDisplayTitle ? $eventTitle : null,
             'textDays'    => $timeLeft->days == 1 ? $transDay : $transDays,
             'textEnd'     => $eventEndTime,
@@ -213,8 +214,7 @@ abstract class AbstractModule extends AbstractFlexibleModule
             return;
         }
 
-        $targetDate = $this->event->datetime->format('m/d/Y h:i:s A T');
-
+        $secondsLeft    = $this->event->seconds;
         $displaySeconds = '%%S%% ' . $this->event->transSec;
         $displayMinutes = '%%M%% ' . $this->event->transMin . ' ' . $displaySeconds;
         $displayFull    = '%%H%% ' . $this->event->transHour . ' ' . $displayMinutes;
@@ -227,7 +227,7 @@ abstract class AbstractModule extends AbstractFlexibleModule
                     return;
                 }
 
-                var TargetDate    = '<?php echo $targetDate; ?>',
+                var secondsLeft   = <?php echo $secondsLeft; ?>,
                     CountActive   = true,
                     CountStepper  = -1,
                     DisplayFormat = '<?php echo addslashes($displayFull); ?>',
@@ -292,22 +292,12 @@ abstract class AbstractModule extends AbstractFlexibleModule
                     CountActive = false;
                 }
 
-                var SetTimeOutPeriod = (Math.abs(CountStepper) - 1) * 1000 + 990,
-                    dthen            = new Date(TargetDate),
-                    dnow             = new Date();
+                var SetTimeOutPeriod = (Math.abs(CountStepper) - 1) * 1000 + 990;
 
-                var ddiff = null;
-                if (CountStepper > 0) {
-                    ddiff = new Date(dnow - dthen);
-                } else {
-                    ddiff = new Date(dthen - dnow);
-                }
-
-                var timeLeft = Math.floor(ddiff.valueOf() / 1000);
                 if (CountActive) {
                     var repeatFunc = function() {
-                        timeLeft += CountStepper;
-                        CountBack(timeLeft);
+                        secondsLeft += CountStepper;
+                        CountBack(secondsLeft);
                         setTimeout(repeatFunc, SetTimeOutPeriod);
                     };
                     repeatFunc();
