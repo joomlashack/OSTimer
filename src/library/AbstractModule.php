@@ -118,9 +118,7 @@ abstract class AbstractModule extends AbstractFlexibleModule
         $fullDate      = sprintf('%s %02d:%02d:00', $eventDate, $eventHour, $eventMinutes);
         $eventTimezone = new DateTimeZone($timezone);
         $eventTime     = new DateTime($fullDate, $eventTimezone);
-        $eventTime->setTimezone($eventTimezone);
-
-        $now = new DateTime('now', $eventTimezone);
+        $now           = new DateTime('now', $eventTimezone);
 
         if (!$this->checkEventDisplay($eventTime, $now)) {
             return;
