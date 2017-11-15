@@ -29,6 +29,7 @@
                 publish="true"
                 ordering="first">OSSystem</extension>
         </relatedExtensions>
+
         <include>AllediaFreeDefaultFiles</include>
 
         <obsolete>
@@ -56,9 +57,9 @@
 
     <media destination="mod_ostimer" folder="media">
         <folder>css</folder>
-        <folder>js</folder>
-        <folder>images</folder>
         <folder>fonts</folder>
+        <folder>images</folder>
+        <folder>js</folder>
     </media>
 
     <config addfieldpath="/modules/mod_ostimer/form/fields">

@@ -26,7 +26,6 @@ namespace Alledia\OSTimer;
 use Alledia\Framework\Joomla\Extension\AbstractFlexibleModule;
 use DateTime;
 use DateTimeZone;
-use JFactory;
 use JHtml;
 use JText;
 
