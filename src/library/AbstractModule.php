@@ -97,7 +97,7 @@ abstract class AbstractModule extends AbstractFlexibleModule
         $eventTitle        = $params->get('ev_tit');
         $eventDisplayDate  = $params->get('ev_ddate', 1);
         $eventDisplayHour  = $params->get('ev_dhour', 1);
-        $eventDate         = preg_replace('/\s*\d+:\d+:\d+/', '', $params->get('ev_date', '01-01-2017'));
+        $eventDate         = preg_replace('/\s*\d+:\d+:\d+/', '', $params->get('ev_date') ?: date('Y-01-01'));
         $eventHour         = $params->get('ev_h', 0);
         $eventMinutes      = $params->get('ev_min', 0);
         $eventDisplayURL   = $params->get('ev_dlink', 1);
