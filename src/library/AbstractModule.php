@@ -105,11 +105,6 @@ abstract class AbstractModule extends AbstractFlexibleModule
         $eventURL          = $params->get('ev_l', '');
         $eventJs           = $params->get('ev_js', 1);
         $eventEndTime      = $params->get('ev_endtime', JText::_('MOD_OSTIMER_TIME_HAS_COME_DEFAULT'));
-        $transDays         = JText::_($params->get('ev_trans_days', JText::_('MOD_OSTIMER_TRANSLATE_DAYS')));
-        $transDay          = JText::_($params->get('ev_trans_day', JText::_('MOD_OSTIMER_TRANSLATE_DAY_1')));
-        $transHour         = JText::_($params->get('ev_trans_hr', JText::_('MOD_OSTIMER_TRANSLATE_HOUR')));
-        $transMin          = JText::_($params->get('ev_trans_min', JText::_('MOD_OSTIMER_TRANSLATE_MINUTE')));
-        $transSec          = JText::_($params->get('ev_trans_sec', JText::_('MOD_OSTIMER_TRANSLATE_SECOND')));
 
         $loadCSS  = $params->get('loadcss', 1);
         $timezone = $params->get('timezone', 'UTC');
@@ -138,11 +133,11 @@ abstract class AbstractModule extends AbstractFlexibleModule
             'date'        => null,
             'seconds'     => $eventTime->getTimestamp() - $now->getTimestamp(),
             'title'       => $eventDisplayTitle ? $eventTitle : null,
-            'textDays'    => $timeLeft->days == 1 ? $transDay : $transDays,
+            'textDays'    => JText::plural('MOD_OSTIMER_TRANSLATE_DAY', $timeLeft->days),
             'textEnd'     => $eventEndTime,
-            'transHour'   => $transHour,
-            'transMin'    => $transMin,
-            'transSec'    => $transSec,
+            'transHour'   => JText::plural('MOD_OSTIMER_TRANSLATE_HOUR', 1),
+            'transMin'    => JText::plural('MOD_OSTIMER_TRANSLATE_MINUTE', 1),
+            'transSec'    => JText::plural('MOD_OSTIMER_TRANSLATE_SECOND', 1),
             'days'        => $timeLeft->format('%a'),
             'JS_enable'   => ($eventDisplayHour && $eventJs),
             'detailCount' => null,
@@ -175,9 +170,9 @@ abstract class AbstractModule extends AbstractFlexibleModule
                 ' ',
                 array(
                     $timeLeft->format('%h'),
-                    $transHour,
+                    $this->event->transHour,
                     $timeLeft->format('%i'),
-                    $transMin
+                    $this->event->transMin
                 )
             );
 

@@ -273,41 +273,6 @@
                     description="MOD_OSTIMER_TEXT_URL_DESC"/>
 
                 <field
-                    name="ev_trans_days"
-                    type="text"
-                    default="Days"
-                    label="MOD_OSTIMER_TRANSLATE_DAYS_LABEL"
-                    description="MOD_OSTIMER_TRANSLATE_DAYS_DESC"/>
-
-                <field
-                    name="ev_trans_day"
-                    type="text"
-                    default="Day"
-                    label="MOD_OSTIMER_TRANSLATE_DAY_LABEL"
-                    description="MOD_OSTIMER_TRANSLATE_DAY_DESC"/>
-
-                <field
-                    name="ev_trans_hr"
-                    type="text"
-                    default="Hr."
-                    label="MOD_OSTIMER_TRANSLATE_HOURS_LABEL"
-                    description="MOD_OSTIMER_TRANSLATE_HOURS_DESC"/>
-
-                <field
-                    name="ev_trans_min"
-                    type="text"
-                    default="Min."
-                    label="MOD_OSTIMER_TRANSLATE_MINUTES_LABEL"
-                    description="MOD_OSTIMER_TRANSLATE_MINUTES_DESC"/>
-
-                <field
-                    name="ev_trans_sec"
-                    type="text"
-                    default="Sec."
-                    label="MOD_OSTIMER_TRANSLATE_SECONDS_LABEL"
-                    description="MOD_OSTIMER_TRANSLATE_SECONDS_DESC"/>
-
-                <field
                     type="customfooter"
                     name="customfooter"
                     media="mod_ostimer"
