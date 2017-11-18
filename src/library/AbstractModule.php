@@ -24,7 +24,6 @@
 namespace Alledia\OSTimer;
 
 use Alledia\Framework\Joomla\Extension\AbstractFlexibleModule;
-use DateTime;
 use DateTimeZone;
 use JHtml;
 use JText;
@@ -157,7 +156,7 @@ abstract class AbstractModule extends AbstractFlexibleModule
             $dateFormat = JText::_($dateFormat);
             $timeFormat = JText::_($params->get('ev_dtime_format', 'MOD_OSTIMER_TIME_FORMAT_12H_UPPER'));
 
-            $this->event->date = $eventTime->format($dateFormat . ' ' . $timeFormat);
+            $this->event->date = $eventTime->localeFormat($dateFormat . ' ' . $timeFormat);
             if ($timezoneFormat = $params->get('show_timezone', '')) {
                 $this->event->date .= ' ' . str_replace('_', ' ', $eventTime->format($timezoneFormat));
             }
