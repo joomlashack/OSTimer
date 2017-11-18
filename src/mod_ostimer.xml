@@ -70,8 +70,7 @@
                     type="radio"
                     class="btn-group"
                     default="1"
-                    label="MOD_OSTIMER_DISPLAY_MOD_OSTIMER_EVENT_TITLE_LABEL"
-                    description="MOD_OSTIMER_YES_OR_NO">
+                    label="MOD_OSTIMER_DISPLAY_EVENT_TITLE_LABEL">
 
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
@@ -244,8 +243,7 @@
                     type="radio"
                     class="btn-group"
                     default="1"
-                    label="MOD_OSTIMER_SHOW_LINK_LABEL"
-                    description="MOD_OSTIMER_YES_OR_NO">
+                    label="MOD_OSTIMER_SHOW_LINK_LABEL">
 
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
