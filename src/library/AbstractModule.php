@@ -138,7 +138,7 @@ abstract class AbstractModule extends AbstractFlexibleModule
             'transHour'   => JText::plural('MOD_OSTIMER_TRANSLATE_HOUR', 1),
             'transMin'    => JText::plural('MOD_OSTIMER_TRANSLATE_MINUTE', 1),
             'transSec'    => JText::plural('MOD_OSTIMER_TRANSLATE_SECOND', 1),
-            'days'        => $timeLeft->format('%a'),
+            'days'        => $timeLeft->format('%r%a'),
             'JS_enable'   => ($eventDisplayHour && $eventJs),
             'detailCount' => null,
             'detailLink'  => null
