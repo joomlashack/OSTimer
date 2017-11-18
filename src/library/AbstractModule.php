@@ -147,7 +147,7 @@ abstract class AbstractModule extends AbstractFlexibleModule
             $dateFormat = $params->get('ev_ddate_format', 'MOD_OSTIMER_DATE_FORMAT_US');
             // Support legacy settings
             if ($dateFormat == 1) {
-                $dateFormat = 'MOD_OSTIMER_US_FORMAT';
+                $dateFormat = 'MOD_OSTIMER_DATE_FORMAT_US';
 
             } elseif ($dateFormat == '0') {
                 $dateFormat = 'MOD_OSTIMER_DATE_FORMAT_INT';
