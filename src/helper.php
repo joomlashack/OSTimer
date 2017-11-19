@@ -21,44 +21,37 @@
  * along with OSTimer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Alledia\OSTimer;
+use Alledia\OSTimer\DateTime;
 
 defined('_JEXEC') or die();
 
-class DateTime extends \DateTime
+abstract class ModOstimerHelper
 {
-    /**
-     * A custom method to use locale aware formats
-     *
-     * @param string $format
-     *
-     * @return string
-     */
-    public function localeFormat($format)
+    public static function getAjax()
     {
-        $stringDate = parent::format('Y-m-d H:i:s');
+        require_once __DIR__ . '/library/DateTime.php';
 
-        return strftime($format, strtotime($stringDate));
-    }
+        $app = JFactory::getApplication();
 
-    /**
-     * Get an array appropriate for use with javascript Date.UTC constructor
-     *
-     * @return array
-     */
-    public function getJSUTCArray()
-    {
-        $utcDate = clone $this;
-        $utcDate->setTimezone(new \DateTimeZone('UTC'));
+        $event = $app->input->getString('time');
+        $user  = $app->input->getString('user');
 
-        $jsParts = array(
-            $utcDate->format('Y'),
-            $utcDate->format('m') - 1,
-            $utcDate->format('d'),
-            $utcDate->format('H'),
-            $utcDate->format('i')
-        );
+        $user = preg_replace('/gmt-\d{4}/i', '', $user);
 
-        return $jsParts;
+        $eventTime    = new DateTime($event);
+        $userTime     = new DateTime($user);
+        $userTimeZone = new DateTimeZone($userTime->format('e'));
+
+        $eventTime->setTimezone($userTimeZone);
+
+        $format   = $app->input->getString('display');
+        $tzFormat = $app->input->getString('tz');
+
+        $dateString = $eventTime->localeFormat($format);
+        if ($tzFormat) {
+            $dateString .= ' ' . $eventTime->format($tzFormat);
+        }
+
+        return $dateString;
     }
 }

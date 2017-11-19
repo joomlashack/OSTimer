@@ -145,6 +145,7 @@ abstract class AbstractModule extends AbstractFlexibleModule
 
         if ($eventDisplayDate) {
             $dateFormat = $params->get('ev_ddate_format', 'MOD_OSTIMER_DATE_FORMAT_US');
+
             // Support legacy settings
             if ($dateFormat == 1) {
                 $dateFormat = 'MOD_OSTIMER_DATE_FORMAT_US';
@@ -153,12 +154,38 @@ abstract class AbstractModule extends AbstractFlexibleModule
                 $dateFormat = 'MOD_OSTIMER_DATE_FORMAT_INT';
             }
 
-            $dateFormat = JText::_($dateFormat);
-            $timeFormat = JText::_($params->get('ev_dtime_format', 'MOD_OSTIMER_TIME_FORMAT_12H_UPPER'));
+            $dateFormat     = JText::_($dateFormat);
+            $timeFormat     = JText::_($params->get('ev_dtime_format', 'MOD_OSTIMER_TIME_FORMAT_12H_UPPER'));
+            $timezoneFormat = $params->get('show_timezone', '');
 
-            $this->event->date = $eventTime->localeFormat($dateFormat . ' ' . $timeFormat);
-            if ($timezoneFormat = $params->get('show_timezone', '')) {
-                $this->event->date .= ' ' . str_replace('_', ' ', $eventTime->format($timezoneFormat));
+            if ($params->get('ev_user', false)) {
+                $this->event->date = '&nbsp;';
+
+                $ajaxData = json_encode(
+                    array(
+                        'option'  => 'com_ajax',
+                        'module'  => 'ostimer',
+                        'format'  => 'raw',
+                        'time'    => $this->event->datetime->format('Y-m-d H:i T'),
+                        'display' => $dateFormat . ' ' . $timeFormat,
+                        'tz'      => $timezoneFormat,
+                        'user'    => null
+                    )
+                );
+                $jScript  = <<<JSCRIPT
+jQuery(document).ready(function() {
+    var ajaxData = {$ajaxData};
+    ajaxData.user = (new Date()).toString();
+    jQuery('.countdown_displaydate').load('index.php', ajaxData);
+});
+JSCRIPT;
+                \JFactory::getDocument()->addScriptDeclaration($jScript);
+
+            } else {
+                $this->event->date = $eventTime->localeFormat($dateFormat . ' ' . $timeFormat);
+                if ($timezoneFormat) {
+                    $this->event->date .= ' ' . str_replace('_', ' ', $eventTime->format($timezoneFormat));
+                }
             }
         }
 

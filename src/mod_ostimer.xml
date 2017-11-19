@@ -52,6 +52,7 @@
         <folder>tmpl</folder>
         <folder>views</folder>
         <filename module="mod_ostimer">mod_ostimer.php</filename>
+        <filename>helper.php</filename>
         <filename>include.php</filename>
     </files>
 
@@ -90,6 +91,17 @@
                     label="MOD_OSTIMER_DISPLAY_EVENT_DATE_LABEL"
                     description="MOD_OSTIMER_DISPLAY_EVENT_DATE_DESC">
 
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+
+                <field
+                    name="ev_user"
+                    type="radio"
+                    class="btn-group btn-group-yesno"
+                    default="0"
+                    label="MOD_OSTIMER_USER_LOCAL_LABEL"
+                    description="MOD_OSTIMER_USER_LOCAL_DESC">
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
                 </field>
