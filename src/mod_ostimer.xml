@@ -68,7 +68,7 @@
                 <field
                     name="ev_dtitle"
                     type="radio"
-                    class="btn-group"
+                    class="btn-group btn-group-yesno"
                     default="1"
                     label="MOD_OSTIMER_DISPLAY_EVENT_TITLE_LABEL">
 
@@ -85,7 +85,7 @@
                 <field
                     name="ev_ddate"
                     type="radio"
-                    class="btn-group"
+                    class="btn-group btn-group-yesno"
                     default="1"
                     label="MOD_OSTIMER_DISPLAY_EVENT_DATE_LABEL"
                     description="MOD_OSTIMER_DISPLAY_EVENT_DATE_DESC">
@@ -164,7 +164,7 @@
                 <field
                     name="ev_dhour"
                     type="radio"
-                    class="btn-group"
+                    class="btn-group btn-group-yesno"
                     default="1"
                     label="MOD_OSTIMER_HOURS_MINUTES_TO_EVENT_LABEL"
                     description="MOD_OSTIMER_HOURS_MINUTES_TO_EVENT_DESC">
@@ -176,7 +176,7 @@
                 <field
                     name="ev_js"
                     type="radio"
-                    class="btn-group"
+                    class="btn-group btn-group-yesno"
                     default="1"
                     label="MOD_OSTIMER_JAVASCRIPT_EFFECT_LABEL"
                     description="MOD_OSTIMER_JAVASCRIPT_EFFECT_DESC">
@@ -188,7 +188,7 @@
                 <field
                     name="loadcss"
                     type="radio"
-                    class="btn-group"
+                    class="btn-group btn-group-yesno"
                     default="1"
                     label="MOD_OSTIMER_LOAD_MODULE_LABEL"
                     description="MOD_OSTIMER_LOAD_MODULE_DESC">
@@ -200,7 +200,7 @@
                 <field
                     name="show_zero_day"
                     type="radio"
-                    class="btn-group"
+                    class="btn-group btn-group-yesno"
                     default="1"
                     label="MOD_OSTIMER_SHOW_ZERO_DAY_LABEL"
                     description="MOD_OSTIMER_SHOW_ZERO_DAY_DESC">
@@ -223,7 +223,7 @@
                 <field
                     name="show_after_expired"
                     type="radio"
-                    class="btn-group"
+                    class="btn-group btn-group-yesno"
                     default="1"
                     label="MOD_OSTIMER_SHOW_AFTER_EXPIRED_LABEL"
                     description="MOD_OSTIMER_SHOW_AFTER_EXPIRED_DESC">
@@ -241,7 +241,7 @@
                 <field
                     name="ev_dlink"
                     type="radio"
-                    class="btn-group"
+                    class="btn-group btn-group-yesno"
                     default="1"
                     label="MOD_OSTIMER_SHOW_LINK_LABEL">
 
