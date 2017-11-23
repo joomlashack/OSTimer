@@ -166,7 +166,7 @@ abstract class AbstractModule extends AbstractFlexibleModule
                         'option'  => 'com_ajax',
                         'module'  => 'ostimer',
                         'format'  => 'raw',
-                        'time'    => $this->event->datetime->format('Y-m-d H:i T'),
+                        'time'    => $this->event->datetime->format('Y-m-d H:i e'),
                         'display' => $dateFormat . ' ' . $timeFormat,
                         'tz'      => $timezoneFormat,
                         'user'    => null
