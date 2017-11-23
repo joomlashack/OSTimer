@@ -33,23 +33,56 @@ abstract class ModOstimerHelper
 
         $app = JFactory::getApplication();
 
-        $event = $app->input->getString('time');
-        $user  = $app->input->getString('user');
+        $event  = $app->input->getString('time');
+        $now    = $app->input->getString('date');
+        $offset = 1 - ($app->input->getInt('offset', 0) * 60); // Javascript provides inverse minutes
 
-        $user = preg_replace('/gmt-\d{4}/i', '', $user);
+        // We're expecting a timezone designator in parentheses
+        if (preg_match('/\(([^\)]*)\)/', $now, $match)) {
+            $timezoneString = $match[1];
+            if (strlen($timezoneString) > 3 && !in_array($timezoneString, timezone_identifiers_list())) {
+                //
+                $words          = preg_split('/\s/', $timezoneString);
+                $timezoneString = '';
+                foreach ($words as $word) {
+                    $timezoneString .= strtoupper($word[0]);
+                }
+            }
 
-        $eventTime    = new DateTime($event);
-        $userTime     = new DateTime($user);
-        $userTimeZone = new DateTimeZone($userTime->format('e'));
+            if (strlen($timezoneString) === 3) {
+                $timezoneString = timezone_name_from_abbr($timezoneString, $offset);
+            }
 
-        $eventTime->setTimezone($userTimeZone);
+            try {
+                $userTimezone = new DateTimeZone($timezoneString);
+
+            } catch (Exception $e) {
+                // Nothing worked
+            }
+        }
+
+        if (empty($userTimezone || !$userTimezone instanceof DateTimeZone)) {
+            try {
+                // Nothing worked. let's get the first available for the offset
+                $timezoneString = timezone_name_from_abbr('', $offset);
+                $userTimezone   = new DateTimeZone($timezoneString);
+
+            } catch (Exception $e) {
+                // shoot! Display will have to be in event timezone
+            }
+        }
+
+        $eventTime = new DateTime($event);
+        if (!empty($userTimezone) && $userTimezone instanceof DateTimeZone) {
+            $eventTime->setTimezone($userTimezone);
+        }
 
         $format   = $app->input->getString('display');
         $tzFormat = $app->input->getString('tz');
 
         $dateString = $eventTime->localeFormat($format);
         if ($tzFormat) {
-            $dateString .= ' ' . $eventTime->format($tzFormat);
+            $dateString .= ' ' . str_replace('_', ' ', $eventTime->format($tzFormat));
         }
 
         return $dateString;

@@ -169,13 +169,16 @@ abstract class AbstractModule extends AbstractFlexibleModule
                         'time'    => $this->event->datetime->format('Y-m-d H:i e'),
                         'display' => $dateFormat . ' ' . $timeFormat,
                         'tz'      => $timezoneFormat,
-                        'user'    => null
+                        'date'    => null,
+                        'offset'  => null
                     )
                 );
                 $jScript  = <<<JSCRIPT
 jQuery(document).ready(function() {
-    var ajaxData = {$ajaxData};
-    ajaxData.user = (new Date()).toString();
+    var ajaxData = {$ajaxData},
+        now = new Date();
+    ajaxData.date = now.toString();
+    ajaxData.offset = now.getTimezoneOffset();
     jQuery('.countdown_displaydate').load('index.php', ajaxData);
 });
 JSCRIPT;
