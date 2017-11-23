@@ -70,8 +70,7 @@
                     type="radio"
                     class="btn-group btn-group-yesno"
                     default="1"
-                    label="MOD_OSTIMER_DISPLAY_MOD_OSTIMER_EVENT_TITLE_LABEL"
-                    description="MOD_OSTIMER_YES_OR_NO">
+                    label="MOD_OSTIMER_DISPLAY_EVENT_TITLE_LABEL">
 
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
@@ -98,12 +97,12 @@
                 <field
                     name="ev_ddate_format"
                     type="list"
-                    default="1"
+                    default="MOD_OSTIMER_DATE_FORMAT_US"
                     label="MOD_OSTIMER_DISPLAY_EVENT_DATE_FORMAT_LABEL"
                     description="MOD_OSTIMER_DISPLAY_EVENT_DATE_FORMAT_DESC">
 
-                    <option value="1">MOD_OSTIMER_US_FORMAT_LABEL</option>
-                    <option value="0">MOD_OSTIMER_INT_FORMAT_LABEL</option>
+                    <option value="MOD_OSTIMER_DATE_FORMAT_US">MOD_OSTIMER_DATE_FORMAT_US_LABEL</option>
+                    <option value="MOD_OSTIMER_DATE_FORMAT_INT">MOD_OSTIMER_DATE_FORMAT_INT_LABEL</option>
                     <option value="MOD_OSTIMER_DATE_FORMAT_LC1">MOD_OSTIMER_DATE_FORMAT_LC1_LABEL</option>
                     <option value="MOD_OSTIMER_DATE_FORMAT_LC2">MOD_OSTIMER_DATE_FORMAT_LC2_LABEL</option>
                     <option value="MOD_OSTIMER_DATE_FORMAT_LC3">MOD_OSTIMER_DATE_FORMAT_LC3_LABEL</option>
@@ -244,8 +243,7 @@
                     type="radio"
                     class="btn-group btn-group-yesno"
                     default="1"
-                    label="MOD_OSTIMER_SHOW_LINK_LABEL"
-                    description="MOD_OSTIMER_YES_OR_NO">
+                    label="MOD_OSTIMER_SHOW_LINK_LABEL">
 
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>

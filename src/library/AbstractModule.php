@@ -24,7 +24,6 @@
 namespace Alledia\OSTimer;
 
 use Alledia\Framework\Joomla\Extension\AbstractFlexibleModule;
-use DateTime;
 use DateTimeZone;
 use JHtml;
 use JText;
@@ -145,18 +144,19 @@ abstract class AbstractModule extends AbstractFlexibleModule
         );
 
         if ($eventDisplayDate) {
-            $dateFormat = $params->get('ev_ddate_format', 1);
-            $timeFormat = JText::_($params->get('ev_dtime_format', 'MOD_OSTIMER_TIME_FORMAT_12H_UPPER'));
-            if ($dateFormat == '1') {
-                $dateFormat = 'm.d.Y'; // U.S. format
+            $dateFormat = $params->get('ev_ddate_format', 'MOD_OSTIMER_DATE_FORMAT_US');
+            // Support legacy settings
+            if ($dateFormat == 1) {
+                $dateFormat = 'MOD_OSTIMER_DATE_FORMAT_US';
 
             } elseif ($dateFormat == '0') {
-                $dateFormat = 'd.m.Y'; // International format
-
-            } else {
-                $dateFormat = JText::_($dateFormat);
+                $dateFormat = 'MOD_OSTIMER_DATE_FORMAT_INT';
             }
-            $this->event->date = $eventTime->format($dateFormat . ' ' . $timeFormat);
+
+            $dateFormat = JText::_($dateFormat);
+            $timeFormat = JText::_($params->get('ev_dtime_format', 'MOD_OSTIMER_TIME_FORMAT_12H_UPPER'));
+
+            $this->event->date = $eventTime->localeFormat($dateFormat . ' ' . $timeFormat);
             if ($timezoneFormat = $params->get('show_timezone', '')) {
                 $this->event->date .= ' ' . str_replace('_', ' ', $eventTime->format($timezoneFormat));
             }
