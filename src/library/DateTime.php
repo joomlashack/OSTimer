@@ -23,6 +23,8 @@
 
 namespace Alledia\OSTimer;
 
+use JFactory;
+
 defined('_JEXEC') or die();
 
 class DateTime extends \DateTime
@@ -36,8 +38,15 @@ class DateTime extends \DateTime
      */
     public function localeFormat($format)
     {
-        $stringDate = parent::format('Y-m-d H:i:s');
+        $systemLocale = setLocale(LC_TIME, 0);
+        $language     = JFactory::getLanguage();
 
-        return strftime($format, strtotime($stringDate));
+        setlocale(LC_TIME, $language->getLocale());
+
+        $stringDate = strftime($format, strtotime(parent::format('Y-m-d H:i:s')));
+
+        setLocale(LC_TIME, $systemLocale);
+
+        return $stringDate;
     }
 }
