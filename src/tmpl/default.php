@@ -24,17 +24,21 @@
 defined('_JEXEC') or die();
 
 $event = $this->event;
+
 ?>
 <div class="countdown<?php echo $this->moduleClassSfx; ?> ostimer-wrapper">
     <?php if (!empty($event->title)) : ?>
         <span class="countdown_title"><?php echo $event->title; ?></span>
     <?php endif; ?>
 
-    <?php if (!empty($event->date)) : ?>
+    <?php
+    if ($event->date) :
+        ?>
         <span class="countdown_displaydate"><?php echo $event->date; ?></span>
-    <?php endif; ?>
+        <?php
+    endif;
 
-    <?php if (($this->showZeroDay && $event->days == 0) || $event->days > 0) : ?>
+    if (($this->showZeroDay && $event->days == 0) || $event->days > 0) : ?>
         <span class="countdown_daycount" style="<?php echo 'color: ' . $this->eventColor . ';'; ?>">
             <span id="<?php echo 'clockDayJS' . static::$instance ?>">
                 <?php echo $event->days; ?>

@@ -49,4 +49,25 @@ class DateTime extends \DateTime
 
         return $stringDate;
     }
+
+    /**
+     * Get an array appropriate for use with javascript Date.UTC constructor
+     *
+     * @return array
+     */
+    public function getJSUTCArray()
+    {
+        $utcDate = clone $this;
+        $utcDate->setTimezone(new \DateTimeZone('UTC'));
+
+        $jsParts = array(
+            $utcDate->format('Y'),
+            $utcDate->format('m') - 1,
+            $utcDate->format('d'),
+            $utcDate->format('H'),
+            $utcDate->format('i')
+        );
+
+        return $jsParts;
+    }
 }
