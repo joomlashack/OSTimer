@@ -94,15 +94,15 @@ abstract class AbstractModule extends AbstractFlexibleModule
 
         $eventDisplayTitle = $params->get('ev_dtitle', 1);
         $eventTitle        = $params->get('ev_tit');
-        $eventDisplayDate  = $params->get('ev_ddate', 1);
-        $eventDisplayHour  = $params->get('ev_dhour', 1);
+        $eventDisplayDate  = (bool)$params->get('ev_ddate', 1);
+        $eventDisplayHour  = (bool)$params->get('ev_dhour', 1);
         $eventDate         = preg_replace('/\s*\d+:\d+:\d+/', '', $params->get('ev_date') ?: date('Y-01-01'));
-        $eventHour         = $params->get('ev_h', 0);
-        $eventMinutes      = $params->get('ev_min', 0);
-        $eventDisplayURL   = $params->get('ev_dlink', 1);
+        $eventHour         = (int)$params->get('ev_h', 0);
+        $eventMinutes      = (int)$params->get('ev_min', 0);
+        $eventDisplayURL   = (bool)$params->get('ev_dlink', 1);
         $eventURLTitle     = $params->get('ev_ltitle', '');
         $eventURL          = $params->get('ev_l', '');
-        $eventJs           = $params->get('ev_js', 1);
+        $eventJs           = (bool)$params->get('ev_js', 1);
         $eventEndTime      = $params->get('ev_endtime', JText::_('MOD_OSTIMER_TIME_HAS_COME_DEFAULT'));
 
         $loadCSS  = $params->get('loadcss', 1);
@@ -195,7 +195,7 @@ JSCRIPT;
         if ($this->event->JS_enable) {
             $this->event->DetailCount = '<span id="clockJS' . static::$instance . '"></span>';
 
-        } elseif (($eventDisplayHour == '1') && ($eventJs == '0')) {
+        } elseif ($eventDisplayHour && !$eventJs) {
             $this->event->DetailCount = join(
                 ' ',
                 array(
@@ -212,7 +212,7 @@ JSCRIPT;
             }
         }
 
-        if (($eventDisplayURL == '1') && $eventURL && $eventURLTitle) {
+        if ($eventDisplayURL && $eventURL && $eventURLTitle) {
             $this->event->detailLink = JHtml::_('link', $eventURL, $eventTitle, ' title="' . $eventURLTitle . '"');
         }
 
