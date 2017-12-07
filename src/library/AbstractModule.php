@@ -132,14 +132,10 @@ abstract class AbstractModule extends AbstractFlexibleModule
             'date'        => null,
             'seconds'     => $eventTime->getTimestamp() - $now->getTimestamp(),
             'title'       => $eventDisplayTitle ? $eventTitle : null,
-            'textDays'    => JText::plural('MOD_OSTIMER_TRANSLATE_DAY', $timeLeft->days),
             'textEnd'     => $eventEndTime,
-            'transHour'   => JText::plural('MOD_OSTIMER_TRANSLATE_HOUR', 1),
-            'transMin'    => JText::plural('MOD_OSTIMER_TRANSLATE_MINUTE', 1),
-            'transSec'    => JText::plural('MOD_OSTIMER_TRANSLATE_SECOND', 1),
             'days'        => $timeLeft->format('%r%a'),
             'JS_enable'   => ($eventDisplayHour && $eventJs),
-            'detailCount' => null,
+            'DetailCount' => null,
             'detailLink'  => null
         );
 
@@ -200,9 +196,9 @@ JSCRIPT;
                 ' ',
                 array(
                     $timeLeft->format('%h'),
-                    $this->event->transHour,
+                    JText::plural('MOD_OSTIMER_TRANSLATE_HOUR', $timeLeft->h),
                     $timeLeft->format('%i'),
-                    $this->event->transMin
+                    JText::plural('MOD_OSTIMER_TRANSLATE_MINUTE', $timeLeft->m)
                 )
             );
 
@@ -234,10 +230,30 @@ JSCRIPT;
             return;
         }
 
+        $transText = array(
+            'day'    => array(
+                JText::_('MOD_OSTIMER_TRANSLATE_DAY'),
+                JText::_('MOD_OSTIMER_TRANSLATE_DAY_1')
+            ),
+            'hour'   => array(
+                JText::_('MOD_OSTIMER_TRANSLATE_HOUR'),
+                JText::_('MOD_OSTIMER_TRANSLATE_HOUR_1')
+            ),
+            'minute' => array(
+                JText::_('MOD_OSTIMER_TRANSLATE_MINUTE'),
+                JText::_('MOD_OSTIMER_TRANSLATE_MINUTE_1')
+            ),
+            'second' => array(
+                JText::_('MOD_OSTIMER_TRANSLATE_SECOND'),
+                JText::_('MOD_OSTIMER_TRANSLATE_SECOND_1')
+            )
+        );
+
         $secondsLeft    = $this->event->seconds;
-        $displaySeconds = '%%S%% ' . $this->event->transSec;
-        $displayMinutes = '%%M%% ' . $this->event->transMin . ' ' . $displaySeconds;
-        $displayFull    = '%%H%% ' . $this->event->transHour . ' ' . $displayMinutes;
+        $displaySeconds = '%%S%% ' . $transText['second'][0];
+        $displayMinutes = '%%M%% ' . $transText['minute'][0] . ' ' . $displaySeconds;
+        $displayFull    = '%%H%% ' . $transText['hour'][0] . ' ' . $displayMinutes;
+
         ?>
         <script language="JavaScript" type="text/javascript">
             ;(function(timerId) {
@@ -250,6 +266,7 @@ JSCRIPT;
                 var secondsLeft   = <?php echo $secondsLeft; ?>,
                     CountActive   = true,
                     CountStepper  = -1,
+                    transText     = <?php echo json_encode($transText); ?>,
                     DisplayFormat = '<?php echo addslashes($displayFull); ?>',
                     FinishMessage = '<?php echo addslashes($this->event->textEnd); ?>',
                     clockDayJS    = document.getElementById('clockDayJS' + timerId);
@@ -269,6 +286,24 @@ JSCRIPT;
                     return s;
                 };
 
+                var pluralize = function(strings, count, showZero) {
+                    if (count > 0 || showZero) {
+                        return count + ' ' + (+count === 1 ? strings[1] : strings[0]);
+                    }
+
+                    return '';
+                };
+
+                var formatDisplay = function(timeLeft) {
+                    var displayArray = [
+                        pluralize(transText.hour, calcage(timeLeft, 3600, 24)),
+                        pluralize(transText.minute, calcage(timeLeft, 60, 60)),
+                        pluralize(transText.second, calcage(timeLeft, 1, 60), true)
+                    ];
+
+                    return displayArray.join(' ');
+                };
+
                 var CountBack = function(timeLeft) {
                     if (timeLeft < 0) {
                         clockJS.innerHTML = FinishMessage;
@@ -276,29 +311,11 @@ JSCRIPT;
                         return;
                     }
 
-                    var days    = calcage(timeLeft, 86400, 100000),
-                        hours   = calcage(timeLeft, 3600, 24),
-                        minutes = calcage(timeLeft, 60, 60),
-                        seconds = calcage(timeLeft, 1, 60);
-
-                    if (+days === 0 && +hours === 0) {
-                        DisplayFormat = "<?php echo $displayMinutes; ?>";
-                    }
-
-                    if (+days === 0 && +hours === 0 && +minutes === 0) {
-                        DisplayFormat = "<?php echo $displaySeconds; ?>";
-                    }
+                    clockJS.innerHTML = formatDisplay(timeLeft);
 
                     if (clockDayJS && timeLeft > 0) {
                         CountBackDays(timeLeft);
                     }
-
-                    var DisplayStr = DisplayFormat.replace(/%%D%%/g, days);
-                    DisplayStr = DisplayStr.replace(/%%H%%/g, hours);
-                    DisplayStr = DisplayStr.replace(/%%M%%/g, minutes);
-                    DisplayStr = DisplayStr.replace(/%%S%%/g, seconds);
-
-                    clockJS.innerHTML = DisplayStr;
                 };
 
                 var CountBackDays = function(timeLeft) {
