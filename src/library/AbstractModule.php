@@ -248,12 +248,6 @@ JSCRIPT;
                 JText::_('MOD_OSTIMER_TRANSLATE_SECOND_1')
             )
         );
-
-        $secondsLeft    = $this->event->seconds;
-        $displaySeconds = '%%S%% ' . $transText['second'][0];
-        $displayMinutes = '%%M%% ' . $transText['minute'][0] . ' ' . $displaySeconds;
-        $displayFull    = '%%H%% ' . $transText['hour'][0] . ' ' . $displayMinutes;
-
         ?>
         <script language="JavaScript" type="text/javascript">
             ;(function(timerId) {
@@ -263,17 +257,14 @@ JSCRIPT;
                     return;
                 }
 
-                var secondsLeft   = <?php echo $secondsLeft; ?>,
-                    CountActive   = true,
-                    CountStepper  = -1,
+                var secondsLeft   = <?php echo $this->event->seconds; ?>,
+                    countActive   = true,
+                    countStepper  = -1,
                     transText     = <?php echo json_encode($transText); ?>,
-                    DisplayFormat = '<?php echo addslashes($displayFull); ?>',
-                    FinishMessage = '<?php echo addslashes($this->event->textEnd); ?>',
+                    finishMessage = '<?php echo addslashes($this->event->textEnd); ?>',
                     clockDayJS    = document.getElementById('clockDayJS' + timerId);
 
-                var calcage = function(timeLeft, num1, num2, doublezero) {
-                    // The default value for doublezero was removed from the method
-                    // signature to avoid issues with IE
+                var calcAge = function(timeLeft, num1, num2, doublezero) {
                     if (doublezero !== false) {
                         doublezero = true;
                     }
@@ -294,52 +285,47 @@ JSCRIPT;
                     return '';
                 };
 
-                var formatDisplay = function(timeLeft) {
+                var formatTime = function(timeLeft) {
                     var displayArray = [
-                        pluralize(transText.hour, calcage(timeLeft, 3600, 24)),
-                        pluralize(transText.minute, calcage(timeLeft, 60, 60)),
-                        pluralize(transText.second, calcage(timeLeft, 1, 60), true)
+                        pluralize(transText.hour, calcAge(timeLeft, 3600, 24)),
+                        pluralize(transText.minute, calcAge(timeLeft, 60, 60)),
+                        pluralize(transText.second, calcAge(timeLeft, 1, 60), true)
                     ];
 
                     return displayArray.join(' ');
                 };
 
-                var CountBack = function(timeLeft) {
+                var countBack = function(timeLeft) {
                     if (timeLeft < 0) {
-                        clockJS.innerHTML = FinishMessage;
+                        clockJS.innerHTML = finishMessage;
 
                         return;
                     }
 
-                    clockJS.innerHTML = formatDisplay(timeLeft);
+                    clockJS.innerHTML = formatTime(timeLeft);
 
                     if (clockDayJS && timeLeft > 0) {
-                        CountBackDays(timeLeft);
+                        clockDayJS.innerHTML = calcAge(timeLeft, 86400, timeLeft, false);
                     }
                 };
 
-                var CountBackDays = function(timeLeft) {
-                    WaitingDays = calcage(timeLeft, 86400, timeLeft, false);
-                    clockDayJS.innerHTML = WaitingDays;
-                };
+                countStepper = Math.ceil(countStepper);
 
-                CountStepper = Math.ceil(CountStepper);
-
-                if (CountStepper === 0) {
-                    CountActive = false;
+                if (countStepper === 0) {
+                    countActive = false;
                 }
 
-                var SetTimeOutPeriod = (Math.abs(CountStepper) - 1) * 1000 + 990;
+                var SetTimeOutPeriod = (Math.abs(countStepper) - 1) * 1000 + 990;
 
-                if (CountActive) {
+                if (countActive) {
                     var repeatFunc = function() {
-                        secondsLeft += CountStepper;
-                        CountBack(secondsLeft);
+                        secondsLeft += countStepper;
+                        countBack(secondsLeft);
                         setTimeout(repeatFunc, SetTimeOutPeriod);
                     };
                     repeatFunc();
                 } else {
-                    CountBack(timeLeft);
+                    countBack(timeLeft);
                 }
             })(<?php echo $this->event->instanceId; ?>);
         </script>
