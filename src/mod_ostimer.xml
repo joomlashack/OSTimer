@@ -119,6 +119,7 @@
                     <option value="MOD_OSTIMER_DATE_FORMAT_LC2">MOD_OSTIMER_DATE_FORMAT_LC2_LABEL</option>
                     <option value="MOD_OSTIMER_DATE_FORMAT_LC3">MOD_OSTIMER_DATE_FORMAT_LC3_LABEL</option>
                     <option value="MOD_OSTIMER_DATE_FORMAT_LC4">MOD_OSTIMER_DATE_FORMAT_LC4_LABEL</option>
+                    <option value="MOD_OSTIMER_DATE_FORMAT_LC5">MOD_OSTIMER_DATE_FORMAT_LC5_LABEL</option>
                 </field>
 
                 <field
