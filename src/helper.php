@@ -27,6 +27,10 @@ defined('_JEXEC') or die();
 
 abstract class ModOstimerHelper
 {
+    /**
+     * @return string
+     * @throws Exception
+     */
     public static function getAjax()
     {
         require_once __DIR__ . '/library/DateTime.php';
