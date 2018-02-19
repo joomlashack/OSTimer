@@ -279,7 +279,10 @@ JSCRIPT;
 
                 var pluralize = function(strings, count, showZero) {
                     if (count > 0 || showZero) {
-                        return count + ' ' + (+count === 1 ? strings[1] : strings[0]);
+                        var string = +count === 1 ? strings[1] : strings[0];
+                        return string.indexOf('%s') < 0 ?
+                            count + ' ' + string :
+                            string.replace('%s', count);
                     }
 
                     return '';
@@ -305,7 +308,7 @@ JSCRIPT;
                     clockJS.innerHTML = formatTime(timeLeft);
 
                     if (clockDayJS && timeLeft > 0) {
-                        clockDayJS.innerHTML = calcAge(timeLeft, 86400, timeLeft, false);
+                        clockDayJS.innerHTML = pluralize(transText.day, calcAge(timeLeft, 86400, timeLeft, false));
                     }
                 };
 

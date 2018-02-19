@@ -44,17 +44,11 @@ $event = $this->event;
         ?>
         <span class="countdown_daycount" style="<?php echo 'color: ' . $this->eventColor . ';'; ?>">
             <span id="<?php echo 'clockDayJS' . static::$instance ?>">
-                <?php echo $event->days; ?>
+                <?php echo JText::plural('MOD_OSTIMER_TRANSLATE_DAY', $event->days); ?>
             </span>
         </span>
 
         <?php
-        if (!empty($event->textDays)) :
-            ?>
-            <span class="countdown_dney"><?php echo $event->textDays; ?></span>
-        <?php
-        endif;
-
         echo $event->DetailCount;
     else :
         ?>
