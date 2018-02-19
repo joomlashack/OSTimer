@@ -26,41 +26,52 @@ defined('_JEXEC') or die();
 $event = $this->event;
 
 ?>
-<div class="countdown<?php echo $this->moduleClassSfx; ?> ostimer-wrapper">
-    <?php if (!empty($event->title)) : ?>
-        <span class="countdown_title"><?php echo $event->title; ?></span>
-    <?php endif; ?>
-
+<div class="<?php echo 'countdown' . $this->moduleClassSfx; ?> ostimer-wrapper">
     <?php
+    if (!empty($event->title)) :
+        ?>
+        <span class="countdown_title"><?php echo $event->title; ?></span>
+    <?php
+    endif;
+
     if ($event->date) :
         ?>
         <span class="countdown_displaydate"><?php echo $event->date; ?></span>
-        <?php
+    <?php
     endif;
 
-    if (($this->showZeroDay && $event->days == 0) || $event->days > 0) : ?>
+    if (($this->showZeroDay && $event->days == 0) || $event->days > 0) :
+        ?>
         <span class="countdown_daycount" style="<?php echo 'color: ' . $this->eventColor . ';'; ?>">
             <span id="<?php echo 'clockDayJS' . static::$instance ?>">
                 <?php echo $event->days; ?>
             </span>
         </span>
 
-        <?php if (!empty($event->textDays)) : ?>
+        <?php
+        if (!empty($event->textDays)) :
+            ?>
             <span class="countdown_dney"><?php echo $event->textDays; ?></span>
-        <?php endif; ?>
+        <?php
+        endif;
 
-        <?php echo $event->DetailCount; ?>
-    <?php else: ?>
+        echo $event->DetailCount;
+    else :
+        ?>
         <span class="countdown_hourcount" style="<?php echo 'color: ' . $this->eventColor . ';'; ?>">
-            <?php echo $event->DetailCount; ?>
+        <?php echo $event->DetailCount; ?>
         </span>
-    <?php endif; ?>
+    <?php
+    endif;
 
-    <?php if (!empty($event->detailLink)) : ?>
+    if (!empty($event->detailLink)) :
+        ?>
         <span class="countdown_link"><?php echo $event->detailLink; ?></span>
-    <?php endif; ?>
+    <?php
+    endif;
 
-    <?php if ($event->JS_enable) : ?>
-        <?php $this->printCountDounJS(); ?>
-    <?php endif; ?>
+    if ($event->JS_enable) :
+        $this->printCountDounJS();
+    endif;
+    ?>
 </div>
