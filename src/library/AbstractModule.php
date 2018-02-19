@@ -290,7 +290,7 @@ JSCRIPT;
 
                 var formatTime = function(timeLeft) {
                     var displayArray = [
-                        pluralize(transText.hour, calcAge(timeLeft, 3600, 24)),
+                        pluralize(transText.hour, calcAge(timeLeft, 3600, 24, false)),
                         pluralize(transText.minute, calcAge(timeLeft, 60, 60)),
                         pluralize(transText.second, calcAge(timeLeft, 1, 60), true)
                     ];
