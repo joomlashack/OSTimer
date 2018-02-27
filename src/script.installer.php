@@ -37,14 +37,15 @@ class Mod_OSTimerInstallerScript extends AbstractScript
      * @param JInstallerAdapterComponent $parent
      *
      * @return void
+     * @throws Exception
      */
     public function postFlight($type, $parent)
     {
         parent::postFlight($type, $parent);
 
         // Convert legacy date fields to the new one
-        $db = JFactory::getDbo();
-        $query = $db->getQuery(true)
+        $db      = JFactory::getDbo();
+        $query   = $db->getQuery(true)
             ->select(
                 array(
                     'id',
@@ -69,7 +70,7 @@ class Mod_OSTimerInstallerScript extends AbstractScript
 
                     $query = $db->getQuery(true)
                         ->update('#__modules')
-                        ->set('params = '  . $db->quote($params->toString()))
+                        ->set('params = ' . $db->quote($params->toString()))
                         ->where('id = ' . $module->id);
                     $db->setQuery($query)->execute();
                 }
