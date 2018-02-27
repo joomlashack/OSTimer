@@ -141,9 +141,9 @@
 
                 <field name="ev_dtime_format"
                        type="list"
-                       default="MOD_OSTIMER_TIME_FORMAT_12H_UPPER"
                        label="MOD_OSTIMER_DISPLAY_EVENT_TIME_FORMAT_LABEL"
                        description="MOD_OSTIMER_DISPLAY_EVENT_TIME_FORMAT_DESC">
+                    <option value="">MOD_OSTIMER_TIME_FORMAT_NONE</option>
                     <option value="MOD_OSTIMER_TIME_FORMAT_12H_UPPER">MOD_OSTIMER_TIME_FORMAT_12H_UPPER_LABEL</option>
                     <option value="MOD_OSTIMER_TIME_FORMAT_12H_LOWER">MOD_OSTIMER_TIME_FORMAT_12H_LOWER_LABEL</option>
                     <option value="MOD_OSTIMER_TIME_FORMAT_24H">MOD_OSTIMER_TIME_FORMAT_24H_LABEL</option>

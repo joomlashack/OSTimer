@@ -151,7 +151,7 @@ abstract class AbstractModule extends AbstractFlexibleModule
             }
 
             $dateFormat     = JText::_($dateFormat);
-            $timeFormat     = JText::_($params->get('ev_dtime_format', 'MOD_OSTIMER_TIME_FORMAT_12H_UPPER'));
+            $timeFormat     = JText::_($params->get('ev_dtime_format'));
             $timezoneFormat = $params->get('show_timezone', '');
 
             if ($params->get('ev_user', false)) {
@@ -163,7 +163,7 @@ abstract class AbstractModule extends AbstractFlexibleModule
                         'module'  => 'ostimer',
                         'format'  => 'raw',
                         'time'    => $this->event->datetime->format('Y-m-d H:i e'),
-                        'display' => $dateFormat . ' ' . $timeFormat,
+                        'display' => trim($dateFormat . ' ' . $timeFormat),
                         'tz'      => $timezoneFormat,
                         'date'    => null,
                         'offset'  => null
@@ -181,7 +181,7 @@ JSCRIPT;
                 \JFactory::getDocument()->addScriptDeclaration($jScript);
 
             } else {
-                $this->event->date = $eventTime->localeFormat($dateFormat . ' ' . $timeFormat);
+                $this->event->date = $eventTime->localeFormat(trim($dateFormat . ' ' . $timeFormat));
                 if ($timezoneFormat) {
                     $this->event->date .= ' ' . str_replace('_', ' ', $eventTime->format($timezoneFormat));
                 }
