@@ -92,6 +92,7 @@ abstract class AbstractModule extends AbstractFlexibleModule
     {
         $params = $this->params;
 
+        $eventImage        = $params->get('ev_image');
         $eventDisplayTitle = $params->get('ev_dtitle', 1);
         $eventTitle        = $params->get('ev_tit');
         $eventDisplayDate  = (bool)$params->get('ev_ddate', 1);
@@ -136,7 +137,8 @@ abstract class AbstractModule extends AbstractFlexibleModule
             'days'        => $timeLeft->format('%r%a'),
             'JS_enable'   => ($eventDisplayHour && $eventJs),
             'DetailCount' => null,
-            'detailLink'  => null
+            'detailLink'  => null,
+            'image'       => $eventImage
         );
 
         if ($eventDisplayDate) {

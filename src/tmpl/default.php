@@ -28,6 +28,12 @@ $event = $this->event;
 ?>
 <div class="<?php echo 'countdown' . $this->moduleClassSfx; ?> ostimer-wrapper">
     <?php
+    if ($event->image) :
+		?>
+		<span class="countdown_image"><img src="<?php echo $event->image; ?>"></span>
+    <?php
+    endif;
+
     if (!empty($event->title)) :
         ?>
         <span class="countdown_title"><?php echo $event->title; ?></span>
