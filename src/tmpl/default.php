@@ -30,7 +30,7 @@ $event = $this->event;
     <?php
     if ($event->image) :
 		?>
-		<span class="countdown_image">
+		<div class="countdown_image">
 			<?php
 			echo JHtml::_(
 				'image',
@@ -38,7 +38,7 @@ $event = $this->event;
 				htmlspecialchars($event->title)
 			);
 			?>
-		</span>
+		</div>
     <?php
     endif;
 

@@ -39,3 +39,8 @@
     padding: 0;
     line-height: normal;
 }
+
+.countdown_image {
+    margin-top: -15px;
+    margin-bottom: 15px;
+}
