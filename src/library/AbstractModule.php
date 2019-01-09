@@ -103,8 +103,8 @@ abstract class AbstractModule extends AbstractFlexibleModule
         $eventMinutes      = (int)$params->get('ev_min', 0);
         $eventDisplayURL   = (bool)$params->get('ev_dlink', 1);
         $eventTargetURL    = $params->get('ev_tlink', '_self');
-        $eventURLTitle     = $params->get('ev_ltitle', '');
         $eventURL          = $params->get('ev_l', '');
+        $eventURLTitle     = $params->get('ev_ltitle') ?: $eventURL;
         $eventJs           = (bool)$params->get('ev_js', 1);
         $eventEndTime      = $params->get('ev_endtime', JText::_('MOD_OSTIMER_TIME_HAS_COME_DEFAULT'));
 

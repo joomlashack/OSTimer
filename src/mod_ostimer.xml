@@ -248,7 +248,13 @@
                        type="url"
                        label="MOD_OSTIMER_URL_LABEL"
                        description="MOD_OSTIMER_URL_DESC"
-                       showon="ev_dlink:1" />
+                       showon="ev_dlink:1"/>
+
+                <field name="ev_ltitle"
+                       type="text"
+                       label="MOD_OSTIMER_TEXT_URL_LABEL"
+                       description="MOD_OSTIMER_TEXT_URL_DESC"
+                       showon="ev_dlink:1"/>
             </fieldset>
 
             <fieldset name="custom" label="MOD_OSTIMER_CUSTOM_TEXT">
@@ -257,11 +263,6 @@
                        default="Time's Up"
                        label="MOD_OSTIMER_TIME_HAS_COME_LABEL"
                        description="MOD_OSTIMER_TIME_HAS_COME_DESC"/>
-
-                <field name="ev_ltitle"
-                       type="text"
-                       label="MOD_OSTIMER_TEXT_URL_LABEL"
-                       description="MOD_OSTIMER_TEXT_URL_DESC"/>
 
                 <field type="customfooter"
                        name="customfooter"
