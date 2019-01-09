@@ -235,7 +235,8 @@
                 <field name="ev_l"
                        type="url"
                        label="MOD_OSTIMER_URL_LABEL"
-                       description="MOD_OSTIMER_URL_DESC"/>
+                       description="MOD_OSTIMER_URL_DESC"
+                       showon="ev_dlink:1" />
             </fieldset>
 
             <fieldset name="custom" label="MOD_OSTIMER_CUSTOM_TEXT">
