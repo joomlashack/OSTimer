@@ -212,7 +212,7 @@ JSCRIPT;
         }
 
         if ($eventDisplayURL && $eventURL && $eventURLTitle) {
-            $this->event->detailLink = JHtml::_('link', $eventURL, $eventTitle, ' title="' . $eventURLTitle . '" target="' . $eventTargetURL . '"');
+            $this->event->detailLink = JHtml::_('link', $eventURL, $eventURLTitle, ' title="' . $eventURLTitle . '" target="' . $eventTargetURL . '"');
         }
 
         if ($loadCSS) {
