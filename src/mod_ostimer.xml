@@ -227,7 +227,8 @@
                        type="radio"
                        class="btn-group btn-group-yesno"
                        default="1"
-                       label="MOD_OSTIMER_SHOW_LINK_LABEL">
+                       label="MOD_OSTIMER_SHOW_LINK_LABEL"
+                       description="MOD_OSTIMER_SHOW_LINK_DESC">
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
                 </field>
