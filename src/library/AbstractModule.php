@@ -101,6 +101,7 @@ abstract class AbstractModule extends AbstractFlexibleModule
         $eventHour         = (int)$params->get('ev_h', 0);
         $eventMinutes      = (int)$params->get('ev_min', 0);
         $eventDisplayURL   = (bool)$params->get('ev_dlink', 1);
+        $eventTargetURL    = $params->get('ev_tlink', '_self');
         $eventURLTitle     = $params->get('ev_ltitle', '');
         $eventURL          = $params->get('ev_l', '');
         $eventJs           = (bool)$params->get('ev_js', 1);
@@ -211,7 +212,7 @@ JSCRIPT;
         }
 
         if ($eventDisplayURL && $eventURL && $eventURLTitle) {
-            $this->event->detailLink = JHtml::_('link', $eventURL, $eventTitle, ' title="' . $eventURLTitle . '"');
+            $this->event->detailLink = JHtml::_('link', $eventURL, $eventTitle, ' title="' . $eventURLTitle . '" target="' . $eventTargetURL . '"');
         }
 
         if ($loadCSS) {
