@@ -5,7 +5,7 @@
     "license"          : "GPL-2+",
     "type"             : "joomla.module",
     "extra"            : {
-        "element": "mod_ostimer",
+        "element"        : "mod_ostimer",
         "element-short"  : "ostimer",
         "name"           : "OSTimer",
         "client"         : "site",

@@ -87,6 +87,7 @@ abstract class AbstractModule extends AbstractFlexibleModule
 
     /**
      * @return void
+     * @throws \Exception
      */
     public function init()
     {
@@ -212,7 +213,15 @@ JSCRIPT;
         }
 
         if ($eventDisplayURL && $eventURL && $eventURLTitle) {
-            $this->event->detailLink = JHtml::_('link', $eventURL, $eventURLTitle, ' title="' . $eventURLTitle . '" target="' . $eventTargetURL . '"');
+            $this->event->detailLink = JHtml::_(
+                'link',
+                $eventURL,
+                $eventURLTitle,
+                array(
+                    'title'  => $eventURLTitle,
+                    'target' => $eventTargetURL
+                )
+            );
         }
 
         if ($loadCSS) {
@@ -337,7 +346,6 @@ JSCRIPT;
         </script>
         <?php
     }
-
 
     /**
      * Final check to determine if this event should be displayed at all
