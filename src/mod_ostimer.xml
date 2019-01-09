@@ -227,15 +227,28 @@
                        type="radio"
                        class="btn-group btn-group-yesno"
                        default="1"
-                       label="MOD_OSTIMER_SHOW_LINK_LABEL">
+                       label="MOD_OSTIMER_SHOW_LINK_LABEL"
+                       description="MOD_OSTIMER_SHOW_LINK_DESC">
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
+                </field>
+
+                <field name="ev_tlink"
+                       type="radio"
+                       class="btn-group"
+                       default="_self"
+                       label="MOD_OSTIMER_TARGET_LINK_LABEL"
+                       description="MOD_OSTIMER_TARGET_LINK_DESC"
+                       showon="ev_dlink:1">
+                    <option value="_self">MOD_OSTIMER_TARGET_SELF</option>
+                    <option value="_blank">MOD_OSTIMER_TARGET_BLANK</option>
                 </field>
 
                 <field name="ev_l"
                        type="url"
                        label="MOD_OSTIMER_URL_LABEL"
-                       description="MOD_OSTIMER_URL_DESC"/>
+                       description="MOD_OSTIMER_URL_DESC"
+                       showon="ev_dlink:1" />
             </fieldset>
 
             <fieldset name="custom" label="MOD_OSTIMER_CUSTOM_TEXT">
