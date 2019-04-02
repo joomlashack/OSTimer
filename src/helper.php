@@ -39,40 +39,35 @@ abstract class ModOstimerHelper
 
         $event  = $app->input->getString('time');
         $now    = $app->input->getString('date');
-        $offset = 1 - ($app->input->getInt('offset', 0) * 60); // Javascript provides inverse minutes
+        $offset = 0 - ($app->input->getInt('offset', 0) * 60); // Javascript provides inverse minutes
 
         // We're expecting a timezone designator in parentheses
         if (preg_match('/\(([^\)]*)\)/', $now, $match)) {
             $timezoneString = $match[1];
-            if (strlen($timezoneString) > 3 && !in_array($timezoneString, timezone_identifiers_list())) {
-                //
-                $words          = preg_split('/\s/', $timezoneString);
-                $timezoneString = '';
+            if (!in_array($timezoneString, timezone_identifiers_list())) {
+                // Try to find Timezone from abbreviation
+                $words = preg_split('/\s/', $timezoneString);
+
+                $timezoneAbbreviation = '';
                 foreach ($words as $word) {
-                    $timezoneString .= strtoupper($word[0]);
+                    $timezoneAbbreviation .= strtoupper($word[0]);
+                }
+
+                $timezoneString = timezone_name_from_abbr($timezoneAbbreviation, $offset);
+                if (!$timezoneString) {
+                    // Abbreviation didn't work either, just try offset
+                    // Note we aren't attempting to determine DST
+                    $timezoneString = timezone_name_from_abbr('', $offset);
                 }
             }
 
-            if (strlen($timezoneString) === 3) {
-                $timezoneString = timezone_name_from_abbr($timezoneString, $offset);
-            }
+            if ($timezoneString) {
+                try {
+                    $userTimezone = new DateTimeZone($timezoneString);
 
-            try {
-                $userTimezone = new DateTimeZone($timezoneString);
-
-            } catch (Exception $e) {
-                // Nothing worked
-            }
-        }
-
-        if (empty($userTimezone || !$userTimezone instanceof DateTimeZone)) {
-            try {
-                // Nothing worked. let's get the first available for the offset
-                $timezoneString = timezone_name_from_abbr('', $offset);
-                $userTimezone   = new DateTimeZone($timezoneString);
-
-            } catch (Exception $e) {
-                // shoot! Display will have to be in event timezone
+                } catch (Exception $e) {
+                    // Nothing worked
+                }
             }
         }
 
