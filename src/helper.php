@@ -42,25 +42,15 @@ abstract class ModOstimerHelper
         $offsetMinutes = $app->input->getInt('offset', 0);
         $offsetSeconds = 0 - ($offsetMinutes * 60); // Javascript reports offset in inverse minutes
 
+        $debugData = array($now, '<br>', $offsetMinutes, '<hr>');
+
         // We're expecting a timezone designator in parentheses
         if (preg_match('/\(([^\)]*)\)/', $now, $match)) {
-            $timezoneString = $match[1];
-            if (!in_array($timezoneString, timezone_identifiers_list())) {
-                $timezoneString = static::findTimezone($timezoneString, $offsetSeconds);
-            }
-
-            if ($timezoneString) {
-                try {
-                    $userTimezone = new DateTimeZone($timezoneString);
-
-                } catch (Exception $e) {
-                    // Nothing worked
-                }
-            }
+            $userTimezone = static::createTimezone($match[1], $offsetSeconds);
         }
 
         $eventTime = new DateTime($event);
-        if (!empty($userTimezone) && $userTimezone instanceof DateTimeZone) {
+        if (!empty($userTimezone)) {
             $eventTime->setTimezone($userTimezone);
         }
 
@@ -73,15 +63,15 @@ abstract class ModOstimerHelper
         }
 
         if ($app->input->getInt('debug', 0)) {
-            $debugData = array(
-                $offsetMinutes,
-                '<br>',
-                $now,
-                '<hr>',
-                date('c (e)'),
-                '<br>',
-                gmdate('c (e)')
+            $debugData = array_merge(
+                $debugData,
+                array(
+                    $event . '<br>',
+                    $eventTime->format('c (e)') . '<hr>',
+                    date('c (e)') . '<br>' . gmdate('c (e)')
+                )
             );
+
             $dateString .= sprintf(
                 '<div class="alert-error" style="text-align: left;">%s</div>',
                 join('', $debugData)
@@ -95,43 +85,51 @@ abstract class ModOstimerHelper
      * @param string $tzString
      * @param int    $offset
      *
-     * @return string
+     * @return DateTimeZone
      */
-    protected static function findTimezone($tzString, $offset)
+    protected static function createTimezone($tzString, $offset)
     {
-        // Try to find Timezone from abbreviation
-        $words = preg_split('/\s/', $tzString);
+        try {
+            $now = new DateTime();
 
-        $tzAbbreviation = '';
-        foreach ($words as $word) {
-            $tzAbbreviation .= strtolower($word[0]);
-        }
-
-        $tzList = timezone_abbreviations_list();
-        if (isset($tzList[$tzAbbreviation])) {
-            // Maybe we'll find it by abbreviation
-            foreach ($tzList[$tzAbbreviation] as $tzData) {
-                if ($tzData['offset'] == $offset) {
-                    return $tzData['timezone_id'];
-                }
-            }
-        }
-
-        // Try to find it by offset
-        $result = null;
-        foreach ($tzList as $key => $codes) {
-            foreach ($codes as $code) {
-                if ($code['offset'] == $offset) {
-                    $result = $code['timezone_id'];
-                    if (stripos($result, $words[0])) {
-                        // The first word is often geographic and may match the timezone ID
-                        return $result;
+            try {
+                if (in_array($tzString, timezone_identifiers_list())) {
+                    $timezone = new DateTimeZone($tzString);
+                    if ($timezone->getOffset($now) == $offset) {
+                        return $timezone;
                     }
                 }
+
+            } catch (Exception $error) {
+                // ignore it here
             }
+
+            // Try to find Timezone from offset
+            $tzList = timezone_abbreviations_list();
+            foreach ($tzList as $key => $codes) {
+                foreach ($codes as $tzData) {
+                    $tzId     = $tzData['timezone_id'];
+                    $tzOffset = $tzData['offset'];
+
+                    if ($tzOffset == $offset) {
+                        try {
+                            $timezone = new DateTimeZone($tzId);
+                            if ($timezone->getOffset($now) == $offset) {
+                                return $timezone;
+                            }
+
+                        } catch (Exception $error) {
+                            // ignore this and carry on
+                        }
+                    }
+
+                }
+            }
+
+        } catch (Exception $error) {
+            // Just bail!
         }
 
-        // Return whatever lame match we might have found
-        return $result;
+        return null;
     }
 }
