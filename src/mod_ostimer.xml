@@ -116,8 +116,7 @@
                        type="calendar"
                        label="MOD_OSTIMER_DATE_LABEL"
                        description="MOD_OSTIMER_DATE_DESC"
-                       filter="utc"
-                       format="%d-%m-%Y"/>
+                       filter="utc"/>
 
                 <field name="ev_h"
                        type="text"
