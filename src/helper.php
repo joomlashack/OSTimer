@@ -28,6 +28,11 @@ defined('_JEXEC') or die();
 abstract class ModOstimerHelper
 {
     /**
+     * @var string[]
+     */
+    protected static $log = array();
+
+    /**
      * @return string
      * @throws Exception
      */
@@ -131,5 +136,42 @@ abstract class ModOstimerHelper
         }
 
         return null;
+    }
+
+    /**
+     * @return string
+     */
+    protected static function renderLog()
+    {
+        try {
+            if (JFactory::getApplication()->input->getInt('debug') && static::$log) {
+                static::logEntry('Server', date('c (e)'));
+                static::logEntry('UTC', gmdate('c (e)'));
+
+                return sprintf(
+                    '<div class="alert-error" style="text-align: left;"><ul><li>%s</li></ul></div>',
+                    join('</li><li>', static::$log)
+                );
+            }
+
+        } catch (Exception $error) {
+            // ignore
+        }
+
+        return '';
+    }
+
+    /**
+     * @param string $label
+     * @param string $text
+     */
+    protected static function logEntry($label, $text = null)
+    {
+        if ($text) {
+            static::$log[] = sprintf('%s: %s', $label, $text);
+
+        } else {
+            static::$log[] = sprintf('<i class="icon-info"></i>%s', $label);
+        }
     }
 }
