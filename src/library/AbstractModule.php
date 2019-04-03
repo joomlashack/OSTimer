@@ -170,7 +170,8 @@ abstract class AbstractModule extends AbstractFlexibleModule
                         'display' => trim($dateFormat . ' ' . $timeFormat),
                         'tz'      => $timezoneFormat,
                         'date'    => null,
-                        'offset'  => null
+                        'offset'  => null,
+                        'debug'   => $this->params->get('debug', 0)
                     )
                 );
                 $jScript  = <<<JSCRIPT

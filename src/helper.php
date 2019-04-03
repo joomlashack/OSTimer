@@ -37,15 +37,16 @@ abstract class ModOstimerHelper
 
         $app = JFactory::getApplication();
 
-        $event  = $app->input->getString('time');
-        $now    = $app->input->getString('date');
-        $offset = 0 - ($app->input->getInt('offset', 0) * 60); // Javascript provides inverse minutes
+        $event         = $app->input->getString('time');
+        $now           = $app->input->getString('date');
+        $offsetMinutes = $app->input->getInt('offset', 0);
+        $offsetSeconds = 0 - ($offsetMinutes * 60); // Javascript reports offset in inverse minutes
 
         // We're expecting a timezone designator in parentheses
         if (preg_match('/\(([^\)]*)\)/', $now, $match)) {
             $timezoneString = $match[1];
             if (!in_array($timezoneString, timezone_identifiers_list())) {
-                $timezoneString = static::findTimezone($timezoneString, $offset);
+                $timezoneString = static::findTimezone($timezoneString, $offsetSeconds);
             }
 
             if ($timezoneString) {
@@ -69,6 +70,22 @@ abstract class ModOstimerHelper
         $dateString = $eventTime->localeFormat($format);
         if ($tzFormat) {
             $dateString .= ' ' . str_replace('_', ' ', $eventTime->format($tzFormat));
+        }
+
+        if ($app->input->getInt('debug', 0)) {
+            $debugData = array(
+                $offsetMinutes,
+                '<br>',
+                $now,
+                '<hr>',
+                date('c (e)'),
+                '<br>',
+                gmdate('c (e)')
+            );
+            $dateString .= sprintf(
+                '<div class="alert-error" style="text-align: left;">%s</div>',
+                join('', $debugData)
+            );
         }
 
         return $dateString;

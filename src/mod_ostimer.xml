@@ -272,6 +272,15 @@
             </fieldset>
 
             <fieldset name="advanced">
+                <field name="debug"
+                       type="radio"
+                       default="0"
+                       class="btn-group btn-group-yesno"
+                       label="MOD_OSTIMER_DEBUG_LABEL">
+                    <option value="0">JDISABLED</option>
+                    <option value="1">JENABLED</option>
+                </field>
+
                 <field name="moduleclass_sfx"
                        type="textarea"
                        label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
