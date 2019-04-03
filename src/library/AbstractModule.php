@@ -180,6 +180,10 @@ jQuery(document).ready(function() {
         now = new Date();
     ajaxData.date = now.toString();
     ajaxData.offset = now.getTimezoneOffset();
+    if (typeof Intl !== 'undefined' && Intl.DateTimeFormat) {
+        ajaxData.tzid = Intl.DateTimeFormat().resolvedOptions().timeZone
+    }
+
     jQuery('.countdown_displaydate').load('index.php', ajaxData);
 });
 JSCRIPT;

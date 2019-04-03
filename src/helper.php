@@ -44,20 +44,35 @@ abstract class ModOstimerHelper
 
         $event         = $app->input->getString('time');
         $now           = $app->input->getString('date');
+        $tzid          = $app->input->getString('tzid');
         $offsetMinutes = $app->input->getInt('offset', 0);
         $offsetSeconds = 0 - ($offsetMinutes * 60); // Javascript reports offset in inverse minutes
 
-        $debugData = array($now, '<br>', $offsetMinutes, '<hr>');
+        $eventTime    = new DateTime($event);
+        $userTimezone = null;
 
-        // We're expecting a timezone designator in parentheses
-        if (preg_match('/\(([^\)]*)\)/', $now, $match)) {
-            $userTimezone = static::createTimezone($match[1], $offsetSeconds);
+        static::logEntry('Event', $eventTime->format('c (e)'));
+        static::logEntry('JS Now', $now);
+
+        if ($tzid) {
+            // Javascript gave us a Timezone ID
+            $userTimezone = static::createTimezone($tzid, $offsetSeconds);
+            $success = $userTimezone ? ' [OK]' : ' [FAIL]';
+            static::logEntry('JS TZID', $tzid . $success);
         }
 
-        $eventTime = new DateTime($event);
-        if (!empty($userTimezone)) {
+        if (!$userTimezone && preg_match('/\(([^\)]*)\)/', $now, $match)) {
+            // Timezone ID failed, try to find via offset
+            $userTimezone = static::createTimezone($match[1], $offsetSeconds);
+
+            $success = $userTimezone ? ' [OK]' : ' [FAIL]';
+            static::logEntry('JS Offset', $offsetMinutes . $success);
+        }
+
+        if ($userTimezone instanceof DateTimeZone) {
             $eventTime->setTimezone($userTimezone);
         }
+        static::logEntry('Event', $eventTime->format('c (e)'));
 
         $format   = $app->input->getString('display');
         $tzFormat = $app->input->getString('tz');
@@ -67,23 +82,7 @@ abstract class ModOstimerHelper
             $dateString .= ' ' . str_replace('_', ' ', $eventTime->format($tzFormat));
         }
 
-        if ($app->input->getInt('debug', 0)) {
-            $debugData = array_merge(
-                $debugData,
-                array(
-                    $event . '<br>',
-                    $eventTime->format('c (e)') . '<hr>',
-                    date('c (e)') . '<br>' . gmdate('c (e)')
-                )
-            );
-
-            $dateString .= sprintf(
-                '<div class="alert-error" style="text-align: left;">%s</div>',
-                join('', $debugData)
-            );
-        }
-
-        return $dateString;
+        return static::renderLog() . $dateString;
     }
 
     /**
