@@ -45,20 +45,7 @@ abstract class ModOstimerHelper
         if (preg_match('/\(([^\)]*)\)/', $now, $match)) {
             $timezoneString = $match[1];
             if (!in_array($timezoneString, timezone_identifiers_list())) {
-                // Try to find Timezone from abbreviation
-                $words = preg_split('/\s/', $timezoneString);
-
-                $timezoneAbbreviation = '';
-                foreach ($words as $word) {
-                    $timezoneAbbreviation .= strtoupper($word[0]);
-                }
-
-                $timezoneString = timezone_name_from_abbr($timezoneAbbreviation, $offset);
-                if (!$timezoneString) {
-                    // Abbreviation didn't work either, just try offset
-                    // Note we aren't attempting to determine DST
-                    $timezoneString = timezone_name_from_abbr('', $offset);
-                }
+                $timezoneString = static::findTimezone($timezoneString, $offset);
             }
 
             if ($timezoneString) {
@@ -85,5 +72,49 @@ abstract class ModOstimerHelper
         }
 
         return $dateString;
+    }
+
+    /**
+     * @param string $tzString
+     * @param int    $offset
+     *
+     * @return string
+     */
+    protected static function findTimezone($tzString, $offset)
+    {
+        // Try to find Timezone from abbreviation
+        $words = preg_split('/\s/', $tzString);
+
+        $tzAbbreviation = '';
+        foreach ($words as $word) {
+            $tzAbbreviation .= strtolower($word[0]);
+        }
+
+        $tzList = timezone_abbreviations_list();
+        if (isset($tzList[$tzAbbreviation])) {
+            // Maybe we'll find it by abbreviation
+            foreach ($tzList[$tzAbbreviation] as $tzData) {
+                if ($tzData['offset'] == $offset) {
+                    return $tzData['timezone_id'];
+                }
+            }
+        }
+
+        // Try to find it by offset
+        $result = null;
+        foreach ($tzList as $key => $codes) {
+            foreach ($codes as $code) {
+                if ($code['offset'] == $offset) {
+                    $result = $code['timezone_id'];
+                    if (stripos($result, $words[0])) {
+                        // The first word is often geographic and may match the timezone ID
+                        return $result;
+                    }
+                }
+            }
+        }
+
+        // Return whatever lame match we might have found
+        return $result;
     }
 }
