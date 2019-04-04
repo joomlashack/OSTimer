@@ -1,7 +1,7 @@
 [![Joomlashack](https://www.joomlashack.com/images/logo_circle_small.png)](https://www.joomlashack.com)
 
 OSTimer
-============
+=======
 
 ## About
 
@@ -9,7 +9,7 @@ The module displays a countdown to an event of your choice. Now developed (and i
 
 ## Requirements
 
-Joomla 2.5.x or 3.x
+Joomla 3.x
 
 ## License
 
