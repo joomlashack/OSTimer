@@ -49,25 +49,12 @@ abstract class ModOstimerHelper
         $offsetSeconds = 0 - ($offsetMinutes * 60); // Javascript reports offset in inverse minutes
 
         $eventTime    = new DateTime($event);
-        $userTimezone = null;
 
         static::logEntry('Event', $eventTime->format('c (e)'));
         static::logEntry('JS Now', $now);
+        static::logEntry('JS Offset', $offsetMinutes);
 
-        if ($tzid) {
-            // Javascript gave us a Timezone ID
-            $userTimezone = static::createTimezone($tzid, $offsetSeconds);
-            $success = $userTimezone ? ' [OK]' : ' [FAIL]';
-            static::logEntry('JS TZID', $tzid . $success);
-        }
-
-        if (!$userTimezone && preg_match('/\(([^\)]*)\)/', $now, $match)) {
-            // Timezone ID failed, try to find via offset
-            $userTimezone = static::createTimezone($match[1], $offsetSeconds);
-
-            $success = $userTimezone ? ' [OK]' : ' [FAIL]';
-            static::logEntry('JS Offset', $offsetMinutes . $success);
-        }
+        $userTimezone = static::createTimezone($offsetSeconds, $tzid);
 
         if ($userTimezone instanceof DateTimeZone) {
             $eventTime->setTimezone($userTimezone);
@@ -91,26 +78,33 @@ abstract class ModOstimerHelper
      * ignoring Timezone names and abbreviations (e.g. Eastern Standard Time
      * or EST) because the data tables have been found to be unreliable.
      *
+     * @param int    $offset   GMT offset seconds (west < 0, east > 0)
+     * @param string $tzString Recognized Intl Timezone ID
+     *
      * @return DateTimeZone
      */
-    protected static function createTimezone($tzString, $offset)
+    protected static function createTimezone($offset, $tzString = null)
     {
         try {
             $now = new DateTime();
 
-            try {
-                if (in_array($tzString, timezone_identifiers_list())) {
-                    $timezone = new DateTimeZone($tzString);
-                    if ($timezone->getOffset($now) == $offset) {
-                        return $timezone;
+            if ($tzString) {
+                // Attempt to create by Intl Timezone ID
+                try {
+                    if (in_array($tzString, timezone_identifiers_list())) {
+                        $timezone = new DateTimeZone($tzString);
+                        if ($timezone->getOffset($now) == $offset) {
+                            static::logEntry('TZID', $tzString);
+                            return $timezone;
+                        }
                     }
-                }
 
-            } catch (Exception $error) {
-                // ignore it here
+                } catch (Exception $error) {
+                    // ignore it here
+                }
             }
 
-            // Try to find Timezone from offset
+            // Look for the first timezone that will give us the specified GMT offset
             $tzList = timezone_abbreviations_list();
             foreach ($tzList as $key => $codes) {
                 foreach ($codes as $tzData) {
@@ -121,6 +115,9 @@ abstract class ModOstimerHelper
                         try {
                             $timezone = new DateTimeZone($tzId);
                             if ($timezone->getOffset($now) == $offset) {
+                                static::logEntry('offset', $offset);
+                                static::logEntry('found', $tzId);
+
                                 return $timezone;
                             }
 
