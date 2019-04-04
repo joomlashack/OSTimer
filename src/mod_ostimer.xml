@@ -2,11 +2,11 @@
 <extension type="module" version="3.5" client="site" method="upgrade">
     <name>mod_ostimer</name>
     <author>Joomlashack</author>
-    <creationDate>April 03 2019</creationDate>
-    <copyright>Copyright (C) 2017 Open Source Training, LLC</copyright>
-    <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+    <copyright>Copyright (C) 2016-2019 Joomlashack. All rights reserved.</copyright>
+    <license>GNU/GPL</license>
     <authorEmail>help@joomlashack.com</authorEmail>
-    <authorUrl>http://www.joomlashack.com</authorUrl>
+    <authorUrl>https://www.joomlashack.com</authorUrl>
+    <creationDate>April 03 2019</creationDate>
     <version>2.8.19b2</version>
     <variant>FREE</variant>
     <description>MOD_OSTIMER_DESCRIPTION</description>
