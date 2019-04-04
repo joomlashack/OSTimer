@@ -86,8 +86,10 @@ abstract class ModOstimerHelper
     }
 
     /**
-     * @param string $tzString
-     * @param int    $offset
+     * Create a DateTimeZone object using either a timezone id
+     * (e.g. America/New_York) or GMT offset. Note that we are
+     * ignoring Timezone names and abbreviations (e.g. Eastern Standard Time
+     * or EST) because the data tables have been found to be unreliable.
      *
      * @return DateTimeZone
      */
