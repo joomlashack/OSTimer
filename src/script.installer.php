@@ -33,8 +33,8 @@ use Alledia\Installer\AbstractScript;
 class Mod_OSTimerInstallerScript extends AbstractScript
 {
     /**
-     * @param string                     $type
-     * @param JInstallerAdapterComponent $parent
+     * @param string            $type
+     * @param JInstallerAdapter $parent
      *
      * @return void
      * @throws Exception
@@ -43,7 +43,20 @@ class Mod_OSTimerInstallerScript extends AbstractScript
     {
         parent::postFlight($type, $parent);
 
-        // Convert legacy date fields to the new one
+        switch ($type) {
+            case 'update':
+                $this->convertLegacyDates();
+                break;
+        }
+    }
+
+    /**
+     * Convert legacy date fields to the new one
+     *
+     * @return void
+     */
+    protected function convertLegacyDates()
+    {
         $db      = JFactory::getDbo();
         $query   = $db->getQuery(true)
             ->select(
