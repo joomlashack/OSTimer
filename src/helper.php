@@ -44,17 +44,18 @@ abstract class ModOstimerHelper
 
         $event         = $app->input->getString('time');
         $now           = $app->input->getString('date');
-        $tzid          = $app->input->getString('tzid');
+        $tzId          = $app->input->getString('tzid');
         $offsetMinutes = $app->input->getInt('offset', 0);
         $offsetSeconds = 0 - ($offsetMinutes * 60); // Javascript reports offset in inverse minutes
 
-        $eventTime    = new DateTime($event);
+        $eventTime = new DateTime($event);
 
-        static::logEntry('Event', $eventTime->format('c (e)'));
-        static::logEntry('JS Now', $now);
-        static::logEntry('JS Offset', $offsetMinutes);
+        static::logEntry('event', $eventTime->format('c (e)'));
+        static::logEntry('jsnow', $now);
+        static::logEntry('jsoffset', $offsetMinutes);
+        static::logEntry('jstzid', $tzId);
 
-        $userTimezone = static::createTimezone($offsetSeconds, $tzid);
+        $userTimezone = static::createTimezone($offsetSeconds, $tzId);
 
         if ($userTimezone instanceof DateTimeZone) {
             $eventTime->setTimezone($userTimezone);
@@ -94,43 +95,60 @@ abstract class ModOstimerHelper
                     if (in_array($tzString, timezone_identifiers_list())) {
                         $timezone = new DateTimeZone($tzString);
                         if ($timezone->getOffset($now) == $offset) {
-                            static::logEntry('TZID', $tzString);
+                            static::logEntry('tzok', $tzString);
                             return $timezone;
                         }
                     }
 
                 } catch (Exception $error) {
-                    // ignore it here
                 }
             }
+            static::logEntry('tzfail', $tzString);
 
             // Look for the first timezone that will give us the specified GMT offset
             $tzList = timezone_abbreviations_list();
             foreach ($tzList as $key => $codes) {
                 foreach ($codes as $tzData) {
-                    $tzId     = $tzData['timezone_id'];
-                    $tzOffset = $tzData['offset'];
+                    if ($tzId = $tzData['timezone_id']) {
+                        $tzOffset = $tzData['offset'];
+                        if ($tzOffset == $offset) {
+                            try {
+                                $timezone = new DateTimeZone($tzId);
+                                if ($timezone->getOffset($now) == $offset) {
+                                    static::logEntry('tzfound', $tzId);
 
-                    if ($tzOffset == $offset) {
-                        try {
-                            $timezone = new DateTimeZone($tzId);
-                            if ($timezone->getOffset($now) == $offset) {
-                                static::logEntry('offset', $offset);
-                                static::logEntry('found', $tzId);
+                                    return $timezone;
+                                }
+                                static::logEntry('tzreject', $tzId);
 
-                                return $timezone;
+                            } catch (Exception $error) {
+                                static::logEntry('tzbad', $tzId);
                             }
-
-                        } catch (Exception $error) {
-                            // ignore this and carry on
                         }
                     }
-
                 }
             }
 
+            // Still nothing! Use the offset to create a GMT offset timezone
+            $offsetMinutes = $offset / 60;
+
+            $hrs       = intval($offsetMinutes / 60);
+            $mins      = abs($offsetMinutes % 60);
+            $gmtString = sprintf('GMT%+03d:%02d', $hrs, $mins);
+
+            try {
+                $timezone = new DateTimeZone($gmtString);
+                static::logEntry('gmtok', $gmtString);
+
+                return $timezone;
+
+            } catch (Exception $error) {
+                static::logEntry('gmtfail', $gmtString);
+            }
+
+
         } catch (Exception $error) {
-            // Just bail!
+            static::logEntry('error', $error->getMessage());
         }
 
         return null;
@@ -144,7 +162,7 @@ abstract class ModOstimerHelper
         try {
             if (JFactory::getApplication()->input->getInt('debug') && static::$log) {
                 static::logEntry('Server', date('c (e)'));
-                static::logEntry('UTC', gmdate('c (e)'));
+                static::logEntry('utc', gmdate('c (e)'));
 
                 return sprintf(
                     '<div class="alert-error" style="text-align: left;"><ul><li>%s</li></ul></div>',
@@ -166,7 +184,7 @@ abstract class ModOstimerHelper
     protected static function logEntry($label, $text = null)
     {
         if ($text) {
-            static::$log[] = sprintf('%s: %s', $label, $text);
+            static::$log[] = sprintf('%s: %s', strtoupper($label), $text);
 
         } else {
             static::$log[] = sprintf('<i class="icon-info"></i>%s', $label);
