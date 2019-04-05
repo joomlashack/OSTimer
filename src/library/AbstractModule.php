@@ -159,13 +159,7 @@ abstract class AbstractModule extends AbstractFlexibleModule
             $timezoneFormat = $params->get('show_timezone', '');
 
             if ($params->get('ev_user', false)) {
-                $this->event->date = JHtml::_(
-                    'image',
-                    'mod_ostimer/loading.gif',
-                    JText::_('MOD_OSTIMER_AJAX_LOADING_USER_TZ'),
-                    null,
-                    true
-                );
+                $this->event->date = JText::_('MOD_OSTIMER_AJAX_LOADING_USER_TZ');
 
                 $ajaxData = json_encode(
                     array(
