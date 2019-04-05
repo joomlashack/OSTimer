@@ -38,46 +38,63 @@ abstract class ModOstimerHelper
      */
     public static function getAjax()
     {
-        require_once __DIR__ . '/library/DateTime.php';
+        try {
+            require_once __DIR__ . '/library/DateTime.php';
 
-        $app = JFactory::getApplication();
+            $app = JFactory::getApplication();
 
-        $event         = $app->input->getString('time');
-        $now           = $app->input->getString('date');
-        $tzId          = $app->input->getString('tzid');
-        $offsetMinutes = $app->input->getInt('offset', 0);
-        $offsetSeconds = 0 - ($offsetMinutes * 60); // Javascript reports offset in inverse minutes
+            $event         = $app->input->getString('time');
+            $now           = $app->input->getString('date');
+            $tzId          = $app->input->getString('tzid');
+            $offsetMinutes = $app->input->getInt('offset', 0);
+            $offsetSeconds = 0 - ($offsetMinutes * 60); // Javascript reports offset in inverse minutes
 
-        $eventTime = new DateTime($event);
+            $eventTime = new DateTime($event);
 
-        static::logEntry('event', $eventTime->format('c (e)'));
-        static::logEntry('jsnow', $now);
-        static::logEntry('jsoffset', $offsetMinutes);
-        static::logEntry('jstzid', $tzId);
+            static::logEntry('event', $eventTime->format('c (e)'));
+            static::logEntry('jsnow', $now);
+            static::logEntry('jsoffset', $offsetMinutes);
+            static::logEntry('jstzid', $tzId);
 
-        $userTimezone = static::createTimezone($offsetSeconds, $tzId);
+            $userTimezone = static::createTimezone($offsetSeconds, $tzId);
 
-        if ($userTimezone instanceof DateTimeZone) {
-            $eventTime->setTimezone($userTimezone);
+            if ($userTimezone instanceof DateTimeZone) {
+                $eventTime->setTimezone($userTimezone);
+            }
+            static::logEntry('Event', $eventTime->format('c (e)'));
+
+            $format   = $app->input->getString('display');
+            $tzFormat = $app->input->getString('tz');
+
+            $dateString = $eventTime->localeFormat($format);
+            if ($tzFormat) {
+                $dateString .= ' ' . str_replace('_', ' ', $eventTime->format($tzFormat));
+            }
+
+            return static::renderLog() . $dateString;
+
+        } catch (Exception $error) {
+            // Handle at the end
+        } catch (Throwable $error) {
+            // Handle at the end
         }
-        static::logEntry('Event', $eventTime->format('c (e)'));
 
-        $format   = $app->input->getString('display');
-        $tzFormat = $app->input->getString('tz');
+        if (!empty($error)) {
+            static::logEntry('error', $error->getMessage());
 
-        $dateString = $eventTime->localeFormat($format);
-        if ($tzFormat) {
-            $dateString .= ' ' . str_replace('_', ' ', $eventTime->format($tzFormat));
+        } else {
+            static::logEntry('error', 'Something truly and epically wrong just happened!');
         }
 
-        return static::renderLog() . $dateString;
+        return static::renderLog();
     }
 
     /**
      * Create a DateTimeZone object using either a timezone id
      * (e.g. America/New_York) or GMT offset. Note that we are
      * ignoring Timezone names and abbreviations (e.g. Eastern Standard Time
-     * or EST) because the data tables have been found to be unreliable.
+     * or EST) because the data tables have been found to be unreliable for
+     * our purposes here.
      *
      * @param int    $offset   GMT offset seconds (west < 0, east > 0)
      * @param string $tzString Recognized Intl Timezone ID
@@ -87,6 +104,7 @@ abstract class ModOstimerHelper
     protected static function createTimezone($offset, $tzString = null)
     {
         try {
+            // We need a reference DateTime to check the offset of the created DateTimeZone
             $now = new DateTime();
 
             if ($tzString) {
@@ -129,12 +147,12 @@ abstract class ModOstimerHelper
                 }
             }
 
-            // Still nothing! Use the offset to create a GMT offset timezone
+            // Still nothing! Use the offset to create a GMT+hh:mm type timezone
             $offsetMinutes = $offset / 60;
 
-            $hrs       = intval($offsetMinutes / 60);
-            $mins      = abs($offsetMinutes % 60);
-            $gmtString = sprintf('GMT%+03d:%02d', $hrs, $mins);
+            $hours     = intval($offsetMinutes / 60);
+            $minutes   = abs($offsetMinutes % 60);
+            $gmtString = sprintf('GMT%+03d:%02d', $hours, $minutes);
 
             try {
                 $timezone = new DateTimeZone($gmtString);
