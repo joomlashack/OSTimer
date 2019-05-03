@@ -9,7 +9,9 @@
         "element-short"  : "ostimer",
         "name"           : "OSTimer",
         "client"         : "site",
-        "package-license": "free"
+        "package-license": "free",
+        "target-platform": "3.*",
+        "infourl"        : "/changelog/ostimer/"
     },
     "authors"          : [
         {
