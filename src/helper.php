@@ -40,7 +40,9 @@ abstract class ModOstimerHelper
     public static function getAjax(): string
     {
         try {
-            require_once __DIR__ . '/library/DateTime.php';
+            if ((include 'include.php') == false) {
+                return '';
+            }
 
             $app = Factory::getApplication();
 
