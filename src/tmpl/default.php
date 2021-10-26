@@ -26,6 +26,10 @@ use Joomla\CMS\Language\Text;
 
 defined('_JEXEC') or die();
 
+/**
+ * @var Alledia\OSTimer\Free\Joomla\Module $this
+ */
+
 $event = $this->event;
 
 ?>

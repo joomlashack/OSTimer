@@ -40,6 +40,7 @@
             <file>/modules/mod_ostimer/library/DateTime.php</file>
             <file>/modules/mod_ostimer/tmpl/style.css</file>
 
+            <folder>/modules/mod_ostimer/library/Alledia/OSTimer/Pro</folder>
             <folder>/modules/mod_ostimer/library/Free</folder>
         </obsolete>
     </alledia>
