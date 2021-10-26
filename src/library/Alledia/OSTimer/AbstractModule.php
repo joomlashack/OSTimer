@@ -116,7 +116,7 @@ abstract class AbstractModule extends AbstractFlexibleModule
         }
 
         $this->moduleClassSfx = $params->get('moduleclass_sfx', '');
-        $this->showZeroDay    = $params->get('show_zero_day', 1);
+        $this->showZeroDay    = (bool)$params->get('show_zero_day', true);
         $this->eventColor     = $params->get('ev_color', '#2B7CBE');
 
         static::$instance++;
@@ -282,6 +282,7 @@ JSCRIPT;
                 let secondsLeft   = <?php echo $this->event->seconds; ?>,
                     countActive   = true,
                     countStepper  = -1,
+                    showZeroDay   = <?php echo $this->showZeroDay ? 'true' : 'false'; ?>,
                     transText     = <?php echo json_encode($transText); ?>,
                     finishMessage = '<?php echo addslashes($this->event->textEnd); ?>',
                     clockDayJS    = document.getElementById('clockDayJS' + timerId);
@@ -331,7 +332,11 @@ JSCRIPT;
                     clockJS.innerHTML = formatTime(timeLeft);
 
                     if (clockDayJS && timeLeft > 0) {
-                        clockDayJS.innerHTML = pluralize(transText.day, calcAge(timeLeft, 86400, timeLeft, false));
+                        clockDayJS.innerHTML = pluralize(
+                            transText.day,
+                            calcAge(timeLeft, 86400, timeLeft, false),
+                            showZeroDay
+                        );
                     }
                 };
 
