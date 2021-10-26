@@ -27,26 +27,15 @@ require_once 'library/Installer/include.php';
 
 use Alledia\Installer\AbstractScript;
 
-/**
- * Custom installer script
- */
-class Mod_OSTimerInstallerScript extends AbstractScript
+class mod_ostimerInstallerScript extends AbstractScript
 {
     /**
-     * @param string            $type
-     * @param JInstallerAdapter $parent
-     *
-     * @return void
-     * @throws Exception
+     * @inheritDoc
      */
-    public function postFlight($type, $parent)
+    protected function customPostFlight($type, $parent)
     {
-        parent::postFlight($type, $parent);
-
-        switch ($type) {
-            case 'update':
-                $this->convertLegacyDates();
-                break;
+        if ($type == 'update') {
+            $this->convertLegacyDates();
         }
     }
 
@@ -54,17 +43,16 @@ class Mod_OSTimerInstallerScript extends AbstractScript
      * Convert legacy date fields to the new one
      *
      * @return void
+     * @since v2.8.2
      */
     protected function convertLegacyDates()
     {
-        $db      = JFactory::getDbo();
+        $db      = $this->dbo;
         $query   = $db->getQuery(true)
-            ->select(
-                array(
-                    'id',
-                    'params'
-                )
-            )
+            ->select([
+                'id',
+                'params'
+            ])
             ->from('#__modules')
             ->where('module = ' . $db->quote('mod_ostimer'));
         $modules = $db->setQuery($query)->loadObjectList();
@@ -77,7 +65,7 @@ class Mod_OSTimerInstallerScript extends AbstractScript
                 $evMonth = $params->get('ev_m', null);
                 $evYear  = $params->get('ev_y', null);
 
-                if (!is_null($evDay)) {
+                if ($evDay !== null) {
                     $newDate = sprintf('%s-%s-%s', $evDay, $evMonth, $evYear);
                     $params->set('ev_date', $newDate);
 
