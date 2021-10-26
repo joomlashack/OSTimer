@@ -220,7 +220,7 @@ JSCRIPT;
         }
 
         if ($loadCSS) {
-            HTMLHelper::_('stylesheet', 'mod_ostimer/style.min.css', null, true);
+            HTMLHelper::_('stylesheet', 'mod_ostimer/style.min.css', ['relative' => true]);
         }
 
         parent::init();
