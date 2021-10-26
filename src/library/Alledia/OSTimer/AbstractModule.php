@@ -23,10 +23,11 @@
 
 namespace Alledia\OSTimer;
 
+use Alledia\Framework\Factory;
 use Alledia\Framework\Joomla\Extension\AbstractFlexibleModule;
 use DateTimeZone;
-use JHtml;
-use JText;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 defined('_JEXEC') or die();
 
@@ -68,7 +69,7 @@ abstract class AbstractModule extends AbstractFlexibleModule
      *
      * @return AbstractModule
      */
-    public static function getInstance($module)
+    public static function getInstance(object $module): ?self
     {
         $nameSpace = '\\Alledia\\OSTimer\\%s\\Joomla\\Module';
 
@@ -106,7 +107,7 @@ abstract class AbstractModule extends AbstractFlexibleModule
         $eventURL          = $params->get('ev_l', '');
         $eventURLTitle     = $params->get('ev_ltitle') ?: $eventURL;
         $eventJs           = (bool)$params->get('ev_js', 1);
-        $eventEndTime      = $params->get('ev_endtime', JText::_('MOD_OSTIMER_TIME_HAS_COME_DEFAULT'));
+        $eventEndTime      = $params->get('ev_endtime', Text::_('MOD_OSTIMER_TIME_HAS_COME_DEFAULT'));
 
         $loadCSS  = $params->get('loadcss', 1);
         $timezone = $params->get('timezone', 'UTC');
@@ -129,7 +130,7 @@ abstract class AbstractModule extends AbstractFlexibleModule
 
         $timeLeft = $now->diff($eventTime);
 
-        $this->event = (object)array(
+        $this->event = (object)[
             'instanceId'  => static::$instance,
             'datetime'    => $eventTime,
             'date'        => null,
@@ -141,7 +142,7 @@ abstract class AbstractModule extends AbstractFlexibleModule
             'DetailCount' => null,
             'detailLink'  => null,
             'image'       => $eventImage
-        );
+        ];
 
         if ($eventDisplayDate) {
             $dateFormat = $params->get('ev_ddate_format', 'MOD_OSTIMER_DATE_FORMAT_US');
@@ -154,26 +155,24 @@ abstract class AbstractModule extends AbstractFlexibleModule
                 $dateFormat = 'MOD_OSTIMER_DATE_FORMAT_INT';
             }
 
-            $dateFormat     = JText::_($dateFormat);
-            $timeFormat     = JText::_($params->get('ev_dtime_format'));
+            $dateFormat     = Text::_($dateFormat);
+            $timeFormat     = Text::_($params->get('ev_dtime_format'));
             $timezoneFormat = $params->get('show_timezone', '');
 
             if ($params->get('ev_user', false)) {
-                $this->event->date = JText::_('MOD_OSTIMER_AJAX_LOADING_USER_TZ');
+                $this->event->date = Text::_('MOD_OSTIMER_AJAX_LOADING_USER_TZ');
 
-                $ajaxData = json_encode(
-                    array(
-                        'option'  => 'com_ajax',
-                        'module'  => 'ostimer',
-                        'format'  => 'raw',
-                        'time'    => $this->event->datetime->format('Y-m-d H:i e'),
-                        'display' => trim($dateFormat . ' ' . $timeFormat),
-                        'tz'      => $timezoneFormat,
-                        'date'    => null,
-                        'offset'  => null,
-                        'debug'   => $this->params->get('debug', 0)
-                    )
-                );
+                $ajaxData = json_encode([
+                    'option'  => 'com_ajax',
+                    'module'  => 'ostimer',
+                    'format'  => 'raw',
+                    'time'    => $this->event->datetime->format('Y-m-d H:i e'),
+                    'display' => trim($dateFormat . ' ' . $timeFormat),
+                    'tz'      => $timezoneFormat,
+                    'date'    => null,
+                    'offset'  => null,
+                    'debug'   => $this->params->get('debug', 0)
+                ]);
                 $jScript  = <<<JSCRIPT
 jQuery(document).ready(function() {
     var ajaxData = {$ajaxData},
@@ -187,7 +186,7 @@ jQuery(document).ready(function() {
     jQuery('.countdown_displaydate').load('index.php', ajaxData);
 });
 JSCRIPT;
-                \JFactory::getDocument()->addScriptDeclaration($jScript);
+                Factory::getDocument()->addScriptDeclaration($jScript);
 
             } else {
                 $this->event->date = $eventTime->localeFormat(trim($dateFormat . ' ' . $timeFormat));
@@ -203,34 +202,32 @@ JSCRIPT;
         } elseif ($eventDisplayHour && !$eventJs) {
             $this->event->DetailCount = join(
                 ' ',
-                array(
+                [
                     $timeLeft->format('%h'),
-                    JText::plural('MOD_OSTIMER_TRANSLATE_HOUR', $timeLeft->h),
+                    Text::plural('MOD_OSTIMER_TRANSLATE_HOUR', $timeLeft->h),
                     $timeLeft->format('%i'),
-                    JText::plural('MOD_OSTIMER_TRANSLATE_MINUTE', $timeLeft->m)
-                )
+                    Text::plural('MOD_OSTIMER_TRANSLATE_MINUTE', $timeLeft->m)
+                ]
             );
 
-        } else {
-            if ($timeLeft->format('%d') <= 0) {
-                $this->event->DetailCount = $eventEndTime;
-            }
+        } elseif ($timeLeft->format('%d') <= 0) {
+            $this->event->DetailCount = $eventEndTime;
         }
 
         if ($eventDisplayURL && $eventURL && $eventURLTitle) {
-            $this->event->detailLink = JHtml::_(
+            $this->event->detailLink = HTMLHelper::_(
                 'link',
                 $eventURL,
                 $eventURLTitle,
-                array(
+                [
                     'title'  => $eventURLTitle,
                     'target' => $eventTargetURL
-                )
+                ]
             );
         }
 
         if ($loadCSS) {
-            JHtml::_('stylesheet', 'mod_ostimer/style.min.css', null, true);
+            HTMLHelper::_('stylesheet', 'mod_ostimer/style.min.css', null, true);
         }
 
         parent::init();
@@ -247,56 +244,58 @@ JSCRIPT;
             return;
         }
 
-        $transText = array(
-            'day'    => array(
-                JText::_('MOD_OSTIMER_TRANSLATE_DAY'),
-                JText::_('MOD_OSTIMER_TRANSLATE_DAY_1')
-            ),
-            'hour'   => array(
-                JText::_('MOD_OSTIMER_TRANSLATE_HOUR'),
-                JText::_('MOD_OSTIMER_TRANSLATE_HOUR_1')
-            ),
-            'minute' => array(
-                JText::_('MOD_OSTIMER_TRANSLATE_MINUTE'),
-                JText::_('MOD_OSTIMER_TRANSLATE_MINUTE_1')
-            ),
-            'second' => array(
-                JText::_('MOD_OSTIMER_TRANSLATE_SECOND'),
-                JText::_('MOD_OSTIMER_TRANSLATE_SECOND_1')
-            )
-        );
+        $transText = [
+            'day'    => [
+                Text::_('MOD_OSTIMER_TRANSLATE_DAY'),
+                Text::_('MOD_OSTIMER_TRANSLATE_DAY_1')
+            ],
+            'hour'   => [
+                Text::_('MOD_OSTIMER_TRANSLATE_HOUR'),
+                Text::_('MOD_OSTIMER_TRANSLATE_HOUR_1')
+            ],
+            'minute' => [
+                Text::_('MOD_OSTIMER_TRANSLATE_MINUTE'),
+                Text::_('MOD_OSTIMER_TRANSLATE_MINUTE_1')
+            ],
+            'second' => [
+                Text::_('MOD_OSTIMER_TRANSLATE_SECOND'),
+                Text::_('MOD_OSTIMER_TRANSLATE_SECOND_1')
+            ]
+        ];
         ?>
-        <script language="JavaScript" type="text/javascript">
+        <script>
             ;(function(timerId) {
-                var clockJS = document.getElementById('clockJS' + timerId);
+                let clockJS = document.getElementById('clockJS' + timerId);
                 if (!clockJS) {
                     console.log(timerId + ' Not found');
+
                     return;
                 }
 
-                var secondsLeft   = <?php echo $this->event->seconds; ?>,
+                let secondsLeft   = <?php echo $this->event->seconds; ?>,
                     countActive   = true,
                     countStepper  = -1,
                     transText     = <?php echo json_encode($transText); ?>,
                     finishMessage = '<?php echo addslashes($this->event->textEnd); ?>',
                     clockDayJS    = document.getElementById('clockDayJS' + timerId);
 
-                var calcAge = function(timeLeft, num1, num2, doublezero) {
+                let calcAge = function(timeLeft, num1, num2, doublezero) {
                     if (doublezero !== false) {
                         doublezero = true;
                     }
 
-                    s = ((Math.floor(timeLeft / num1)) % num2).toString();
-                    if (s.length < 2 && doublezero) {
-                        s = "0" + s;
+                    let seconds = ((Math.floor(timeLeft / num1)) % num2).toString();
+                    if (seconds.length < 2 && doublezero) {
+                        seconds = '0' + seconds;
                     }
 
-                    return s;
+                    return seconds;
                 };
 
-                var pluralize = function(strings, count, showZero) {
+                let pluralize = function(strings, count, showZero) {
                     if (count > 0 || showZero) {
-                        var string = +count === 1 ? strings[1] : strings[0];
+                        let string = +count === 1 ? strings[1] : strings[0];
+
                         return string.indexOf('%s') < 0 ?
                             count + ' ' + string :
                             string.replace('%s', count);
@@ -305,8 +304,8 @@ JSCRIPT;
                     return '';
                 };
 
-                var formatTime = function(timeLeft) {
-                    var displayArray = [
+                let formatTime = function(timeLeft) {
+                    let displayArray = [
                         pluralize(transText.hour, calcAge(timeLeft, 3600, 24, false)),
                         pluralize(transText.minute, calcAge(timeLeft, 60, 60)),
                         pluralize(transText.second, calcAge(timeLeft, 1, 60), true)
@@ -315,7 +314,7 @@ JSCRIPT;
                     return displayArray.join(' ');
                 };
 
-                var countBack = function(timeLeft) {
+                let countBack = function(timeLeft) {
                     if (timeLeft < 0) {
                         clockJS.innerHTML = finishMessage;
 
@@ -335,10 +334,10 @@ JSCRIPT;
                     countActive = false;
                 }
 
-                var SetTimeOutPeriod = (Math.abs(countStepper) - 1) * 1000 + 990;
+                let SetTimeOutPeriod = (Math.abs(countStepper) - 1) * 1000 + 990;
 
                 if (countActive) {
-                    var repeatFunc = function() {
+                    let repeatFunc = function() {
                         secondsLeft += countStepper;
                         countBack(secondsLeft);
                         setTimeout(repeatFunc, SetTimeOutPeriod);
@@ -360,7 +359,7 @@ JSCRIPT;
      *
      * @return bool
      */
-    protected function checkEventDisplay(DateTime $eventTime, DateTime $now)
+    protected function checkEventDisplay(DateTime $eventTime, DateTime $now): bool
     {
         if ($now < $eventTime) {
             return true;

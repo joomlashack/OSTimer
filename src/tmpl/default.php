@@ -21,6 +21,9 @@
  * along with OSTimer.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+
 defined('_JEXEC') or die();
 
 $event = $this->event;
@@ -29,20 +32,20 @@ $event = $this->event;
 <div class="<?php echo 'countdown' . $this->moduleClassSfx; ?> ostimer-wrapper">
     <?php
     if ($event->image) :
-		?>
-		<div class="countdown_image">
-			<?php
-			echo JHtml::_(
-				'image',
-				$event->image,
-				htmlspecialchars($event->title)
-			);
-			?>
-		</div>
+        ?>
+        <div class="countdown_image">
+            <?php
+            echo HTMLHelper::_(
+                'image',
+                $event->image,
+                htmlspecialchars($event->title)
+            );
+            ?>
+        </div>
     <?php
     endif;
 
-    if (!empty($event->title)) :
+    if (empty($event->title) == false) :
         ?>
         <span class="countdown_title"><?php echo $event->title; ?></span>
     <?php
@@ -58,7 +61,7 @@ $event = $this->event;
         ?>
         <span class="countdown_daycount" style="<?php echo 'color: ' . $this->eventColor . ';'; ?>">
             <span id="<?php echo 'clockDayJS' . static::$instance ?>">
-                <?php echo JText::plural('MOD_OSTIMER_TRANSLATE_DAY', $event->days); ?>
+                <?php echo Text::plural('MOD_OSTIMER_TRANSLATE_DAY', $event->days); ?>
             </span>
         </span>
 
@@ -72,7 +75,7 @@ $event = $this->event;
     <?php
     endif;
 
-    if (!empty($event->detailLink)) :
+    if (empty($event->detailLink) == false) :
         ?>
         <span class="countdown_link"><?php echo $event->detailLink; ?></span>
     <?php

@@ -23,7 +23,7 @@
 
 namespace Alledia\OSTimer;
 
-use JFactory;
+use Alledia\Framework\Factory;
 
 defined('_JEXEC') or die();
 
@@ -36,16 +36,16 @@ class DateTime extends \DateTime
      *
      * @return string
      */
-    public function localeFormat($format)
+    public function localeFormat(string $format): string
     {
-        $systemLocale = setLocale(LC_TIME, 0);
-        $language     = JFactory::getLanguage();
+        $systemLocale = setlocale(LC_TIME, 0);
+        $language     = Factory::getLanguage();
 
         setlocale(LC_TIME, $language->getLocale());
 
         $stringDate = strftime($format, strtotime(parent::format('Y-m-d H:i:s')));
 
-        setLocale(LC_TIME, $systemLocale);
+        setlocale(LC_TIME, $systemLocale);
 
         return $stringDate;
     }
@@ -55,19 +55,17 @@ class DateTime extends \DateTime
      *
      * @return array
      */
-    public function getJSUTCArray()
+    public function getJSUTCArray(): array
     {
         $utcDate = clone $this;
         $utcDate->setTimezone(new \DateTimeZone('UTC'));
 
-        $jsParts = array(
+        return [
             $utcDate->format('Y'),
             $utcDate->format('m') - 1,
             $utcDate->format('d'),
             $utcDate->format('H'),
             $utcDate->format('i')
-        );
-
-        return $jsParts;
+        ];
     }
 }

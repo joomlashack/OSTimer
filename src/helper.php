@@ -22,6 +22,7 @@
  */
 
 use Alledia\OSTimer\DateTime;
+use Joomla\CMS\Factory;
 
 defined('_JEXEC') or die();
 
@@ -30,18 +31,18 @@ abstract class ModOstimerHelper
     /**
      * @var string[]
      */
-    protected static $log = array();
+    protected static $log = [];
 
     /**
      * @return string
      * @throws Exception
      */
-    public static function getAjax()
+    public static function getAjax(): string
     {
         try {
             require_once __DIR__ . '/library/DateTime.php';
 
-            $app = JFactory::getApplication();
+            $app = Factory::getApplication();
 
             $event         = $app->input->getString('time');
             $now           = $app->input->getString('date');
@@ -73,16 +74,11 @@ abstract class ModOstimerHelper
 
             return static::renderLog() . $dateString;
 
-        } catch (Exception $error) {
-            // Handle at the end
         } catch (Throwable $error) {
-            // Handle at the end
+            static::logEntry('error', $error->getMessage());
         }
 
-        if (!empty($error)) {
-            static::logEntry('error', $error->getMessage());
-
-        } else {
+        if (empty($error)) {
             static::logEntry('error', 'Something truly and epically wrong just happened!');
         }
 
@@ -96,12 +92,12 @@ abstract class ModOstimerHelper
      * or EST) because the data tables have been found to be unreliable for
      * our purposes here.
      *
-     * @param int    $offset   GMT offset seconds (west < 0, east > 0)
-     * @param string $tzString Recognized Intl Timezone ID
+     * @param ?int    $offset   GMT offset seconds (west < 0, east > 0)
+     * @param ?string $tzString Recognized Intl Timezone ID
      *
-     * @return DateTimeZone
+     * @return ?DateTimeZone
      */
-    protected static function createTimezone($offset, $tzString = null)
+    protected static function createTimezone(int $offset = 0, string $tzString = null): ?DateTimeZone
     {
         try {
             // We need a reference DateTime to check the offset of the created DateTimeZone
@@ -114,18 +110,20 @@ abstract class ModOstimerHelper
                         $timezone = new DateTimeZone($tzString);
                         if ($timezone->getOffset($now) == $offset) {
                             static::logEntry('tzok', $tzString);
+
                             return $timezone;
                         }
                     }
 
-                } catch (Exception $error) {
+                } catch (Throwable $error) {
+                    static::logEntry('tzerror', $error->getMessage());
                 }
             }
             static::logEntry('tzfail', $tzString);
 
             // Look for the first timezone that will give us the specified GMT offset
             $tzList = timezone_abbreviations_list();
-            foreach ($tzList as $key => $codes) {
+            foreach ($tzList as $codes) {
                 foreach ($codes as $tzData) {
                     if ($tzId = $tzData['timezone_id']) {
                         $tzOffset = $tzData['offset'];
@@ -175,7 +173,7 @@ abstract class ModOstimerHelper
     /**
      * @return string
      */
-    protected static function renderLog()
+    protected static function renderLog(): string
     {
         try {
             if (JFactory::getApplication()->input->getInt('debug') && static::$log) {
@@ -188,7 +186,7 @@ abstract class ModOstimerHelper
                 );
             }
 
-        } catch (Exception $error) {
+        } catch (Throwable $error) {
             // ignore
         }
 
@@ -196,10 +194,10 @@ abstract class ModOstimerHelper
     }
 
     /**
-     * @param string $label
-     * @param string $text
+     * @param string  $label
+     * @param ?string $text
      */
-    protected static function logEntry($label, $text = null)
+    protected static function logEntry(string $label, ?string $text = null)
     {
         if ($text) {
             static::$log[] = sprintf('%s: %s', strtoupper($label), $text);

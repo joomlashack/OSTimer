@@ -1,46 +1,46 @@
 .countdown {
-    position: relative;
-    text-align: center !important;
-    width: 100%;
-    padding: 15px 0 15px 0;
-    border: 1px solid #ccc;
+  position: relative;
+  text-align: center !important;
+  width: 100%;
+  padding: 15px 0 15px 0;
+  border: 1px solid #ccc;
 }
 
 .countdown_title {
-    display: block;
-    font-weight: bold;
+  display: block;
+  font-weight: bold;
 }
 
 .countdown_displaydate {
-    display: block;
-    color: #ccc;
+  display: block;
+  color: #ccc;
 }
 
 .countdown_daycount {
-    display: block;
-    color: #2B7CBE;
-    font-size: 50px;
-    font-weight: bold;
-    margin: 0;
-    padding: 0;
-    line-height: normal;
+  display: block;
+  color: #2B7CBE;
+  font-size: 50px;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  line-height: normal;
 }
 
 .countdown_link {
-    display: block;
+  display: block;
 }
 
 .countdown_hourcount {
-    display: block;
-    color: #2B7CBE;
-    font-size: 20px;
-    font-weight: bold;
-    margin: 0;
-    padding: 0;
-    line-height: normal;
+  display: block;
+  color: #2B7CBE;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  line-height: normal;
 }
 
 .countdown_image {
-    margin-top: -15px;
-    margin-bottom: 15px;
+  margin-top: -15px;
+  margin-bottom: 15px;
 }
