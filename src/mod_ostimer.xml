@@ -31,8 +31,11 @@
             <file>/language/es-ES/es-ES.mod_ostimer.ini</file>
             <file>/language/es-ES/es-ES.mod_ostimer.sys.ini</file>
             <file>/modules/mod_ostimer/form/fields/timezones.php</file>
-            <file>/modules/mod_ostimer/library/Free/Countdown.php</file>
+            <file>/modules/mod_ostimer/library/AbstractModule.php</file>
+            <file>/modules/mod_ostimer/library/DateTime.php</file>
             <file>/modules/mod_ostimer/tmpl/style.css</file>
+
+            <folder>/modules/mod_ostimer/library/Free</folder>
         </obsolete>
     </alledia>
 

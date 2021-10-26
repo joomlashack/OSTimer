@@ -24,22 +24,29 @@
 defined('_JEXEC') or die();
 
 use Alledia\Framework\AutoLoader;
+use Joomla\CMS\Factory;
 
-define('OSTIMER_MODULE_PATH', __DIR__);
+try {
+    $frameworkPath = JPATH_SITE . '/libraries/allediaframework/include.php';
+    if (!(is_file($frameworkPath) && include $frameworkPath)) {
+        $app = Factory::getApplication();
 
-// Alledia Framework
-if (!defined('ALLEDIA_FRAMEWORK_LOADED')) {
-    $allediaFrameworkPath = JPATH_SITE . '/libraries/allediaframework/include.php';
-
-    if (file_exists($allediaFrameworkPath)) {
-        require_once $allediaFrameworkPath;
+        if ($app->isClient('administrator')) {
+            $app->enqueueMessage('[OSTimer] Joomlashack framework not found', 'error');
+        }
+        return false;
     }
+
+    if (defined('ALLEDIA_FRAMEWORK_LOADED') && !defined('OSTIMER_LOADED')) {
+        define('OSTIMER_LOADED', true);
+
+        AutoLoader::register('Alledia\OSTimer', __DIR__ . '/library/Alledia/OSTimer');
+    }
+
+} catch (Throwable $error) {
+    Factory::getApplication()->enqueueMessage('[OSMap] Unable to initialize: ' . $error->getMessage(), 'error');
+
+    return false;
 }
 
-if (defined('ALLEDIA_FRAMEWORK_LOADED')) {
-    AutoLoader::register('Alledia\OSTimer', JPATH_SITE . '/modules/mod_ostimer/library');
-
-} else {
-    JFactory::getApplication()
-        ->enqueueMessage('[OSTimer] Alledia framework not found', 'error');
-}
+return defined('ALLEDIA_FRAMEWORK_LOADED') && defined('OSTIMER_LOADED');

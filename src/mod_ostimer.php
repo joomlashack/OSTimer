@@ -24,9 +24,8 @@
 defined('_JEXEC') or die();
 
 use Alledia\OSTimer\AbstractModule;
+use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
-
-require_once 'include.php';
 
 /**
  * @var object           $module
@@ -44,8 +43,10 @@ require_once 'include.php';
  * @var string           $content
  */
 
-if ($modOSTimer = AbstractModule::getInstance($module)) {
-    $modOSTimer->init();
-} else {
-    JFactory::getApplication()->enqueueMessage('MOD_OSTIMER_ERROR_INSTANTIATION', 'error');
+if (include 'include.php') {
+    if ($modOSTimer = AbstractModule::getInstance($module)) {
+        $modOSTimer->init();
+    } else {
+        Factory::getApplication()->enqueueMessage('MOD_OSTIMER_ERROR_INSTANTIATION', 'error');
+    }
 }
