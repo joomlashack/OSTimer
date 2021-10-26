@@ -227,11 +227,25 @@ JSCRIPT;
     }
 
     /**
+     * @throws \Exception
+     * @deprecated v3.0.0: Use printCountDownJS()
+     */
+    public function printCountDounJS()
+    {
+        Factory::getApplication()->enqueueMessage(
+            '[OSTimer] printCountDounJS() is deprecated. Use printCountDownJS() in your template override',
+            'warning'
+        );
+
+        $this->printCountDownJS();
+    }
+
+    /**
      * Setup and display all js display code
      *
      * @return void
      */
-    public function printCountDounJS()
+    public function printCountDownJS()
     {
         if (!$this->event->JS_enable) {
             return;

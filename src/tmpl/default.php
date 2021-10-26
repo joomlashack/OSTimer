@@ -82,7 +82,7 @@ $event = $this->event;
     endif;
 
     if ($event->JS_enable) :
-        $this->printCountDounJS();
+        $this->printCountDownJS();
     endif;
     ?>
 </div>
