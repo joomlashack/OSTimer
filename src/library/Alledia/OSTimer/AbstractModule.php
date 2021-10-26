@@ -350,8 +350,9 @@ JSCRIPT;
                         setTimeout(repeatFunc, SetTimeOutPeriod);
                     };
                     repeatFunc();
+
                 } else {
-                    countBack(timeLeft);
+                    countBack(secondsLeft);
                 }
             })(<?php echo $this->event->instanceId; ?>);
         </script>
