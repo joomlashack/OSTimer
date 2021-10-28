@@ -155,6 +155,7 @@
             <fieldset name="layout" label="MOD_OSTIMER_LAYOUT">
                 <field name="layout"
                        type="modulelayout"
+                       class="form-select"
                        default="default"
                        label="MOD_OSTIMER_THEME_STYLE_LABEL"
                        description="MOD_OSTIMER_THEME_STYLE_DESC"/>
