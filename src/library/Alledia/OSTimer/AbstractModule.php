@@ -152,7 +152,12 @@ abstract class AbstractModule extends AbstractFlexibleModule
             $timeFormat     = Text::_($params->get('ev_dtime_format'));
             $timezoneFormat = $params->get('show_timezone', '');
 
-            if ($params->get('ev_user', false)) {
+            $userTime = $params->get('ev_user');
+            if ($userTime || $eventJs) {
+                HTMLHelper::_('jquery.framework');
+            }
+
+            if ($userTime) {
                 $this->event->date = Text::_('MOD_OSTIMER_AJAX_LOADING_USER_TZ');
 
                 $ajaxData = json_encode([
