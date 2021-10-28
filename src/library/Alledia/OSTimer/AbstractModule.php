@@ -91,16 +91,16 @@ abstract class AbstractModule extends AbstractFlexibleModule
         $eventImage        = $params->get('ev_image');
         $eventDisplayTitle = $params->get('ev_dtitle', 1);
         $eventTitle        = $params->get('ev_tit');
-        $eventDisplayDate  = (bool)$params->get('ev_ddate', 1);
-        $eventDisplayHour  = (bool)$params->get('ev_dhour', 1);
+        $eventDisplayDate  = (bool)$params->get('ev_ddate', true);
+        $eventDisplayHour  = (bool)$params->get('ev_dhour', true);
         $eventDate         = preg_replace('/\s*\d+:\d+:\d+/', '', $params->get('ev_date') ?: date('Y-01-01'));
         $eventHour         = (int)$params->get('ev_h', 0);
         $eventMinutes      = (int)$params->get('ev_min', 0);
-        $eventDisplayURL   = (bool)$params->get('ev_dlink', 1);
+        $eventDisplayURL   = (bool)$params->get('ev_dlink', true);
         $eventTargetURL    = $params->get('ev_tlink', '_self');
         $eventURL          = $params->get('ev_l', '');
         $eventURLTitle     = $params->get('ev_ltitle') ?: $eventURL;
-        $eventJs           = (bool)$params->get('ev_js', 1);
+        $eventJs           = (bool)$params->get('ev_js', true);
         $eventEndTime      = $params->get('ev_endtime', Text::_('MOD_OSTIMER_TIME_HAS_COME_DEFAULT'));
 
         $loadCSS  = $params->get('loadcss', 1);
