@@ -188,7 +188,7 @@ JSCRIPT;
 
             } else {
                 $this->event->date = $eventTime->localeFormat(trim($dateFormat . ' ' . $timeFormat));
-                if ($timezoneFormat) {
+                if ($timeFormat && $timezoneFormat) {
                     $this->event->date .= ' ' . str_replace('_', ' ', $eventTime->format($timezoneFormat));
                 }
             }
