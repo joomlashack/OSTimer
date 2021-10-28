@@ -201,10 +201,8 @@ JSCRIPT;
             $this->event->DetailCount = join(
                 ' ',
                 [
-                    $timeLeft->format('%h'),
                     Text::plural('MOD_OSTIMER_TRANSLATE_HOUR', $timeLeft->h),
-                    $timeLeft->format('%i'),
-                    Text::plural('MOD_OSTIMER_TRANSLATE_MINUTE', $timeLeft->m)
+                    Text::plural('MOD_OSTIMER_TRANSLATE_MINUTE', $timeLeft->i)
                 ]
             );
 
