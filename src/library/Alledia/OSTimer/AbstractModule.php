@@ -208,7 +208,8 @@ JSCRIPT;
                 ]
             );
 
-        } elseif ($timeLeft->format('%d') <= 0) {
+        } elseif ($timeLeft->invert == 1) {
+            // Time expired
             $this->event->DetailCount = $eventEndTime;
         }
 
