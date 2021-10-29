@@ -138,17 +138,7 @@ abstract class AbstractModule extends AbstractFlexibleModule
         ];
 
         if ($eventDisplayDate) {
-            $dateFormat = $params->get('ev_ddate_format', 'MOD_OSTIMER_DATE_FORMAT_US');
-
-            // Support legacy settings
-            if ($dateFormat == 1) {
-                $dateFormat = 'MOD_OSTIMER_DATE_FORMAT_US';
-
-            } elseif ($dateFormat == '0') {
-                $dateFormat = 'MOD_OSTIMER_DATE_FORMAT_INT';
-            }
-
-            $dateFormat     = Text::_($dateFormat);
+            $dateFormat = Text::_($params->get('ev_ddate_format', 'MOD_OSTIMER_DATE_FORMAT_US'));
             $timeFormat     = Text::_($params->get('ev_dtime_format'));
             $timezoneFormat = $params->get('show_timezone', '');
 
