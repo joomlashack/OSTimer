@@ -32,14 +32,8 @@ defined('_JEXEC') or die();
 
 $event = $this->event;
 
-$classes = join(' ', [
-    'countdown' . $this->moduleClassSfx,
-    'ostimer-wrapper',
-    'ostimer-mod-' . $this->id
-]);
-
 ?>
-<div class="<?php echo $classes; ?>">
+<div class="<?php echo $this->getModuleClasses(); ?>">
     <?php
     if ($event->image) :
         ?>

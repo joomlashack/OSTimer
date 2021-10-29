@@ -233,6 +233,22 @@ JSCRIPT;
     }
 
     /**
+     * @return string
+     */
+    protected function getModuleClasses(): string
+    {
+        $layout = explode(':', $this->params->get('layout', 'default'));
+        $template = array_pop($layout);
+
+        return join(' ', [
+            'countdown' . $this->moduleClassSfx,
+            'ostimer-wrapper',
+            'ostimer-' . $template,
+            'ostimer-mod-' . $this->id
+        ]);
+    }
+
+    /**
      * @throws \Exception
      * @deprecated v3.0.0: Use printCountDownJS()
      */
