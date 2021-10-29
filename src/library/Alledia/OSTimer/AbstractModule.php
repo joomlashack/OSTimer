@@ -131,6 +131,7 @@ abstract class AbstractModule extends AbstractFlexibleModule
             'title'       => $eventDisplayTitle ? $eventTitle : null,
             'textEnd'     => $eventEndTime,
             'days'        => $timeLeft->format('%r%a'),
+            'expired'     => $timeLeft->invert == 1,
             'JS_enable'   => $eventDisplayHour && $eventJs,
             'DetailCount' => null,
             'detailLink'  => null,
@@ -184,7 +185,10 @@ JSCRIPT;
             }
         }
 
-        if ($this->event->JS_enable) {
+        if ($this->event->expired) {
+            $this->event->DetailCount = $eventEndTime;
+
+        } elseif ($this->event->JS_enable) {
             $this->event->DetailCount = '<span id="clockJS' . static::$instance . '"></span>';
 
         } elseif ($eventDisplayHour && !$eventJs) {
@@ -196,9 +200,6 @@ JSCRIPT;
                 ]
             );
 
-        } elseif ($timeLeft->invert == 1) {
-            // Time expired
-            $this->event->DetailCount = $eventEndTime;
         }
 
         if ($eventDisplayURL && $eventURL && $eventURLTitle) {
