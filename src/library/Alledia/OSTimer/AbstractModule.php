@@ -236,7 +236,7 @@ JSCRIPT;
      * @throws \Exception
      * @deprecated v3.0.0: Use printCountDownJS()
      */
-    public function printCountDounJS()
+    protected function printCountDounJS()
     {
         Factory::getApplication()->enqueueMessage(
             '[OSTimer] printCountDounJS() is deprecated. Use printCountDownJS() in your template override',
@@ -251,7 +251,7 @@ JSCRIPT;
      *
      * @return void
      */
-    public function printCountDownJS()
+    protected function printCountDownJS()
     {
         if (!$this->event->JS_enable) {
             return;
