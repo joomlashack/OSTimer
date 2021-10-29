@@ -131,14 +131,14 @@ abstract class AbstractModule extends AbstractFlexibleModule
             'title'       => $eventDisplayTitle ? $eventTitle : null,
             'textEnd'     => $eventEndTime,
             'days'        => $timeLeft->format('%r%a'),
-            'JS_enable'   => ($eventDisplayHour && $eventJs),
+            'JS_enable'   => $eventDisplayHour && $eventJs,
             'DetailCount' => null,
             'detailLink'  => null,
             'image'       => $eventImage
         ];
 
         if ($eventDisplayDate) {
-            $dateFormat = Text::_($params->get('ev_ddate_format', 'MOD_OSTIMER_DATE_FORMAT_US'));
+            $dateFormat     = Text::_($params->get('ev_ddate_format', 'MOD_OSTIMER_DATE_FORMAT_US'));
             $timeFormat     = Text::_($params->get('ev_dtime_format'));
             $timezoneFormat = $params->get('show_timezone', '');
 
