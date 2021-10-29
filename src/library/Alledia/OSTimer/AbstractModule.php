@@ -183,7 +183,7 @@ jQuery(document).ready(function() {
         ajaxData.tzid = Intl.DateTimeFormat().resolvedOptions().timeZone
     }
 
-    jQuery('.countdown_displaydate').load('index.php', ajaxData);
+    jQuery('.ostimer-mod-{$this->id} .countdown_displaydate').load('index.php', ajaxData);
 });
 JSCRIPT;
                 Factory::getDocument()->addScriptDeclaration($jScript);
