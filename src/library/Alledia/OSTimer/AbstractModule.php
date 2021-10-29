@@ -39,9 +39,15 @@ abstract class AbstractModule extends AbstractFlexibleModule
     protected $moduleClassSfx = null;
 
     /**
-     * @var int
+     * @var bool
+     * @deprecated v3.0.0: Use $showDay
      */
     protected $showZeroDay = null;
+
+    /**
+     * @var bool
+     */
+    protected $showDay = null;
 
     /**
      * @var string
@@ -116,8 +122,8 @@ abstract class AbstractModule extends AbstractFlexibleModule
         }
 
         $this->moduleClassSfx = $params->get('moduleclass_sfx', '');
-        $this->showZeroDay    = (bool)$params->get('show_zero_day', true);
         $this->eventColor     = $params->get('ev_color', '#2B7CBE');
+
 
         static::$instance++;
 
@@ -137,6 +143,11 @@ abstract class AbstractModule extends AbstractFlexibleModule
             'detailLink'  => null,
             'image'       => $eventImage
         ];
+
+        $this->showDay = $this->showZeroDay = (
+            $this->event->expired == false
+            && (($params->get('show_zero_day', true) && $this->event->days == 0) || $this->event->days > 0)
+        );
 
         if ($eventDisplayDate) {
             $dateFormat     = Text::_($params->get('ev_ddate_format', 'MOD_OSTIMER_DATE_FORMAT_US'));

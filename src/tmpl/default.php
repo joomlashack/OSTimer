@@ -61,9 +61,7 @@ $event = $this->event;
     <?php
     endif;
 
-    if (
-        $event->expired == false
-        && (($this->showZeroDay && $event->days == 0) || $event->days > 0)) :
+    if ($this->showDay) :
         ?>
         <span class="countdown_daycount" style="<?php echo 'color: ' . $this->eventColor . ';'; ?>">
             <span id="<?php echo 'clockDayJS' . static::$instance ?>">
