@@ -1,26 +1,27 @@
 {
-    "name"             : "joomlashack/ostimer",
-    "description"      : "OSTimer",
-    "minimum-stability": "stable",
-    "license"          : "GPL-2.0-or-later",
-    "type"             : "joomla-module",
-    "extra"            : {
-        "element"        : "mod_ostimer",
-        "element-short"  : "ostimer",
-        "name"           : "OSTimer",
-        "client"         : "site",
-        "package-license": "free",
-        "target-platform": ".*",
-        "infourl"        : "/changelog/ostimer/"
-    },
-    "authors"          : [
-        {
-            "name" : "Joomlashack",
-            "email": "help@joomlashack.com"
-        }
-    ],
-    "require"          : {
-        "ext-json": "*",
-        "php"     : ">=7.2.5"
+  "name": "joomlashack/ostimer",
+  "description": "OSTimer",
+  "minimum-stability": "stable",
+  "license": "GPL-2.0-or-later",
+  "type": "joomla-module",
+  "extra": {
+    "element": "mod_ostimer",
+    "element-short": "ostimer",
+    "name": "OSTimer",
+    "client": "site",
+    "package-license": "free",
+    "target-platform": ".*",
+    "infourl": "/changelog/ostimer/"
+  },
+  "authors": [
+    {
+      "name": "Joomlashack",
+      "email": "help@joomlashack.com"
     }
+  ],
+  "require": {
+    "ext-json": "*",
+    "ext-simplexml": "*",
+    "php": ">=7.2.5"
+  }
 }

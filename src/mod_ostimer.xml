@@ -7,8 +7,8 @@
     <copyright>Copyright (C) 2016-2021 Joomlashack. All rights reserved.</copyright>
     <license>GNU GPL; see LICENSE file</license>
     <description>MOD_OSTIMER_DESCRIPTION</description>
-    <creationDate>November 01 2021</creationDate>
-    <version>3.0.0</version>
+    <creationDate>October 10 2022</creationDate>
+    <version>3.0.1b1</version>
     <variant>FREE</variant>
 
     <alledia>
@@ -74,10 +74,11 @@
                 <field name="ev_dtitle"
                        type="radio"
                        class="btn-group btn-group-yesno"
+                       layout="joomla.form.field.radio.switcher"
                        default="1"
                        label="MOD_OSTIMER_DISPLAY_EVENT_TITLE_LABEL">
-                    <option value="1">JYES</option>
                     <option value="0">JNO</option>
+                    <option value="1">JYES</option>
                 </field>
 
                 <field name="ev_tit"
@@ -88,25 +89,28 @@
                 <field name="ev_ddate"
                        type="radio"
                        class="btn-group btn-group-yesno"
+                       layout="joomla.form.field.radio.switcher"
                        default="1"
                        label="MOD_OSTIMER_DISPLAY_EVENT_DATE_LABEL"
                        description="MOD_OSTIMER_DISPLAY_EVENT_DATE_DESC">
-                    <option value="1">JYES</option>
                     <option value="0">JNO</option>
+                    <option value="1">JYES</option>
                 </field>
 
                 <field name="ev_user"
                        type="radio"
                        class="btn-group btn-group-yesno"
+                       layout="joomla.form.field.radio.switcher"
                        default="0"
                        label="MOD_OSTIMER_USER_LOCAL_LABEL"
                        description="MOD_OSTIMER_USER_LOCAL_DESC">
-                    <option value="1">JYES</option>
                     <option value="0">JNO</option>
+                    <option value="1">JYES</option>
                 </field>
 
                 <field name="ev_ddate_format"
                        type="list"
+                       layout="joomla.form.field.list-fancy-select"
                        default="MOD_OSTIMER_DATE_FORMAT_US"
                        label="MOD_OSTIMER_DISPLAY_EVENT_DATE_FORMAT_LABEL"
                        description="MOD_OSTIMER_DISPLAY_EVENT_DATE_FORMAT_DESC">
@@ -126,27 +130,37 @@
                        filter="utc"/>
 
                 <field name="ev_h"
-                       type="text"
+                       type="number"
+                       min="0"
+                       max="24"
+                       validate="number"
                        default="12"
                        label="MOD_OSTIMER_HOUR_LABEL"
                        description="MOD_OSTIMER_HOUR_DESC"/>
 
                 <field name="ev_min"
-                       type="text"
+                       type="number"
+                       min="0"
+                       max="59"
+                       validate="number"
                        default="00"
                        label="MOD_OSTIMER_MINUTE_LABEL"
                        description="MOD_OSTIMER_MINUTE_DESC"/>
 
                 <field name="timezone"
                        type="timezone"
+                       layout="joomla.form.field.groupedlist-fancy-select"
                        default="UTC"
                        label="MOD_OSTIMER_TIMEZONE_LABEL"
                        description="MOD_OSTIMER_TIMEZONE_DESC">
-                    <option value="UTC">JLIB_FORM_VALUE_TIMEZONE_UTC</option>
+                    <group label="JDEFAULT">
+                        <option value="UTC">JLIB_FORM_VALUE_TIMEZONE_UTC</option>
+                    </group>
                 </field>
 
                 <field name="ev_dtime_format"
                        type="list"
+                       layout="joomla.form.field.list-fancy-select"
                        label="MOD_OSTIMER_DISPLAY_EVENT_TIME_FORMAT_LABEL"
                        description="MOD_OSTIMER_DISPLAY_EVENT_TIME_FORMAT_DESC">
                     <option value="">MOD_OSTIMER_TIME_FORMAT_NONE</option>
@@ -167,46 +181,51 @@
                 <field name="ev_dhour"
                        type="radio"
                        class="btn-group btn-group-yesno"
+                       layout="joomla.form.field.radio.switcher"
                        default="1"
                        label="MOD_OSTIMER_HOURS_MINUTES_TO_EVENT_LABEL"
                        description="MOD_OSTIMER_HOURS_MINUTES_TO_EVENT_DESC">
-                    <option value="1">JYES</option>
                     <option value="0">JNO</option>
+                    <option value="1">JYES</option>
                 </field>
 
                 <field name="ev_js"
                        type="radio"
                        class="btn-group btn-group-yesno"
+                       layout="joomla.form.field.radio.switcher"
                        default="1"
                        label="MOD_OSTIMER_JAVASCRIPT_EFFECT_LABEL"
                        description="MOD_OSTIMER_JAVASCRIPT_EFFECT_DESC"
                        showon="ev_dhour:1">
-                    <option value="1">JYES</option>
                     <option value="0">JNO</option>
+                    <option value="1">JYES</option>
                 </field>
 
                 <field name="loadcss"
                        type="radio"
                        class="btn-group btn-group-yesno"
+                       layout="joomla.form.field.radio.switcher"
                        default="1"
                        label="MOD_OSTIMER_LOAD_MODULE_LABEL"
                        description="MOD_OSTIMER_LOAD_MODULE_DESC">
-                    <option value="1">JYES</option>
                     <option value="0">JNO</option>
+                    <option value="1">JYES</option>
                 </field>
 
                 <field name="show_zero_day"
                        type="radio"
                        class="btn-group btn-group-yesno"
+                       layout="joomla.form.field.radio.switcher"
                        default="1"
                        label="MOD_OSTIMER_SHOW_ZERO_DAY_LABEL"
                        description="MOD_OSTIMER_SHOW_ZERO_DAY_DESC">
-                    <option value="1">JYES</option>
                     <option value="0">JNO</option>
+                    <option value="1">JYES</option>
                 </field>
 
                 <field name="show_timezone"
                        type="list"
+                       layout="joomla.form.field.list-fancy-select"
                        label="MOD_OSTIMER_SHOW_TIMEZONE_LABEL"
                        description="MOD_OSTIMER_SHOW_TIMEZONE_DESC">
                     <option value="">MOD_OSTIMER_OPTION_TIMEZONE_NONE</option>
@@ -218,11 +237,12 @@
                 <field name="show_after_expired"
                        type="radio"
                        class="btn-group btn-group-yesno"
+                       layout="joomla.form.field.radio.switcher"
                        default="1"
                        label="MOD_OSTIMER_SHOW_AFTER_EXPIRED_LABEL"
                        description="MOD_OSTIMER_SHOW_AFTER_EXPIRED_DESC">
-                    <option value="1">JSHOW</option>
                     <option value="0">JHIDE</option>
+                    <option value="1">JSHOW</option>
                 </field>
 
                 <field name="ev_color"
@@ -234,11 +254,12 @@
                 <field name="ev_dlink"
                        type="radio"
                        class="btn-group btn-group-yesno"
+                       layout="joomla.form.field.radio.switcher"
                        default="1"
                        label="MOD_OSTIMER_SHOW_LINK_LABEL"
                        description="MOD_OSTIMER_SHOW_LINK_DESC">
-                    <option value="1">JYES</option>
                     <option value="0">JNO</option>
+                    <option value="1">JYES</option>
                 </field>
 
                 <field name="ev_tlink"
@@ -282,8 +303,9 @@
             <fieldset name="advanced">
                 <field name="debug"
                        type="radio"
-                       default="0"
                        class="btn-group btn-group-yesno"
+                       layout="joomla.form.field.radio.switcher"
+                       default="0"
                        label="MOD_OSTIMER_DEBUG_LABEL">
                     <option value="0">JDISABLED</option>
                     <option value="1">JENABLED</option>

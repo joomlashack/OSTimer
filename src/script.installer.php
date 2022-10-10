@@ -61,9 +61,9 @@ class mod_ostimerInstallerScript extends AbstractScript
             foreach ($modules as $module) {
                 $params = new JRegistry($module->params);
 
-                $evDay   = $params->get('ev_d', null);
-                $evMonth = $params->get('ev_m', null);
-                $evYear  = $params->get('ev_y', null);
+                $evDay   = $params->get('ev_d');
+                $evMonth = $params->get('ev_m');
+                $evYear  = $params->get('ev_y');
 
                 if ($evDay !== null) {
                     $newDate = sprintf('%s-%s-%s', $evDay, $evMonth, $evYear);
