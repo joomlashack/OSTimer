@@ -34,17 +34,18 @@ try {
         if ($app->isClient('administrator')) {
             $app->enqueueMessage('[OSTimer] Joomlashack framework not found', 'error');
         }
+
         return false;
     }
 
     if (defined('ALLEDIA_FRAMEWORK_LOADED') && !defined('OSTIMER_LOADED')) {
-        define('OSTIMER_LOADED', true);
-
         AutoLoader::register('Alledia\OSTimer', __DIR__ . '/library/Alledia/OSTimer');
+
+        define('OSTIMER_LOADED', true);
     }
 
 } catch (Throwable $error) {
-    Factory::getApplication()->enqueueMessage('[OSMap] Unable to initialize: ' . $error->getMessage(), 'error');
+    Factory::getApplication()->enqueueMessage('[OSTimer] Unable to initialize: ' . $error->getMessage(), 'error');
 
     return false;
 }

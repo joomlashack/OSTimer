@@ -21,11 +21,11 @@
  * along with OSTimer.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+use Alledia\Installer\AbstractScript;
+
 defined('_JEXEC') or die();
 
 require_once 'library/Installer/include.php';
-
-use Alledia\Installer\AbstractScript;
 
 class mod_ostimerInstallerScript extends AbstractScript
 {
