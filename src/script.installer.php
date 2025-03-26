@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   OSTimer
  * @contact   www.joomlashack.com, help@joomlashack.com
@@ -22,6 +23,11 @@
  */
 
 use Alledia\Installer\AbstractScript;
+use Joomla\CMS\Installer\InstallerAdapter;
+
+// phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
+// phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
+// phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
 
 defined('_JEXEC') or die();
 
@@ -32,7 +38,7 @@ class mod_ostimerInstallerScript extends AbstractScript
     /**
      * @inheritDoc
      */
-    protected function customPostFlight($type, $parent)
+    protected function customPostFlight(string $type, InstallerAdapter $parent): void
     {
         if ($type == 'update') {
             $this->convertLegacyDates();
@@ -45,7 +51,7 @@ class mod_ostimerInstallerScript extends AbstractScript
      * @return void
      * @since v2.8.2
      */
-    protected function convertLegacyDates()
+    protected function convertLegacyDates(): void
     {
         $db      = $this->dbo;
         $query   = $db->getQuery(true)
