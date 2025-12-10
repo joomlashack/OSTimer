@@ -25,14 +25,17 @@
 use Alledia\OSTimer\DateTime;
 use Joomla\CMS\Factory;
 
+// phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
 defined('_JEXEC') or die();
+// phpcs:enable PSR1.Files.SideEffects.FoundWithSymbols
 
+// phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
 abstract class ModOstimerHelper
 {
     /**
      * @var string[]
      */
-    protected static $log = [];
+    protected static array $log = [];
 
     /**
      * @return string
@@ -81,10 +84,6 @@ abstract class ModOstimerHelper
             static::logEntry('error', $error->getMessage());
         }
 
-        if (empty($error)) {
-            static::logEntry('error', 'Something truly and epically wrong just happened!');
-        }
-
         return static::renderLog();
     }
 
@@ -100,7 +99,7 @@ abstract class ModOstimerHelper
      *
      * @return ?DateTimeZone
      */
-    protected static function createTimezone(int $offset = 0, string $tzString = null): ?DateTimeZone
+    protected static function createTimezone(int $offset = 0, ?string $tzString = null): ?DateTimeZone
     {
         try {
             // We need a reference DateTime to check the offset of the created DateTimeZone
