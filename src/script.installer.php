@@ -24,6 +24,7 @@
 
 use Alledia\Installer\AbstractScript;
 use Joomla\CMS\Installer\InstallerAdapter;
+use Joomla\Registry\Registry;
 
 // phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
 // phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
@@ -65,7 +66,7 @@ class mod_ostimerInstallerScript extends AbstractScript
 
         if (!empty($modules)) {
             foreach ($modules as $module) {
-                $params = new JRegistry($module->params);
+                $params = new Registry($module->params);
 
                 $evDay   = $params->get('ev_d');
                 $evMonth = $params->get('ev_m');
