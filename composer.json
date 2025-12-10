@@ -22,6 +22,7 @@
   "require": {
     "ext-json": "*",
     "ext-simplexml": "*",
+    "ext-intl": "*",
     "php": ">=7.4"
   }
 }

@@ -25,11 +25,59 @@
 namespace Alledia\OSTimer;
 
 use Alledia\Framework\Factory;
+use IntlDateFormatter;
 
 defined('_JEXEC') or die();
 
 class DateTime extends \DateTime
 {
+    /**
+     * @var string[]
+     */
+    protected array $icuFormat = [
+        '%a' => 'E',
+        '%A' => 'EEEE',
+        '%d' => 'dd',
+        '%e' => 'd',
+        '%j' => 'D',
+        '%u' => 'e',// not 100% correct
+        '%w' => 'c',// not 100% correct
+        '%U' => 'w',
+        '%V' => 'ww',// not 100% correct
+        '%W' => 'w',// not 100% correct
+        '%b' => 'MMM',
+        '%B' => 'MMMM',
+        '%h' => 'MMM',// alias of %b
+        '%m' => 'MM',
+        '%C' => 'yy',// no replace for this
+        '%g' => 'yy',// no replace for this
+        '%G' => 'Y',// not 100% correct
+        '%y' => 'yy',
+        '%Y' => 'yyyy',
+        '%H' => 'HH',
+        '%k' => 'H',
+        '%I' => 'hh',
+        '%l' => 'h',
+        '%M' => 'mm',
+        '%p' => 'a',
+        '%P' => 'a',// no replace for this
+        '%r' => 'hh:mm:ss a',
+        '%R' => 'HH:mm',
+        '%S' => 'ss',
+        '%T' => 'HH:mm:ss',
+        '%X' => 'HH:mm:ss',// no replace for this
+        '%z' => 'ZZ',
+        '%Z' => 'v',// no replace for this
+        '%c' => 'd/M/YYYY HH:mm:ss',// Buddhist era not converted.
+        '%D' => 'MM/dd/yy',
+        '%F' => 'yyyy-MM-dd',
+        '%s' => '',// no replace for this
+        '%x' => 'd/MM/yyyy',// Buddhist era not converted.
+        '%n' => "\n",
+        '%t' => "\t",
+        '%%' => '%',
+    ];
+
     /**
      * A custom method to use locale aware formats
      *
@@ -39,12 +87,28 @@ class DateTime extends \DateTime
      */
     public function localeFormat(string $format): string
     {
+        $time   = strtotime(parent::format('Y-m-d H:i:s'));
+        $locale = Factory::getApplication()->getLanguage()->getTag();
+
+        if (class_exists(IntlDateFormatter::class)) {
+            $pattern = $format;
+            foreach ($this->icuFormat as $strfFormat => $icuFormat) {
+                $pattern = str_replace($strfFormat, $icuFormat, $pattern);
+            }
+
+            $formatter = new IntlDateFormatter($locale, IntlDateFormatter::NONE, IntlDateFormatter::NONE);
+            $formatter->setPattern($pattern);
+
+            return $formatter->format($time);
+
+        }
+
+        // @TODO: can we drop this legacy method entirely?
         $systemLocale = setlocale(LC_TIME, 0);
-        $language     = Factory::getLanguage();
 
-        setlocale(LC_TIME, $language->getLocale());
+        setlocale(LC_TIME, $locale);
 
-        $stringDate = strftime($format, strtotime(parent::format('Y-m-d H:i:s')));
+        $stringDate = strftime($format, $time);
 
         setlocale(LC_TIME, $systemLocale);
 
@@ -66,7 +130,7 @@ class DateTime extends \DateTime
             $utcDate->format('m') - 1,
             $utcDate->format('d'),
             $utcDate->format('H'),
-            $utcDate->format('i')
+            $utcDate->format('i'),
         ];
     }
 }
